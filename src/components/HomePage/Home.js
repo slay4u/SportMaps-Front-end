@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
@@ -41,11 +40,11 @@ function Copyright(props) {
 
 export default function Home() {
     return (
-      <Box>
+      <>
         <Container 
           maxWidth="false" 
           disableGutters="true" 
-          sx={{marginTop: '64px', width: '100%', position: 'relative'}}
+          sx={{ width: '100%', position: 'relative'}}
         >
           <img src={SportImage} width="100%" alt="sportTitle" height="800px"/>
           <Typography 
@@ -388,6 +387,6 @@ export default function Home() {
             </Container>
           </Container>
         </Container>
-      </Box>
+      </>
     );
   }

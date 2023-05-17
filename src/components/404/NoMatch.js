@@ -8,7 +8,7 @@ export default function NoMatch() {
         setTimeout(() => {
             navigate('/')
         }, 3000)
-    }, [])
+    }, [navigate])
     return (
         <Box bgcolor={'#4682b4'} sx={{ height: '100vh' }}>
             <Typography paddingTop={35} variant='h1' textAlign={'center'} fontSize={160} letterSpacing={13} color={'#00ff7f'}>
