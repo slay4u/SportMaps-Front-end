@@ -39,6 +39,8 @@ export default function SignUp() {
   const [validEmail, setValidEmail] = useState(false);
 
   const [errMsg, setErrMsg] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('');
 
   useEffect(() => {
     setValidFirstName(firstName.match(USERNAME_REGEX));
@@ -78,11 +80,12 @@ export default function SignUp() {
           withCredentials: true
         }
       );
-      console.log(response?.data);
       setFirstName('');
       setLastName('');
       setPassword('');
       setEmail('');
+      setSuccess(true);
+      setSuccessMsg(response?.data);
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response.');
@@ -96,7 +99,15 @@ export default function SignUp() {
 
   return (
     <>
-      <Paper sx={{ padding: '1%', marginTop: '9%', width: '24%', ml:'38%', borderRadius:4, mr:'38%' }}>
+      { success ? (
+        <Paper sx={{ padding: '1%', marginTop: '9%', width: '24%', ml: '38%', borderRadius: 4, mr: '38%' }}>
+          <Typography sx={{ textAlign: 'center' }}>
+            {successMsg}
+          </Typography>
+        </Paper>
+      ) : (
+        <>
+        <Paper sx={{ padding: '1%', marginTop: '9%', width: '24%', ml: '38%', borderRadius: 4, mr: '38%' }}>
         <Box
           sx={{
             marginTop: 6,
@@ -197,6 +208,8 @@ export default function SignUp() {
         <Copyright sx={{ mt: 2 }} />
       </Paper>
       <Typography className={errMsg ? "errmsg" : "offscreen"} sx={{ textAlign: 'center' }}>{errMsg}</Typography>
+      </>
+      )}
     </>
   );
 }
