@@ -1,16 +1,10 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Paper } from '@mui/material';
+import React, { useRef, useState, useEffect, useContext } from 'react';
+import { Avatar, Button, TextField, Grid, Box, Typography, Paper } from '@mui/material';
+import { LoginOutlined } from '@mui/icons-material';
 import { NavLink } from 'react-router-dom';
+import Home from '../../components/HomePage/Home';
+import AuthContext from '../../context/AuthProvider.js';
+import axios from '../api/axios';
 
 function Copyright(props) {
   return (
@@ -30,54 +24,91 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
+const LOGIN_URL = '/sport-maps/v1/auth/login';
 
 export default function SignIn() {
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const user = { email, password }
-    console.log(user)
-        fetch("http://localhost:8090/api/v1/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body:JSON.stringify(user)
-        }).then(() => {
-          console.log("LOGIN")
-        })
+  const { setAuth } = useContext(AuthContext);
+  const emailRef = useRef();
+  const errRef = useRef();
+
+  const [email, setEmail] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [errMsg, setErrMsg] = useState('');
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, [])
+
+  useEffect(() => {
+    setErrMsg('');
+  }, [email, pwd])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(LOGIN_URL, 
+        JSON.stringify({email, password: pwd}),
+        {
+          headers: { 'Content-Type': 'application/json'},
+          withCredentials: true
+        }
+      );
+      console.log(JSON.stringify(response?.data));
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+      setAuth({ email, pwd, roles, accessToken });
+      setEmail('');
+      setPwd('');
+      setSuccess(true);
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg('No Server Response');
+      } else if (err.response?.status === 400) {
+        setErrMsg('Missing Email or Password');
+      } else if (err.response?.status === 401) {
+        setErrMsg('Unauthorized');
+      } else {
+        setErrMsg('Login failed');
+      }
+      errRef.current.focus();
+    }
   }
+
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <Paper sx={{ padding: '1px 25px', marginTop: "170px", width: 500, marginLeft: "-35px", borderRadius:4 }}>
-        <CssBaseline/>
+    <>
+      {success ? (
+        <Home/>
+      ) : (
+      <>
+        <Paper sx={{ padding: '1%', marginTop: "9%", width: '24%', ml:'38%', borderRadius:4, mr:'38%' }}>
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 6,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LoginOutlinedIcon fontSize='large'/>
+          <Avatar sx={{ bgcolor: 'secondary.main' }}>
+            <LoginOutlined fontSize='large'/>
           </Avatar>
-          <Typography component="h1" variant="h5" sx={{color:"#9c27b0", fontSize:32}}>
+          <Typography variant="h4" sx={{color:"#9c27b0"}}>
             Sign in
           </Typography>
-          <Box component="form" Validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
+                  type="email"
+                  label="Email"
+                  autoComplete="off"
+                  ref={emailRef}
                   variant="outlined"
-                  value={email} onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   sx={{background:"#ffebee", borderRadius:1}}
                 />
               </Grid>
@@ -85,13 +116,11 @@ export default function SignIn() {
                 <TextField
                   required
                   fullWidth
-                  name="password"
                   label="Password"
                   type="password"
-                  id="password"
-                  autoComplete="new-password"
                   variant="outlined"
-                  value={password} onChange={(e) => setPassword(e.target.value)}
+                  value={pwd} 
+                  onChange={(e) => setPwd(e.target.value)}
                   sx={{background:"#ffebee", borderRadius:1}}
                 />
               </Grid>
@@ -104,11 +133,11 @@ export default function SignIn() {
                 <Button
                   type="submit"
                   variant="contained"
-                  sx={{ mt: 3, mb: 2, width: 150, borderRadius: 5, fontSize: 15 }}
+                  sx={{ mt: 2, mb: 3, width: '30%', borderRadius: 5, fontSize: 15 }}
                   color='secondary'>
                     Sign In
                 </Button>
-              </Box>
+            </Box>
               <Typography variant="body2" align='right'>
                 <NavLink to="/signup" reloadDocument
                   style={({ isActive }) =>
@@ -122,9 +151,14 @@ export default function SignIn() {
               </Typography>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        <Copyright sx={{ mt: 2 }} />
         </Paper>
-      </Container>
-    </ThemeProvider>
+        <Typography ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive" sx={{ textAlign: 'center' }}
+        >
+          {errMsg}
+        </Typography>
+      </>
+    )}
+    </>
   );
 }
