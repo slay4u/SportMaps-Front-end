@@ -19,7 +19,7 @@ function App() {
       <NavigationBar/>
       <Routes>
         <Route path="/" element={<Layout/>}>
-          <Route element={<RequireAuth/>}>
+          <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/maps" element={<Maps />} />

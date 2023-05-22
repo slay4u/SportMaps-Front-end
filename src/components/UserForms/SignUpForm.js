@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Paper, Grid, Box, Typography, TextField, Button, Avatar } from '@mui/material';
 import { LockPersonOutlined } from '@mui/icons-material';
 import { NavLink } from 'react-router-dom';
-import axios from '../api/axios';
+import { useSignupMutation } from '../../store/auth/authApiSlice';
 
 function Copyright(props) {
   return (
@@ -23,9 +23,10 @@ function Copyright(props) {
 const USERNAME_REGEX = "^(?=.{2,30}$)[A-Z][a-zA-Z]*(?:\\h+[A-Z][a-zA-Z]*)*$";
 const PWD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[{}:#@!;\\[_'`\\],\".\\/~?*\\-$^+=\\\\<>]).{8,20}$";
 const EMAIL_REGEX = "^(?=.{1,32}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-const REGISTER_URL = "/sport-maps/v1/auth/signup";
 
 export default function SignUp() {
+  const [signup] = useSignupMutation()
+
   const [firstName, setFirstName] = useState('');
   const [validFirstName, setValidFirstName] = useState(false);
 
@@ -73,19 +74,13 @@ export default function SignUp() {
       return;
     }
     try {
-      const response = await axios.post(REGISTER_URL,
-        JSON.stringify({ firstName, lastName, email, password }),
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true
-        }
-      );
+      const response = await signup({ firstName, lastName, email, password }).unwrap();
       setFirstName('');
       setLastName('');
       setPassword('');
       setEmail('');
       setSuccess(true);
-      setSuccessMsg(response?.data);
+      setSuccessMsg(response);
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response.');

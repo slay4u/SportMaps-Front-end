@@ -3,22 +3,22 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-import { Container, Divider } from '@mui/material';
+import { Container } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import ImageSlider from './ImageSlider';
-import SportImage from 'E:/idea/front/restapp/src/components/images/homePage/sportTitle.jpg';
-import mapIcon from 'E:/idea/front/restapp/src/components/images/homePage/map-location.png';
-import communicationIcon from 'E:/idea/front/restapp/src/components/images/homePage/communication.png';
-import earningIcon from 'E:/idea/front/restapp/src/components/images/homePage/earning.png';
-import trainerIcon from 'E:/idea/front/restapp/src/components/images/homePage/trainer.png';
-import PowerFitness from 'E:/idea/front/restapp/src/components/images/homePage/power-fitness.png';
-import GymTrainer from 'E:/idea/front/restapp/src/components/images/homePage/gym-trainer.jpg';
-import LogoDraftKings from 'E:/idea/front/restapp/src/components/images/homePage/logo-draftkings.png';
-import Visa from 'E:/idea/front/restapp/src/components/images/homePage/visa.png';
-import Maestro from 'E:/idea/front/restapp/src/components/images/homePage/maestro.png';
+import SportImage from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/sportTitle.jpg';
+import mapIcon from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/map-location.png';
+import communicationIcon from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/communication.png';
+import earningIcon from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/earning.png';
+import trainerIcon from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/trainer.png';
+import PowerFitness from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/power-fitness.png';
+import GymTrainer from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/gym-trainer.jpg';
+import LogoDraftKings from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/logo-draftkings.png';
+import Visa from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/visa.png';
+import Maestro from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/maestro.png';
 
 function Copyright(props) {
   return (
@@ -43,7 +43,7 @@ export default function Home() {
       <>
         <Container 
           maxWidth="false" 
-          disableGutters="true" 
+          disableGutters
           sx={{ width: '100%', position: 'relative'}}
         >
           <img src={SportImage} width="100%" alt="sportTitle" height="800px"/>
@@ -71,7 +71,7 @@ export default function Home() {
         </Container>
         <Container
           maxWidth="false" 
-          disableGutters="true"
+          disableGutters
           sx={{background: "linear-gradient(to right, #67B26F, #4ca2cd)", height: "400px", marginTop: "-4px", paddingTop: "20px"}}
         >
           <Typography
@@ -83,12 +83,12 @@ export default function Home() {
           </Typography>
           <Container
             maxWidth="false" 
-            disableGutters="true"
+            disableGutters
             sx={{justifyContent: "space-around", alignItems: "flex-start", display: "flex", mt: "35px"}}
           >
             <Container
-              axWidth="false" 
-              disableGutters="true"
+              maxWidth="false" 
+              disableGutters
               sx={{justifyContent: "center", alignItems: "center", ml: "100px", alignContent: "center"}}
             >
               <img src={mapIcon} alt="mapIcon" width="70px" height="70px" style={{ marginLeft: '180px' }}/>
@@ -104,8 +104,8 @@ export default function Home() {
               </Typography>
             </Container>
             <Container
-              axWidth="false" 
-              disableGutters="true"
+              maxWidth="false" 
+              disableGutters
               sx={{justifyContent: "center", alignItems: "center", alignContent: "center"}}
             >
               <img src={communicationIcon} alt="mapIcon" width="70px" height="70px" style={{ marginLeft: '180px' }}/>
@@ -120,8 +120,8 @@ export default function Home() {
               </Typography>
             </Container>
             <Container
-              axWidth="false" 
-              disableGutters="true"
+              maxWidth="false" 
+              disableGutters
               sx={{justifyContent: "center", alignItems: "center", alignContent: "center"}}
             >
               <img src={earningIcon} alt="mapIcon" width="70px" height="70px" style={{ marginLeft: '175px' }}/>
@@ -138,8 +138,8 @@ export default function Home() {
               </Typography>
             </Container>
             <Container
-              axWidth="false" 
-              disableGutters="true"
+              maxWidth="false" 
+              disableGutters
               sx={{justifyContent: "center", alignItems: "center", mr: "100px", alignContent: "center"}}
             >
               <img src={trainerIcon} alt="mapIcon" width="70px" height="70px" style={{ marginLeft: '175px' }}/>
@@ -157,14 +157,14 @@ export default function Home() {
         </Container>
         <Container
           maxWidth="false" 
-          disableGutters="true" 
+          disableGutters
           sx={{background: "linear-gradient(to right, rgb(255,65,108), rgb(255,75,43))"}}
         >
           <ImageSlider/>
         </Container>
         <Container
           maxWidth="false" 
-          disableGutters="true" 
+          disableGutters
           sx={{background: "linear-gradient(to right, #f85032, #e73827)", padding: '20px 0 25px'}}
         >
           <Typography
@@ -179,7 +179,7 @@ export default function Home() {
           </Typography>
           <Container
             maxWidth="false"
-            disableGutters="true"
+            disableGutters
             sx={{alignItems: 'flex-start', justifyContent: 'space-between', display: 'flex', marginTop: '40px'}}
           >
             <Container
@@ -194,7 +194,7 @@ export default function Home() {
               >
                 <span style={{fontWeight: 'bold', fontSize: '18px'}}>Power Fitness</span><br></br>
                 <span style={{fontSize: '14px', marginTop: '-10px'}}>Фітнес-клуб</span><br></br><br></br>
-                <Divider sx={{height: "2px", borderWidth: "0", backgroundColor: "rgb(114, 199, 28)"}}/><br></br>
+                {/* <Divider sx={{height: "2px", borderWidth: "0", backgroundColor: "rgb(114, 199, 28)"}}/><br></br> */}
                 <span style={{fontSize: '16px', lineHeight: '23px'}}>
                   Фітнес-клуб "Power Fitness" надає послуги:<br></br>
                   тренажерний зал, фітнес, дитячий фітнес,<br></br>
@@ -216,7 +216,7 @@ export default function Home() {
               >
                 <span style={{fontWeight: 'bold', fontSize: '18px'}}>Matt Roberts</span><br></br>
                 <span style={{fontSize: '14px', marginTop: '-10px'}}>Фітнес-тренер</span><br></br><br></br>
-                <Divider sx={{height: "2px", borderWidth: "0", backgroundColor: "rgb(114, 199, 28)"}}/><br></br>
+                {/* <Divider sx={{height: "2px", borderWidth: "0", backgroundColor: "rgb(114, 199, 28)"}}/><br></br> */}
                 <span style={{fontSize: '16px', lineHeight: '23px'}}>
                   Допоможу Вам досягти результату: набір<br></br>
                   м'язової маси, схуднення, корекція фігури,<br></br>
@@ -239,7 +239,7 @@ export default function Home() {
               >
                 <span style={{fontWeight: 'bold', fontSize: '18px'}}>Draft Kings</span><br></br>
                 <span style={{fontSize: '14px', marginTop: '-10px'}}>Букмекерська компанія</span><br></br><br></br>
-                <Divider sx={{height: "2px", borderWidth: "0", backgroundColor: "rgb(114, 199, 28)"}}/><br></br>
+                {/* <Divider sx={{height: "2px", borderWidth: "0", backgroundColor: "rgb(114, 199, 28)"}}/><br></br> */}
                 <span style={{fontSize: '16px', lineHeight: '23px'}}>
                   Компанія дозволяє користувачам брати участь у щоденних і щотижневих<br></br>
                   конкурсах, пов'язаних з фентезі-спортом, і вигравати гроші на основі<br></br> 
@@ -254,12 +254,12 @@ export default function Home() {
         </Container>
         <Container
           maxWidth="false" 
-          disableGutters="true" 
+          disableGutters 
           sx={{background: "linear-gradient(to right, #0919a3, #004e92)", height: '17ch', display: 'flex', justifyContent: 'space-between', 
               alignItems: 'center', color: 'aliceblue'}}
         >
           <Container
-            marginLeft="3cm"
+            sx={{marginLeft: "3cm"}}
           >
             <Container>
               <img src={Visa} alt="Visa" width="110px" height="110px" style={{marginRight: '30px'}}></img>

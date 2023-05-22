@@ -1,0 +1,49 @@
+.main-box {
+    cursor: pointer;
+    display: table-cell;
+    position: relative;
+    overflow: hidden;
+
+    -webkit-transition: .4s ease-in-out;
+	transition: .4s ease-in-out;
+}
+
+.main-box-img {
+    object-fit: cover;
+    width: 100%;
+    height: 700px;
+    filter: brightness(60%);
+    -webkit-transition: .4s ease-in-out;
+	transition: .4s ease-in-out;
+}
+
+.main-box-arrow {
+    color: white;
+    position: absolute;
+    left: 85%;
+    bottom: 7%;
+    -webkit-transition: .4s ease-in-out;
+	transition: .4s ease-in-out;
+}
+
+.main-box:hover .main-box-img {
+    filter: brightness(80%);
+    transform: scale(1.01, 1.01);
+}
+
+.main-box:hover .main-box-arrow {
+    transition: .4s ease-in-out;
+    transform: translateX(30%);
+}
+
+.main-box-text {
+    height: 25%;
+    width: 60%;
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    color: white;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}

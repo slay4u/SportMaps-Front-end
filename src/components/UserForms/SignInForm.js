@@ -2,8 +2,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Avatar, Button, TextField, Grid, Box, Typography, Paper } from '@mui/material';
 import { LoginOutlined } from '@mui/icons-material';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
-import axios from '../api/axios';
+import { useDispatch } from 'react-redux';
+
+import { setCredentials } from '../../store/auth/authSlice';
+import { useLoginMutation } from '../../store/auth/authApiSlice';
 
 function Copyright(props) {
   return (
@@ -21,21 +23,20 @@ function Copyright(props) {
   );
 }
 
-const LOGIN_URL = '/sport-maps/v1/auth/login';
-
 export default function SignIn() {
-  const { setAuth } = useAuth();
+  const emailRef = useRef();
+  const errRef = useRef();
+
+  const [email, setEmail] = useState('');
+  const [password, setPwd] = useState('');
+  const [errMsg, setErrMsg] = useState('');
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const emailRef = useRef();
-  const errRef = useRef();
-
-  const [email, setEmail] = useState('');
-  const [pwd, setPwd] = useState('');
-  const [errMsg, setErrMsg] = useState('');
+  const [login, { isLoading }] = useLoginMutation()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     emailRef.current.focus();
@@ -43,21 +44,15 @@ export default function SignIn() {
 
   useEffect(() => {
     setErrMsg('');
-  }, [email, pwd])
+  }, [email, password])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(LOGIN_URL,
-        JSON.stringify({email, password: pwd}),
-        {
-          headers: { 'Content-Type': 'application/json'},
-          withCredentials: true
-        }
-      );
-      setAuth({ email, ...response?.data  });
-      setEmail('');
-      setPwd('');
+      const userData = await login({ email, password }).unwrap()
+      dispatch(setCredentials({ ...userData, email }))
+      setEmail('')
+      setPwd('')
       navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
@@ -73,7 +68,7 @@ export default function SignIn() {
     }
   }
 
-  return (
+  return isLoading ? <h1>Loading...</h1> : (
       <>
         <Paper sx={{ padding: '1%', marginTop: "9%", width: '24%', ml:'38%', borderRadius:4, mr:'38%' }}>
         <Box
@@ -113,7 +108,7 @@ export default function SignIn() {
                   label="Password"
                   type="password"
                   variant="outlined"
-                  value={pwd} 
+                  value={password} 
                   onChange={(e) => setPwd(e.target.value)}
                   sx={{background:"#ffebee", borderRadius:1}}
                 />

@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import SportImage1 from 'E:/idea/front/restapp/src/components/images/homePage/gallery/august-phlieger.jpg';
-import SportImage2 from 'E:/idea/front/restapp/src/components/images/homePage/gallery/felipe-giacometti.jpg';
-import SportImage3 from 'E:/idea/front/restapp/src/components/images/homePage/gallery/joe-neric.jpg';
-import SportImage4 from 'E:/idea/front/restapp/src/components/images/homePage/gallery/markus-spiske.jpg';
-import SportImage5 from 'E:/idea/front/restapp/src/components/images/homePage/gallery/matthieu-petiard.jpg';
-import SportImage6 from 'E:/idea/front/restapp/src/components/images/homePage/gallery/thomas-serer.jpg';
-import SportImage7 from 'E:/idea/front/restapp/src/components/images/homePage/gallery/vienna-reyes.jpg';
-import SportImage8 from 'E:/idea/front/restapp/src/components/images/homePage/gallery/zachary-kadolph.jpg';
+import SportImage1 from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/gallery/august-phlieger.jpg';
+import SportImage2 from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/gallery/felipe-giacometti.jpg';
+import SportImage3 from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/gallery/joe-neric.jpg';
+import SportImage4 from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/gallery/markus-spiske.jpg';
+import SportImage5 from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/gallery/matthieu-petiard.jpg';
+import SportImage6 from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/gallery/thomas-serer.jpg';
+import SportImage7 from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/gallery/vienna-reyes.jpg';
+import SportImage8 from 'E:/Programs/VSCode/React/SportMaps-Front-end/src/components/images/homePage/gallery/zachary-kadolph.jpg';
 
 const SliderData = [
   {
