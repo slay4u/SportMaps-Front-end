@@ -7,6 +7,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.map-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.map-wrapper {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.edit-marker {
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
+  width: 10%;
+  height: 7%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

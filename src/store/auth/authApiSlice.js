@@ -140,6 +140,20 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: credentials.newUpdateForumComment,
       }),
     }),
+    getMarkers: builder.mutation({
+      query: (credentials) => ({
+        url: "/sport-maps/v1/markers",
+        method: "POST",
+        body: {...credentials}
+      })
+    }),
+    postMarker: builder.mutation({
+      query: (credentials) => ({
+        url: "/sport-maps/v1/markers/add",
+        method: "POST",
+        body: {...credentials}
+      })
+    }),
   }),
 });
 
@@ -164,5 +178,7 @@ export const {
   useDeleteForumCommentMutation,
   useEditForumMutation,
   useEditForumCommentMutation,
-  useLogoutMutation
+  useLogoutMutation,
+  useGetMarkersMutation,
+  usePostMarkerMutation
 } = authApiSlice;
