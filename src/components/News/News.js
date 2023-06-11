@@ -1,5 +1,5 @@
 import './News.css';
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,58 +10,60 @@ import MainFeaturedPost from './MainFeaturedPost';
 import FeaturedPost from './FeaturedPost';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from 'react-router-dom';
-
-const mainFeaturedPost = {
-  title: 'Title of a longer featured blog post',
-  description:
-    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-  image: 'https://source.unsplash.com/random/?sport/4',
-  imageText: 'main image description',
-  linkText: 'Continue reading…',
-};
-  
-const featuredPosts = [
-  {
-    type: 'Chess boxing',
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random/?sport/5',
-    imageLabel: 'Image Text',
-  },
-  {
-    type: 'Workout',
-    title: 'Featured post',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random/?sport/6',
-    imageLabel: 'Image Text',
-  },
-  {
-    type: 'Box',
-    title: 'Featured post',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random/?sport/7',
-    imageLabel: 'Image Text',
-  },
-];
+import { useGetAllNewsMutation, useCreateNewsMutation } from '../../store/auth/authApiSlice';
+import store from '../../store/store';
 
 const theme = createTheme();
 
 export default function News() {
+  const [getAllNews] = useGetAllNewsMutation();
+  const [createNewsCall] = useCreateNewsMutation();
+  const email = store.getState().auth.email;
+  const [news, setNews] = useState([]);
+  const [newNews, setNewNews] = useState({
+    name: "",
+    publishDate: "",
+    desc: "",
+    emailUser: email
+  })
+  var popup = document.getElementById("popup");
 
   let navigate = useNavigate(); 
   const routeChange = () => { 
-    let path = '/NewsPage'; 
+    let path = '/newsPage'; 
     navigate(path);
   }
 
+  useEffect(() => {
+    getAllNews().then((res) => {
+        setNews(res.data);
+    });
+  }, [])
+
+  const updateNewNewsName = (value) => {
+    const newNewsCopy = { ...newNews };
+    newNewsCopy.name = value;
+    setNewNews(newNewsCopy);
+  }
+
+  const updateNewNewsText = (value) => {
+    const newNewsCopy = { ...newNews };
+    newNewsCopy.desc = value;
+    setNewNews(newNewsCopy);
+  }
+
+  const createNewNews = () => {
+    newNews.publishDate = new Date().toLocaleDateString('uk-UA') + " " + new Date().toLocaleTimeString('uk-UA').slice(0,5);
+    createNewsCall(newNews);
+    window.location.reload();
+  }
+
+  const openPopup = () => {
+    popup.classList.add("open-popup");
+  };
+
   return (
-      <Box sx={{backgroundColor: 'rgb(211,211,211)'}}>
+      <Box sx={{backgroundColor: '#BC2044'}}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Container
@@ -121,12 +123,39 @@ export default function News() {
               </Typography>
             </Box>
           </Container>
+
+          <div style={{paddingTop:"1em", display:'flex', justifyContent: 'center'}}>
+            <button className="createNewNewsButton" onClick={openPopup}>Створити новину</button>
+            <div className="popup" id="popup">
+              <button id='closeNewNews' onClick={() => {popup.classList.remove("open-popup")}}>close</button>
+              <h2 style={{marginTop: '-1em'}}>Створення новини</h2>
+              <div>
+                <p style={{margin: 0, fontSize: '20px', padding: '0.5em'}}>Введіть назву</p>
+                <textarea 
+                  style={{ width: "40em", height: "5em", resize: "none", borderRadius: "0.25em"}}
+                  onChange={(e) => updateNewNewsName(e.target.value)}
+                ></textarea>
+              </div>
+              <hr style={{height: '1px', borderColor: '#000000', marginTop: '1em'}}/>
+              <div style={{paddingBottom: '0.5em', marginTop: '0.5em'}}>
+                <p style={{margin: 0, fontSize: '20px', padding: '0.5em'}}>Введіть текст</p>
+                <textarea 
+                  style={{ minWidth: "50em", minHeight: "15em", maxWidth: "80em", maxHeight: "35em", borderRadius: "0.25em"}}
+                  onChange={(e) => updateNewNewsText(e.target.value)}
+                ></textarea>
+              </div>
+              <button className="createNewNewsButton" type="submit" onClick={createNewNews}>Створити</button>
+            </div>
+          </div>
+
           <Container maxWidth="lg" sx={{mt: '64px'}}>
             <main style={{paddingBottom: '1%'}}>
-              <MainFeaturedPost post={mainFeaturedPost}/>
+              {news.slice(0,1).map((post) => (
+                <MainFeaturedPost key={post.name} post={post}/>
+              ))}
               <Grid container spacing={3} columns={1}>
-                {featuredPosts.map((post) => (
-                  <FeaturedPost key={post.title} post={post} />
+                {news.slice(1).map((post) => (
+                  <FeaturedPost key={post.name} post={post}/>
                 ))}
               </Grid>
             </main>

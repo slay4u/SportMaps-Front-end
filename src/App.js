@@ -13,6 +13,7 @@ import AboutUs from "./components/AboutUs/AboutUs";
 import Layout from "./components/layout/Layout";
 import RequireAuth from "./components/RequireAuth";
 import ChatRoom from "./components/chatroom/ChatRoom";
+import NewsPage from "./components/News/NewsPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/maps" element={<Maps />} />
             <Route path="/forums" element={<Forums />} />
             <Route path="/news" element={<News />} />
+            <Route path="/newsPage/:id" element={<NewsPage />} />
             <Route path="/coaches" element={<Coaches />} />
             <Route path="/chat" element={<ChatRoom />} />
           </Route>

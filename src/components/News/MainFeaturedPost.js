@@ -6,8 +6,9 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
 
-function MainFeaturedPost(props) {
-  const { post } = props;
+function MainFeaturedPost(prop) {
+  const { post } = prop;
+  const description = (post.desc.length > 330) ? post.desc.slice(0,330) + "..." : post.desc;
 
   return (
     <Paper
@@ -19,11 +20,13 @@ function MainFeaturedPost(props) {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundImage: `url(${post.image})`,
+        backgroundImage: `url(${"https://source.unsplash.com/random/?sport" + "/" + post.id})`,
+        // backgroundImage: `url(${post.image})`,
       }}
     >
       {/* Increase the priority of the hero background image */}
-      {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />}
+      {<img style={{ display: 'none' }} src={"https://source.unsplash.com/random/?sport" + "/" + post.id} alt={post.id + " image"} />}
+      {/* {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />} */}
       <Box
         sx={{
           position: 'absolute',
@@ -44,10 +47,10 @@ function MainFeaturedPost(props) {
             }}
           >
             <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-              {post.title}
+              {post.name}
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>
-              {post.description}
+              {description}
             </Typography>
             <NavLink to="/" reloadDocument variant="subtitle1"
               style={({ isActive }) =>
@@ -56,7 +59,7 @@ function MainFeaturedPost(props) {
                   : { color: 'white', fontSize: '20px'}
               }
             >
-              {post.linkText}
+              {"Continue reading…"}
             </NavLink>
             {/* <Link variant="subtitle1" href="#">
               {post.linkText}
@@ -68,14 +71,14 @@ function MainFeaturedPost(props) {
   );
 }
 
-MainFeaturedPost.propTypes = {
-  post: PropTypes.shape({
-    description: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    imageText: PropTypes.string.isRequired,
-    linkText: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  }).isRequired,
-};
+// MainFeaturedPost.propTypes = {
+//   post: PropTypes.shape({
+//     description: PropTypes.string.isRequired,
+//     image: PropTypes.string.isRequired,
+//     imageText: PropTypes.string.isRequired,
+//     linkText: PropTypes.string.isRequired,
+//     title: PropTypes.string.isRequired,
+//   }).isRequired,
+// };
 
 export default MainFeaturedPost;
