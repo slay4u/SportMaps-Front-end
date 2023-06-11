@@ -1,11 +1,33 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
+import { useLogoutMutation } from "../../store/auth/authApiSlice";
+import store from "../../store/store";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../store/auth/authSlice";
 
 export default function NavigationBar() {
+  const role = store.getState().auth.role;
+  const token = store.getState().auth.token;
+  const email = store.getState().auth.email;
+  const refreshToken = store.getState().auth.refreshToken;
+  const [userInfo] = useState({
+    role: role,
+    email: email,
+    refreshToken: refreshToken,
+    toke: token,
+  });
+  const [logoutCall] = useLogoutMutation();
+  const dispatch = useDispatch();
+  console.log(store.getState().auth)
+  const logout = () => {
+    logoutCall({ email, refreshToken });
+    dispatch(logOut(userInfo));
+  };
+
   return (
     <>
       <nav>
@@ -147,42 +169,82 @@ export default function NavigationBar() {
                 Events
               </NavLink>
             </Typography>
-            <Button
-              sx={{
-                mr: "16%",
-                flexGrow: 1,
-                borderRadius: 5,
-                width: "0.1%",
-                height: "0.1%",
-                backgroundColor: "white",
-                textTransform: "none",
-                ":hover": {
-                  bgcolor: "#4169E1",
-                },
-              }}
-            >
-              <NavLink
-                to="/signin"
-                reloadDocument
-                style={({ isActive }) =>
-                  isActive
-                    ? {
-                        color: "black",
-                        textDecoration: "none",
-                        fontWeight: "bold",
-                        fontSize: 15,
-                      }
-                    : {
-                        color: "black",
-                        textDecoration: "none",
-                        fontWeight: "bold",
-                        fontSize: 15,
-                      }
-                }
+            {store.getState().auth.email ? (
+              <Button
+                sx={{
+                  mr: "16%",
+                  flexGrow: 1,
+                  borderRadius: 5,
+                  width: "0.1%",
+                  height: "0.1%",
+                  backgroundColor: "white",
+                  textTransform: "none",
+                  ":hover": {
+                    bgcolor: "#4169E1",
+                  },
+                }}
+                onClick={logout}
               >
-                Sign In
-              </NavLink>
-            </Button>
+                <NavLink
+                  to="/signin"
+                  reloadDocument
+                  style={({ isActive }) =>
+                    isActive
+                      ? {
+                          color: "black",
+                          textDecoration: "none",
+                          fontWeight: "bold",
+                          fontSize: 15,
+                        }
+                      : {
+                          color: "black",
+                          textDecoration: "none",
+                          fontWeight: "bold",
+                          fontSize: 15,
+                        }
+                  }
+                >
+                  Log Out
+                </NavLink>
+              </Button>
+            ) : (
+              <Button
+                sx={{
+                  mr: "16%",
+                  flexGrow: 1,
+                  borderRadius: 5,
+                  width: "0.1%",
+                  height: "0.1%",
+                  backgroundColor: "white",
+                  textTransform: "none",
+                  ":hover": {
+                    bgcolor: "#4169E1",
+                  },
+                }}
+              >
+                <NavLink
+                  to="/signin"
+                  reloadDocument
+                  style={({ isActive }) =>
+                    isActive
+                      ? {
+                          color: "black",
+                          textDecoration: "none",
+                          fontWeight: "bold",
+                          fontSize: 15,
+                        }
+                      : {
+                          color: "black",
+                          textDecoration: "none",
+                          fontWeight: "bold",
+                          fontSize: 15,
+                        }
+                  }
+                >
+                  Sign In
+                </NavLink>
+              </Button>
+            )}
           </Toolbar>
         </AppBar>
       </nav>

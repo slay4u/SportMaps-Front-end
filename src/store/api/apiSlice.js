@@ -20,7 +20,7 @@ const baseQueryAuth = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result;
-  args.url.endsWith("auth/login") || args.url.endsWith("auth/signup")
+  args.url.endsWith("auth/login") || args.url.endsWith("auth/signup") || args.url.endsWith("auth/logout")
     ? (result = await baseQueryAuth(args, api, extraOptions))
     : (result = await baseQuery(args, api, extraOptions));
 

@@ -22,6 +22,7 @@ export default function News() {
   const [getAllNews] = useGetAllNewsMutation();
   const [createNewsCall] = useCreateNewsMutation();
   const email = store.getState().auth.email;
+  const role = store.getState().auth.role;
   const [news, setNews] = useState([]);
   const [newNews, setNewNews] = useState({
     name: "",
@@ -121,72 +122,75 @@ export default function News() {
             </Typography>
           </Box>
         </Container>
-
-        <div
-          style={{
-            paddingTop: "1em",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <button className="createNewNewsButton" onClick={openPopup}>
-            Створити новину
-          </button>
-          <div className="popupNews" id="popup">
-            <button
-              id="closeNewNews"
-              onClick={() => {
-                popup.classList.remove("open-popupNews");
-              }}
-            >
-              close
+        {role == "ADMIN" ? (
+          <div
+            style={{
+              paddingTop: "1em",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <button className="createNewNewsButton" onClick={openPopup}>
+              Створити новину
             </button>
-            <h2 style={{ marginTop: "-1em" }}>Створення новини</h2>
-            <div>
-              <p style={{ margin: 0, fontSize: "20px", padding: "0.5em" }}>
-                Введіть назву
-              </p>
-              <textarea
-                style={{
-                  width: "40em",
-                  height: "5em",
-                  resize: "none",
-                  borderRadius: "0.25em",
+            <div className="popupNews" id="popup">
+              <button
+                id="closeNewNews"
+                onClick={() => {
+                  popup.classList.remove("open-popupNews");
                 }}
-                onChange={(e) => updateNewNewsName(e.target.value)}
-              ></textarea>
-            </div>
-            <hr
-              style={{
-                height: "1px",
-                borderColor: "#000000",
-                marginTop: "1em",
-              }}
-            />
-            <div style={{ paddingBottom: "0.5em", marginTop: "0.5em" }}>
-              <p style={{ margin: 0, fontSize: "20px", padding: "0.5em" }}>
-                Введіть текст
-              </p>
-              <textarea
+              >
+                close
+              </button>
+              <h2 style={{ marginTop: "-1em" }}>Створення новини</h2>
+              <div>
+                <p style={{ margin: 0, fontSize: "20px", padding: "0.5em" }}>
+                  Введіть назву
+                </p>
+                <textarea
+                  style={{
+                    width: "40em",
+                    height: "5em",
+                    resize: "none",
+                    borderRadius: "0.25em",
+                  }}
+                  onChange={(e) => updateNewNewsName(e.target.value)}
+                ></textarea>
+              </div>
+              <hr
                 style={{
-                  minWidth: "50em",
-                  minHeight: "15em",
-                  maxWidth: "80em",
-                  maxHeight: "35em",
-                  borderRadius: "0.25em",
+                  height: "1px",
+                  borderColor: "#000000",
+                  marginTop: "1em",
                 }}
-                onChange={(e) => updateNewNewsText(e.target.value)}
-              ></textarea>
+              />
+              <div style={{ paddingBottom: "0.5em", marginTop: "0.5em" }}>
+                <p style={{ margin: 0, fontSize: "20px", padding: "0.5em" }}>
+                  Введіть текст
+                </p>
+                <textarea
+                  style={{
+                    minWidth: "50em",
+                    minHeight: "15em",
+                    maxWidth: "80em",
+                    maxHeight: "35em",
+                    borderRadius: "0.25em",
+                  }}
+                  onChange={(e) => updateNewNewsText(e.target.value)}
+                ></textarea>
+              </div>
+              <button
+                className="createNewNewsButton"
+                type="submit"
+                onClick={createNewNews}
+              >
+                Створити
+              </button>
             </div>
-            <button
-              className="createNewNewsButton"
-              type="submit"
-              onClick={createNewNews}
-            >
-              Створити
-            </button>
           </div>
-        </div>
+        ) : (
+          ""
+        )}
 
         <Container maxWidth="lg" sx={{ mt: "64px" }}>
           <main style={{ paddingBottom: "1%" }}>

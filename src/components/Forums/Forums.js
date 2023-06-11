@@ -14,6 +14,7 @@ export default function Forums() {
   const [forums, setForums] = useState([]);
   var popup = document.getElementById("popup");
   const email = store.getState().auth.email;
+  const role = store.getState().auth.role;
   const [newForum, setNewForum] = useState({
     name: "",
     createDate:
@@ -64,9 +65,16 @@ export default function Forums() {
         <div
           style={{ alignItems: "center", textAlign: "center", margin: "1em" }}
         >
-          <button className="ForumsJSCreateNewForumButton" onClick={openPopup}>
-            Create new forum
-          </button>
+          {role == "ADMIN" ? (
+            <button
+              className="ForumsJSCreateNewForumButton"
+              onClick={openPopup}
+            >
+              Create new forum
+            </button>
+          ) : (
+            ""
+          )}
         </div>
         <Grid container spacing={2} columns={1}>
           {forums &&

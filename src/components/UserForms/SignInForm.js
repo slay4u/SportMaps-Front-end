@@ -7,6 +7,7 @@ import {
   Box,
   Typography,
   Paper,
+  CircularProgress
 } from "@mui/material";
 import { LoginOutlined } from "@mui/icons-material";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -63,6 +64,9 @@ export default function SignIn() {
       setEmail("");
       setPwd("");
       navigate(from, { replace: true });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -78,7 +82,7 @@ export default function SignIn() {
   };
 
   return isLoading ? (
-    <h1>Loading...</h1>
+    <CircularProgress/>
   ) : (
     <>
       <Paper

@@ -9,6 +9,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: { ...credentials },
       }),
     }),
+    logout: builder.mutation({
+      query: (credentials) => ({
+        url: "/sport-maps/v1/auth/logout",
+        method: "POST",
+        body: { ...credentials },
+      }),
+    }),
     signup: builder.mutation({
       query: (credentials) => ({
         url: "/sport-maps/v1/auth/signup",
@@ -157,4 +164,5 @@ export const {
   useDeleteForumCommentMutation,
   useEditForumMutation,
   useEditForumCommentMutation,
+  useLogoutMutation
 } = authApiSlice;

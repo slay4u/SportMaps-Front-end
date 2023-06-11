@@ -52,7 +52,8 @@ function MainFeaturedPost(prop) {
             <Typography variant="h5" color="inherit" paragraph>
               {description}
             </Typography>
-            <NavLink to="/" reloadDocument variant="subtitle1"
+            {/* <NavLink to="/" reloadDocument variant="subtitle1" */}
+            <NavLink to={`/newsPage/${post.id}`} reloadDocument variant="subtitle1"
               style={({ isActive }) =>
               isActive
                   ? { color: 'white', fontSize: '20px'}

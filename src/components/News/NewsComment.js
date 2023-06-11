@@ -7,9 +7,11 @@ import {
   useDeleteNewsCommentMutation,
   useUpdateNewsCommentMutation,
 } from "../../store/auth/authApiSlice";
+import store from "../../store/store";
 
 function NewsComment(prop) {
   const { comment } = prop;
+  const role = store.getState().auth.role;
   const [deleteCommentCall] = useDeleteNewsCommentMutation();
   const [updateCommentCall] = useUpdateNewsCommentMutation();
   let mounth =
@@ -133,36 +135,42 @@ function NewsComment(prop) {
           </div>
         </div>
 
-        <div
-          style={{
-            marginTop: "0.1em",
-            marginLeft: "47em",
-            position: "absolute",
-          }}
-        >
-          <button
-            className="createNewNewsButton"
-            style={{ backgroundColor: "red", borderColor: "red" }}
-            onClick={deleteComment}
-          >
-            Видалити
-          </button>
-        </div>
-        <div
-          style={{
-            marginTop: "0.1em",
-            marginLeft: "55em",
-            position: "absolute",
-          }}
-        >
-          <button
-            className="createNewNewsButton"
-            style={{ backgroundColor: "blue", borderColor: "blue" }}
-            onClick={openPopup}
-          >
-            Редагувати
-          </button>
-        </div>
+        {role == "ADMIN" ? (
+          <>
+            <div
+              style={{
+                marginTop: "0.1em",
+                marginLeft: "47em",
+                position: "absolute",
+              }}
+            >
+              <button
+                className="createNewNewsButton"
+                style={{ backgroundColor: "red", borderColor: "red" }}
+                onClick={deleteComment}
+              >
+                Видалити
+              </button>
+            </div>
+            <div
+              style={{
+                marginTop: "0.1em",
+                marginLeft: "55em",
+                position: "absolute",
+              }}
+            >
+              <button
+                className="createNewNewsButton"
+                style={{ backgroundColor: "blue", borderColor: "blue" }}
+                onClick={openPopup}
+              >
+                Редагувати
+              </button>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
       </Card>
     </Grid>
   );

@@ -20,6 +20,7 @@ export default function ForumPage() {
   const [forum, setForum] = useState({ commentList: [] });
   const forumId = parseInt(window.location.href.slice(32));
   const email = store.getState().auth.email;
+  const role = store.getState().auth.role;
   const [authorName, setAuthorName] = useState("");
   const [commentCall] = useCreateForumCommentMutation();
   var popup = document.getElementById("popup");
@@ -117,22 +118,26 @@ export default function ForumPage() {
           <div id="forumPageJSTopicContainer2">
             <p id="forumPageJSTopicParagraph">{forum.desc}</p>
           </div>
-          <div
-            style={{
-              textAlign: "center",
-              alignItems: "center",
-              justifyContent: "space-between",
-              display: "flex",
-            }}
-          >
-            <p id="forumPageJSTopicDate">{createDate}</p>
-            <button id="forumPageJSTopicEditButton" onClick={openPopup}>
-              Edit
-            </button>
-            <button onClick={deleteForum} id="forumPageJSTopicDeleteButton">
-              Delete
-            </button>
-          </div>
+          {role == "ADMIN" ? (
+            <div
+              style={{
+                textAlign: "center",
+                alignItems: "center",
+                justifyContent: "space-between",
+                display: "flex",
+              }}
+            >
+              <p id="forumPageJSTopicDate">{createDate}</p>
+              <button id="forumPageJSTopicEditButton" onClick={openPopup}>
+                Edit
+              </button>
+              <button onClick={deleteForum} id="forumPageJSTopicDeleteButton">
+                Delete
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div id="forumPageJSTopicContainer3">
           <textarea

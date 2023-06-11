@@ -29,6 +29,7 @@ export default function NewsPage() {
   const [deleteCommentCall] = useDeleteNewsCommentMutation();
   const [updateCall] = useUpdateNewsMutation();
   const email = store.getState().auth.email;
+  const role = store.getState().auth.role;
   const newsId = parseInt(window.location.href.slice(31));
   const [news, setNews] = useState({ commentList: [] });
   const [authorName, setAuthorName] = useState("");
@@ -232,37 +233,42 @@ export default function NewsPage() {
                   </button>
                 </div>
               </div>
-
-              <div
-                style={{
-                  marginTop: "5em",
-                  marginLeft: "77em",
-                  position: "absolute",
-                }}
-              >
-                <button
-                  className="createNewNewsButton"
-                  style={{ backgroundColor: "blue", borderColor: "blue" }}
-                  onClick={openPopup}
-                >
-                  Редагувати
-                </button>
-              </div>
-              <div
-                style={{
-                  marginTop: "5em",
-                  marginLeft: "86em",
-                  position: "absolute",
-                }}
-              >
-                <button
-                  className="createNewNewsButton"
-                  style={{ backgroundColor: "red", borderColor: "red" }}
-                  onClick={deleteNews}
-                >
-                  Видалити
-                </button>
-              </div>
+              {role == "ADMIN" ? (
+                <>
+                  <div
+                    style={{
+                      marginTop: "5em",
+                      marginLeft: "77em",
+                      position: "absolute",
+                    }}
+                  >
+                    <button
+                      className="createNewNewsButton"
+                      style={{ backgroundColor: "blue", borderColor: "blue" }}
+                      onClick={openPopup}
+                    >
+                      Редагувати
+                    </button>
+                  </div>
+                  <div
+                    style={{
+                      marginTop: "5em",
+                      marginLeft: "86em",
+                      position: "absolute",
+                    }}
+                  >
+                    <button
+                      className="createNewNewsButton"
+                      style={{ backgroundColor: "red", borderColor: "red" }}
+                      onClick={deleteNews}
+                    >
+                      Видалити
+                    </button>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
             </Box>
             <Box sx={{ display: "flex", pl: "5%" }}>
               <Avatar
@@ -276,7 +282,9 @@ export default function NewsPage() {
                 <Typography>
                   {new Date(news.publishDate).toLocaleDateString("uk-UA") +
                     " " +
-                    new Date(news.publishDate).toLocaleTimeString("uk-UA").slice(0, 5)}
+                    new Date(news.publishDate)
+                      .toLocaleTimeString("uk-UA")
+                      .slice(0, 5)}
                 </Typography>
               </Box>
             </Box>

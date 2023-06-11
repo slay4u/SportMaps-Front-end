@@ -3,12 +3,14 @@ import {
   useDeleteForumCommentMutation,
   useEditForumCommentMutation,
 } from "../../store/auth/authApiSlice";
+import store from "../../store/store";
 
 export default function ForumComment(prop) {
   const { comment } = prop;
   const [deleteCommentCall] = useDeleteForumCommentMutation();
   var popup = document.getElementById("popupForumComment");
   const [editForumCommentCall] = useEditForumCommentMutation();
+  const role = store.getState().auth.role;
   var commentId = comment.id;
   var emailUser = comment.createdBy.email;
   var idForum = comment.forum.idForum;
@@ -88,23 +90,27 @@ export default function ForumComment(prop) {
         <div id="forumCommentJSContainer1">
           <p id="forumCommentJSText">{comment.text}</p>
         </div>
-        <div
-          style={{
-            textAlign: "center",
-            alignItems: "center",
-            justifyContent: "space-between",
-            display: "flex",
-            fontSize: "0.9em",
-          }}
-        >
-          <p id="forumCommentJSTextDate">{createdDate}</p>
-          <button id="forumCommentJSEditButton" onClick={openPopup}>
-            Edit
-          </button>
-          <button id="forumCommentJSDeleteButton" onClick={deleteComment}>
-            Delete
-          </button>
-        </div>
+        {role == "ADMIN" ? (
+          <div
+            style={{
+              textAlign: "center",
+              alignItems: "center",
+              justifyContent: "space-between",
+              display: "flex",
+              fontSize: "0.9em",
+            }}
+          >
+            <p id="forumCommentJSTextDate">{createdDate}</p>
+            <button id="forumCommentJSEditButton" onClick={openPopup}>
+              Edit
+            </button>
+            <button id="forumCommentJSDeleteButton" onClick={deleteComment}>
+              Delete
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
         <div
           style={{
             paddingTop: "1em",
