@@ -14,6 +14,7 @@ import Layout from "./components/layout/Layout";
 import RequireAuth from "./components/RequireAuth";
 import ChatRoom from "./components/chatroom/ChatRoom";
 import NewsPage from "./components/News/NewsPage";
+import ForumPage from "./components/Forums/ForumPage";
 
 function App() {
   return (
@@ -26,14 +27,15 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/maps" element={<Maps />} />
             <Route path="/forums" element={<Forums />} />
+            <Route path="/forumPage/:id" element={<ForumPage />} />
             <Route path="/news" element={<News />} />
             <Route path="/newsPage/:id" element={<NewsPage />} />
             <Route path="/coaches" element={<Coaches />} />
-            <Route path="/chat" element={<ChatRoom />} />
           </Route>
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<NoMatch />} />
+          <Route path="/chat" element={<ChatRoom />} />
         </Route>
       </Routes>
     </>
