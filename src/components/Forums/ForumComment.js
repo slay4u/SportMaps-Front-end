@@ -109,7 +109,17 @@ export default function ForumComment(prop) {
             </button>
           </div>
         ) : (
-          ""
+          <div
+            style={{
+              textAlign: "center",
+              alignItems: "center",
+              justifyContent: "space-between",
+              display: "flex",
+              fontSize: "0.9em",
+            }}
+          >
+            <p id="forumCommentJSTextDate">{createdDate}</p>
+          </div>
         )}
         <div
           style={{

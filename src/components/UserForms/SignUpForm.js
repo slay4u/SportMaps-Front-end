@@ -9,7 +9,7 @@ import {
   Avatar,
 } from "@mui/material";
 import { LockPersonOutlined } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSignupMutation } from "../../store/auth/authApiSlice";
 
 function Copyright(props) {
@@ -52,8 +52,7 @@ export default function SignUp() {
   const [validEmail, setValidEmail] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [successMsg, setSuccessMsg] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     setValidFirstName(firstName.match(USERNAME_REGEX));
@@ -74,6 +73,18 @@ export default function SignUp() {
   useEffect(() => {
     setErrMsg("");
   }, [firstName, lastName, email, password]);
+
+  const activateAccount = async (token) => {
+    const response = await fetch(
+      `http://localhost:8090/sport-maps/v1/auth/accountVerification/${token}`,
+      {
+        method: "GET",
+      }
+    );
+    if (response.ok) {
+      navigate("/signin");
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -96,8 +107,7 @@ export default function SignUp() {
       setLastName("");
       setPassword("");
       setEmail("");
-      setSuccess(true);
-      setSuccessMsg(response);
+      activateAccount(response);
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response.");
@@ -111,179 +121,160 @@ export default function SignUp() {
 
   return (
     <>
-      {success ? (
-        <Paper
+      <Paper
+        sx={{
+          padding: "1%",
+          marginTop: "9%",
+          width: "24%",
+          ml: "38%",
+          borderRadius: 4,
+          mr: "38%",
+        }}
+      >
+        <Box
           sx={{
-            padding: "1%",
-            marginTop: "9%",
-            width: "24%",
-            ml: "38%",
-            borderRadius: 4,
-            mr: "38%",
+            marginTop: 6,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Typography sx={{ textAlign: "center" }}>{successMsg}</Typography>
-        </Paper>
-      ) : (
-        <>
-          <Paper
-            sx={{
-              padding: "1%",
-              marginTop: "9%",
-              width: "24%",
-              ml: "38%",
-              borderRadius: 4,
-              mr: "38%",
-            }}
-          >
-            <Box
-              sx={{
-                marginTop: 6,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Avatar sx={{ bgcolor: "secondary.main" }}>
-                <LockPersonOutlined fontSize="large" />
-              </Avatar>
-              <Typography variant="h4" sx={{ color: "#9c27b0" }}>
-                Sign up
-              </Typography>
-              <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      type="text"
-                      label="First Name"
-                      variant="outlined"
-                      autoComplete="off"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      error={
-                        firstName !== "" && !firstName.match(USERNAME_REGEX)
-                      }
-                      helperText={
-                        firstName !== "" && !firstName.match(USERNAME_REGEX)
-                          ? "Provide valid name, please."
-                          : ""
-                      }
-                      sx={{ background: "#ffebee", borderRadius: 1 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      type="text"
-                      label="Last Name"
-                      variant="outlined"
-                      autoComplete="off"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      error={lastName !== "" && !lastName.match(USERNAME_REGEX)}
-                      helperText={
-                        lastName !== "" && !lastName.match(USERNAME_REGEX)
-                          ? "Provide valid name, please."
-                          : ""
-                      }
-                      sx={{ background: "#ffebee", borderRadius: 1 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      type="email"
-                      label="Email"
-                      variant="outlined"
-                      autoComplete="off"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      error={email !== "" && !email.match(EMAIL_REGEX)}
-                      helperText={
-                        email !== "" && !email.match(EMAIL_REGEX)
-                          ? "Provide valid email, please."
-                          : ""
-                      }
-                      sx={{ background: "#ffebee", borderRadius: 1 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      label="Password"
-                      type="password"
-                      variant="outlined"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      error={password !== "" && !password.match(PWD_REGEX)}
-                      helperText={
-                        password !== "" && !password.match(PWD_REGEX)
-                          ? "Password must contain letters, numbers and special symbols. Should be at least 8 characters long."
-                          : ""
-                      }
-                      sx={{ background: "#ffebee", borderRadius: 1 }}
-                    />
-                  </Grid>
-                </Grid>
-                <Box
-                  m={1}
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{
-                      mt: 2,
-                      mb: 3,
-                      width: "30%",
-                      borderRadius: 5,
-                      fontSize: 15,
-                    }}
-                    disabled={
-                      !validFirstName ||
-                      !validLastName ||
-                      !validEmail ||
-                      !validPassword
-                        ? true
-                        : false
-                    }
-                    color="secondary"
-                  >
-                    Sign Up
-                  </Button>
-                </Box>
-                <Typography variant="body2" align="right">
-                  <NavLink
-                    to="/signin"
-                    reloadDocument
-                    style={({ isActive }) =>
-                      isActive
-                        ? { color: "blue", textDecoration: "none" }
-                        : { color: "blue", textDecoration: "none" }
-                    }
-                  >
-                    Already have an account? Sign in
-                  </NavLink>
-                </Typography>
-              </Box>
-            </Box>
-            <Copyright sx={{ mt: 2 }} />
-          </Paper>
-          <Typography
-            className={errMsg ? "errmsg" : "offscreen"}
-            sx={{ textAlign: "center" }}
-          >
-            {errMsg}
+          <Avatar sx={{ bgcolor: "secondary.main" }}>
+            <LockPersonOutlined fontSize="large" />
+          </Avatar>
+          <Typography variant="h4" sx={{ color: "#9c27b0" }}>
+            Sign up
           </Typography>
-        </>
-      )}
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  type="text"
+                  label="First Name"
+                  variant="outlined"
+                  autoComplete="off"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  error={firstName !== "" && !firstName.match(USERNAME_REGEX)}
+                  helperText={
+                    firstName !== "" && !firstName.match(USERNAME_REGEX)
+                      ? "Provide valid name, please."
+                      : ""
+                  }
+                  sx={{ background: "#ffebee", borderRadius: 1 }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  type="text"
+                  label="Last Name"
+                  variant="outlined"
+                  autoComplete="off"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  error={lastName !== "" && !lastName.match(USERNAME_REGEX)}
+                  helperText={
+                    lastName !== "" && !lastName.match(USERNAME_REGEX)
+                      ? "Provide valid name, please."
+                      : ""
+                  }
+                  sx={{ background: "#ffebee", borderRadius: 1 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  type="email"
+                  label="Email"
+                  variant="outlined"
+                  autoComplete="off"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  error={email !== "" && !email.match(EMAIL_REGEX)}
+                  helperText={
+                    email !== "" && !email.match(EMAIL_REGEX)
+                      ? "Provide valid email, please."
+                      : ""
+                  }
+                  sx={{ background: "#ffebee", borderRadius: 1 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  variant="outlined"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  error={password !== "" && !password.match(PWD_REGEX)}
+                  helperText={
+                    password !== "" && !password.match(PWD_REGEX)
+                      ? "Password must contain letters, numbers and special symbols. Should be at least 8 characters long."
+                      : ""
+                  }
+                  sx={{ background: "#ffebee", borderRadius: 1 }}
+                />
+              </Grid>
+            </Grid>
+            <Box
+              m={1}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  mt: 2,
+                  mb: 3,
+                  width: "30%",
+                  borderRadius: 5,
+                  fontSize: 15,
+                }}
+                disabled={
+                  !validFirstName ||
+                  !validLastName ||
+                  !validEmail ||
+                  !validPassword
+                    ? true
+                    : false
+                }
+                color="secondary"
+              >
+                Sign Up
+              </Button>
+            </Box>
+            <Typography variant="body2" align="right">
+              <NavLink
+                to="/signin"
+                reloadDocument
+                style={({ isActive }) =>
+                  isActive
+                    ? { color: "blue", textDecoration: "none" }
+                    : { color: "blue", textDecoration: "none" }
+                }
+              >
+                Already have an account? Sign in
+              </NavLink>
+            </Typography>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 2 }} />
+      </Paper>
+      <Typography
+        className={errMsg ? "errmsg" : "offscreen"}
+        sx={{ textAlign: "center" }}
+      >
+        {errMsg}
+      </Typography>
     </>
   );
 }

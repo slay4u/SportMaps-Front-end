@@ -136,7 +136,16 @@ export default function ForumPage() {
               </button>
             </div>
           ) : (
-            ""
+            <div
+              style={{
+                textAlign: "center",
+                alignItems: "center",
+                justifyContent: "space-between",
+                display: "flex",
+              }}
+            >
+              <p id="forumPageJSTopicDate">{createDate}</p>
+            </div>
           )}
         </div>
         <div id="forumPageJSTopicContainer3">

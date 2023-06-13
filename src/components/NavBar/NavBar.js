@@ -22,7 +22,6 @@ export default function NavigationBar() {
   });
   const [logoutCall] = useLogoutMutation();
   const dispatch = useDispatch();
-  console.log(store.getState().auth)
   const logout = () => {
     logoutCall({ email, refreshToken });
     dispatch(logOut(userInfo));
@@ -35,7 +34,7 @@ export default function NavigationBar() {
           <Toolbar>
             <Typography
               textAlign={"center"}
-              sx={{ flexGrow: 1, fontWeight: "bold", ml: "12%" }}
+              sx={{ flexGrow: 1, fontWeight: "bold", ml: "11%" }}
               variant="body1"
             >
               <NavLink
@@ -169,10 +168,27 @@ export default function NavigationBar() {
                 Events
               </NavLink>
             </Typography>
+            <Typography
+              textAlign={"center"}
+              variant="body1"
+              sx={{ flexGrow: 1, fontWeight: "bold" }}
+            >
+              <NavLink
+                to="/profile"
+                reloadDocument
+                style={({ isActive }) =>
+                  isActive
+                    ? { color: "orange", textDecoration: "none" }
+                    : { color: "white", textDecoration: "none" }
+                }
+              >
+                Profile
+              </NavLink>
+            </Typography>
             {store.getState().auth.email ? (
               <Button
                 sx={{
-                  mr: "16%",
+                  mr: "6%",
                   flexGrow: 1,
                   borderRadius: 5,
                   width: "0.1%",
@@ -210,7 +226,7 @@ export default function NavigationBar() {
             ) : (
               <Button
                 sx={{
-                  mr: "16%",
+                  mr: "6%",
                   flexGrow: 1,
                   borderRadius: 5,
                   width: "0.1%",

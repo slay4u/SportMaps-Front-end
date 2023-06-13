@@ -1,0 +1,155 @@
+#userProfileMainPage {
+  background-color: hsl(282, 72%, 79%);
+  inset: 0;
+  margin: auto;
+  height: 100vh;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 2em;
+}
+
+#userProfileMainBackground {
+  background-color: hsl(62, 76%, 90%);
+  background-image: linear-gradient(
+    315deg,
+    hsl(62, 76%, 90%) 0%,
+    hsl(264, 85%, 92%) 74%
+  );
+  max-width: 70em;
+  height: 15em;
+  margin: 2em 0em 0em 0em;
+  color: hsl(264, 85%, 92%);
+  border-radius: 3em 0em 0em 0em;
+}
+
+#userProfileMainBackground p {
+  margin-left: 10em;
+}
+
+#userProfileMainContainer {
+  background-color: aliceblue;
+  border-radius: 0em 0em 3em 0em;
+  padding: 1em;
+  max-width: 68em;
+}
+
+#userProfileAvatar {
+  position: absolute;
+  width: 4em;
+  height: 4em;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 3em;
+  line-height: 3.7em;
+  color: hsl(0, 0%, 100%);
+  text-align: center;
+  border-radius: 50%;
+  font-style: normal;
+  text-transform: uppercase;
+  margin-top: -1.5em;
+  margin-left: 0.4em;
+}
+
+#userProfileName h1 {
+  margin-left: 8em;
+}
+
+#userProfileName {
+  margin-top: -2.3em;
+}
+
+#userProfileName p {
+  margin-left: 16em;
+  margin-top: -1em;
+}
+
+#userProfileUsername {
+  margin-top: 4em;
+  display: flex;
+}
+
+#userProfileUsername h3 {
+  margin-left: 7.5em;
+  font-size: 1.4em;
+  font-weight: 400;
+}
+
+#userProfileJoinedOn {
+  display: flex;
+}
+
+#userProfileJoinedOn h3 {
+  margin-left: 7.5em;
+  font-size: 1.4em;
+  font-weight: 400;
+}
+
+#userProfileBio {
+  display: flex;
+}
+
+#userProfileBio textarea {
+  margin-left: 12em;
+  width: 43em;
+  max-width: 43em;
+  height: 10em;
+  max-height: 10em;
+  padding: 0.5em;
+  font-size: 1.2em;
+  margin-top: 1em;
+}
+
+#userProfileSaveButton {
+  align-items: center;
+  appearance: none;
+  background-color: #3eb2fd;
+  background-image: linear-gradient(1deg, #4f58fd, #149bf3 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd, sans-serif;
+  font-size: 1rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s, background-position 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+  margin-left: 63em;
+}
+
+#userProfileSaveButton:active,
+#userProfileSaveButton:focus {
+  outline: none;
+}
+
+#userProfileSaveButton:hover {
+  background-position: -20px -20px;
+}
+
+#userProfileSaveButton:focus:not(:active) {
+  box-shadow: hsla(204, 100%, 58%, 0.25) 0 0 0 0.125em;
+}
+
+#userProfileEmail {
+  display: flex;
+}
+
+#userProfileEmail h3 {
+  margin-left: 9.5em;
+  font-size: 1.4em;
+  font-weight: 400;
+}

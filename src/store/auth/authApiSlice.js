@@ -154,6 +154,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: {...credentials}
       })
     }),
+    getUserProfileData: builder.mutation({
+      query: () => ({
+        url: "/sport-maps/v1/userdata",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -180,5 +186,6 @@ export const {
   useEditForumCommentMutation,
   useLogoutMutation,
   useGetMarkersMutation,
-  usePostMarkerMutation
+  usePostMarkerMutation,
+  useGetUserProfileDataMutation,
 } = authApiSlice;
