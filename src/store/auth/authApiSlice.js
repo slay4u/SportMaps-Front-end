@@ -160,6 +160,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    deleteMarker: builder.mutation({
+      query: (credentials) => ({
+        url: "/sport-maps/v1/markers/delete",
+        method: "DELETE",
+        body: {...credentials}
+      })
+    })
   }),
 });
 
@@ -188,4 +195,5 @@ export const {
   useGetMarkersMutation,
   usePostMarkerMutation,
   useGetUserProfileDataMutation,
+  useDeleteMarkerMutation,
 } = authApiSlice;
