@@ -2,7 +2,7 @@ import * as React from 'react';
 import {GoogleMap, InfoWindow, MarkerF, useLoadScript} from '@react-google-maps/api';
 import {Box, Button, CircularProgress, Dialog, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
-import {useGetMarkersMutation, usePostMarkerMutation} from "../../store/auth/authApiSlice";
+import {useDeleteMarkerMutation, useGetMarkersMutation, usePostMarkerMutation} from "../../store/auth/authApiSlice";
 import PropTypes from "prop-types";
 import {useDispatch} from "react-redux";
 import store from "../../store/store";
@@ -28,14 +28,21 @@ export default function Maps() {
 
 function Map() {
     const [getMarkers] = useGetMarkersMutation();
+    const [deleteMarkers] = useDeleteMarkerMutation();
     const [markers, setMarkers] = useState([]);
     const [userLocation, setUserLocation] = useState({});
     const [selectedElement, setSelectedElement] = useState(null);
     const inEdit = store.getState().marker && store.getState().marker.title && store.getState().marker.label;
     const dispatch = useDispatch();
+    const role = store.getState().auth.role;
 
     const changeEditLatLng = e => {
         dispatch(addLatLng({lat: e.latLng.lat(), lng: e.latLng.lng()}))
+    }
+
+    const deleteMarker = marker => {
+        deleteMarkers(marker);
+        window.location.reload()
     }
 
     useEffect(() => {
@@ -86,6 +93,21 @@ function Map() {
                 >
                     <div>
                         <h1>{selectedElement.title}</h1>
+                        <div style={{ fontSize: "14px"}}>{selectedElement.description}</div>
+                        {
+                            role === "ADMIN" &&
+                            <div style={{
+                                textAlign: "center"
+                            }}>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    onClick={() => deleteMarker(selectedElement)}
+                                >
+                                    Delete
+                                </Button>
+                            </div>
+                        }
                     </div>
                 </InfoWindow>
             ) : null
@@ -118,8 +140,9 @@ function Edit() {
             label: store.getState().marker.label,
             position: {
                 lat: store.getState().marker.lat,
-                lng: store.getState().marker.lng
-            }
+                lng: store.getState().marker.lng,
+            },
+            description: store.getState().marker.description,
         }
         postMarker(toPost);
         dispatch(clearEverything());
@@ -137,6 +160,7 @@ function Edit() {
 function PopUp({onClose, open}) {
     const [title, setTitle] = useState("");
     const [label, setLabel] = useState("");
+    const [description, setDescription] = useState("");
     const dispatch = useDispatch();
 
     PopUp.propTypes = {
@@ -145,7 +169,7 @@ function PopUp({onClose, open}) {
     };
 
     const toMarker = () => {
-        dispatch(addText({title, label}));
+        dispatch(addText({title, label, description}));
         const currentState = "1";
         dispatch(setCurrentState({currentState}));
     }
@@ -181,6 +205,20 @@ function PopUp({onClose, open}) {
                     onChange={(e) => setLabel(e.target.value)}
                     sx={{
                         mb: "2em"
+                    }}
+                />
+                <TextField
+                    fullWidth
+                    multiline={true}
+                    rows={5}
+                    type="text"
+                    label="Description"
+                    variant="outlined"
+                    autoComplete="off"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    sx={{
+                        mb: "2em",
                     }}
                 />
                 <div style={{

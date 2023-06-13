@@ -2,12 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const markerSlice = createSlice({
     name: "marker",
-    initialState: { title: null, label: null, lat: null, lng: null, currentState: ""},
+    initialState: { title: null, label: null, lat: null, lng: null, description: null, currentState: ""},
     reducers: {
         addText: (state, action) => {
-            const { title, label } = action.payload;
+            const { title, label, description } = action.payload;
             state.title = title;
             state.label = label;
+            state.description = description;
         },
         addLatLng: (state, action) => {
             const { lat, lng } = action.payload;
@@ -23,6 +24,7 @@ const markerSlice = createSlice({
             state.label = null;
             state.lat = null;
             state.lng = null
+            state.description = null;
             state.currentState = "";
         },
     },
