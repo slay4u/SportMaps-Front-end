@@ -23,7 +23,7 @@ export default function ForumPage() {
   const role = store.getState().auth.role;
   const [authorName, setAuthorName] = useState("");
   const [commentCall] = useCreateForumCommentMutation();
-  var popup = document.getElementById("popup");
+  const popup = document.getElementById("popup");
   const [updateForum, setUpdateForum] = useState({
     name: "",
     createDate:
@@ -94,12 +94,12 @@ export default function ForumPage() {
   };
 
   const editForum = () => {
-    var newUpdateForum = {
+    const newUpdateForum = {
       name: updateForum.name,
       createDate:
-        new Date().toLocaleDateString("uk-UA") +
-        " " +
-        new Date().toLocaleTimeString("uk-UA").slice(0, 5),
+          new Date().toLocaleDateString("uk-UA") +
+          " " +
+          new Date().toLocaleTimeString("uk-UA").slice(0, 5),
       desc: updateForum.desc,
       emailUser: forum.emailUser,
     };
@@ -118,7 +118,7 @@ export default function ForumPage() {
           <div id="forumPageJSTopicContainer2">
             <p id="forumPageJSTopicParagraph">{forum.desc}</p>
           </div>
-          {role == "ADMIN" ? (
+          {role === "ADMIN" ? (
             <div
               style={{
                 textAlign: "center",

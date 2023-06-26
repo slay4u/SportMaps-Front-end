@@ -8,12 +8,12 @@ import store from "../../store/store";
 export default function ForumComment(prop) {
   const { comment } = prop;
   const [deleteCommentCall] = useDeleteForumCommentMutation();
-  var popup = document.getElementById("popupForumComment");
+  const popup = document.getElementById("popupForumComment");
   const [editForumCommentCall] = useEditForumCommentMutation();
   const role = store.getState().auth.role;
-  var commentId = comment.id;
-  var emailUser = comment.createdBy.email;
-  var idForum = comment.forum.idForum;
+  const commentId = comment.id;
+  const emailUser = comment.createdBy.email;
+  const idForum = comment.forum.idForum;
   const [updateForumComment, setUpdateForumComment] = useState({
     createdDate:
       new Date().toLocaleDateString("uk-UA") +
@@ -24,27 +24,27 @@ export default function ForumComment(prop) {
     idForum: comment.idForum,
   });
   let minutes =
-    new String(comment.createdDate[4]).length == 1
-      ? "0" + new String(comment.createdDate[4])
-      : new String(comment.createdDate[4]);
+    String(comment.createdDate[4]).length === 1
+      ? "0" + String(comment.createdDate[4])
+      : String(comment.createdDate[4]);
   let hours =
-    new String(comment.createdDate[3]).length == 1
-      ? "0" + new String(comment.createdDate[3])
-      : new String(comment.createdDate[3]);
+    String(comment.createdDate[3]).length === 1
+      ? "0" + String(comment.createdDate[3])
+      : String(comment.createdDate[3]);
   let months =
-    new String(comment.createdDate[1]).length == 1
-      ? "0" + new String(comment.createdDate[1])
-      : new String(comment.createdDate[1]);
+    String(comment.createdDate[1]).length === 1
+      ? "0" + String(comment.createdDate[1])
+      : String(comment.createdDate[1]);
   let days =
-    new String(comment.createdDate[2]).length == 1
-      ? "0" + new String(comment.createdDate[2])
-      : new String(comment.createdDate[2]);
+    String(comment.createdDate[2]).length === 1
+      ? "0" + String(comment.createdDate[2])
+      : String(comment.createdDate[2]);
   const createdDate =
     days +
     "." +
     months +
     "." +
-    new String(comment.createdDate[0]) +
+    String(comment.createdDate[0]) +
     " " +
     hours +
     ":" +
@@ -65,11 +65,11 @@ export default function ForumComment(prop) {
   };
 
   const editForumComment = () => {
-    var newUpdateForumComment = {
+    const newUpdateForumComment = {
       createdDate:
-        new Date().toLocaleDateString("uk-UA") +
-        " " +
-        new Date().toLocaleTimeString("uk-UA").slice(0, 5),
+          new Date().toLocaleDateString("uk-UA") +
+          " " +
+          new Date().toLocaleTimeString("uk-UA").slice(0, 5),
       text: updateForumComment.text,
       emailUser: emailUser,
       idForum: idForum,
@@ -90,7 +90,7 @@ export default function ForumComment(prop) {
         <div id="forumCommentJSContainer1">
           <p id="forumCommentJSText">{comment.text}</p>
         </div>
-        {role == "ADMIN" ? (
+        {role === "ADMIN" ? (
           <div
             style={{
               textAlign: "center",

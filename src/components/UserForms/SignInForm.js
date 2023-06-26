@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import {
   Avatar,
   Button,
@@ -34,9 +34,6 @@ function Copyright(props) {
 }
 
 export default function SignIn() {
-  const emailRef = useRef();
-  const errRef = useRef();
-
   const [email, setEmail] = useState("");
   const [password, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -47,10 +44,6 @@ export default function SignIn() {
 
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    emailRef.current.focus();
-  }, []);
 
   useEffect(() => {
     setErrMsg("");
@@ -77,7 +70,6 @@ export default function SignIn() {
       } else {
         setErrMsg("Login failed");
       }
-      errRef.current.focus();
     }
   };
 
@@ -118,7 +110,6 @@ export default function SignIn() {
                   type="email"
                   label="Email"
                   autoComplete="off"
-                  ref={emailRef}
                   variant="outlined"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -180,9 +171,7 @@ export default function SignIn() {
         <Copyright sx={{ mt: 2 }} />
       </Paper>
       <Typography
-        ref={errRef}
         className={errMsg ? "errmsg" : "offscreen"}
-        aria-live="assertive"
         sx={{ textAlign: "center" }}
       >
         {errMsg}
