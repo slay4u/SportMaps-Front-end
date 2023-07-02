@@ -14,12 +14,10 @@ import storage from "redux-persist/lib/storage";
 import { apiSlice } from "./api/apiSlice";
 import authReducer from "./auth/authSlice";
 import markerReducer from "./markerSlice"
-import markerSlice from "./markerSlice";
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
   auth: authReducer,
-  [markerSlice.reducerPath]: markerSlice.reducer,
   marker: markerReducer
 });
 
@@ -43,3 +41,5 @@ const store = configureStore({
 
 export const persistor = persistStore(store);
 export default store;
+
+export type RootState = ReturnType<typeof rootReducer>

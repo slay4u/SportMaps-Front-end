@@ -12,35 +12,34 @@ function NewsComment(prop: PropTypes.InferProps<typeof NewsComment.propTypes>) {
   const role = useSelector(selectCurrentRole);
   const [deleteCommentCall] = useDeleteNewsCommentMutation();
   const [updateCommentCall] = useUpdateNewsCommentMutation();
-  const mounth =
-    new String(comment.createdDate[1]).length == 1
-      ? "0" + new String(comment.createdDate[1])
-      : new String(comment.createdDate[1]);
+  const month =
+    String(comment.createdDate[1]).length == 1
+      ? "0" + String(comment.createdDate[1])
+      : String(comment.createdDate[1]);
   const day =
-    new String(comment.createdDate[2]).length == 1
-      ? "0" + new String(comment.createdDate[2])
-      : new String(comment.createdDate[2]);
+    String(comment.createdDate[2]).length == 1
+      ? "0" + String(comment.createdDate[2])
+      : String(comment.createdDate[2]);
   const hours =
-    new String(comment.createdDate[3]).length == 1
-      ? "0" + new String(comment.createdDate[3])
-      : new String(comment.createdDate[3]);
+    String(comment.createdDate[3]).length == 1
+      ? "0" + String(comment.createdDate[3])
+      : String(comment.createdDate[3]);
   const minutes =
-    new String(comment.createdDate[4]).length == 1
-      ? "0" + new String(comment.createdDate[4])
-      : new String(comment.createdDate[4]);
+    String(comment.createdDate[4]).length == 1
+      ? "0" + String(comment.createdDate[4])
+      : String(comment.createdDate[4]);
   const createdDate =
     day +
     "." +
-    mounth +
+    month +
     "." +
-    new String(comment.createdDate[0]) +
+    String(comment.createdDate[0]) +
     " " +
     hours +
     ":" +
     minutes;
-  const popup = document.getElementById("popupComment");
+  const popup = document.getElementById(String("popupComment" + comment.id));
   const overlay = document.getElementById("overlayComment");
-  const commentId = comment.id;
   const [updateComment, setUpdateComment] = useState({
     createdDate: "",
     emailUser: "",
@@ -64,7 +63,7 @@ function NewsComment(prop: PropTypes.InferProps<typeof NewsComment.propTypes>) {
       new Date().toLocaleTimeString("uk-UA").slice(0, 5);
     updateComment.emailUser = comment.createdBy.email;
     updateComment.idNew = comment.news.idNew;
-    updateCommentCall({ commentId, updateComment });
+    updateCommentCall({ commentId: comment.id, updateComment });
     window.location.reload();
   };
 
@@ -103,7 +102,7 @@ function NewsComment(prop: PropTypes.InferProps<typeof NewsComment.propTypes>) {
             >
               Видалити
             </button>
-            <div className="news-create-popup" id="popupComment">
+            <div className="news-create-popup" id={"popupComment" + comment.id}>
               <button id="close-news-popup" onClick={closePopup}></button>
               <h2>Редагування коментарію</h2>
               <div>

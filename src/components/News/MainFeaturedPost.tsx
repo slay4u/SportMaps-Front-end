@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function MainFeaturedPost(prop: PropTypes.InferProps<typeof MainFeaturedPost.propTypes>) {
   const { post } = prop;
@@ -16,13 +16,13 @@ function MainFeaturedPost(prop: PropTypes.InferProps<typeof MainFeaturedPost.pro
         <div className='main-featured-content'>
           <h1>{post.name}</h1>
           <p>{description}</p>
-          <NavLink
+          <Link
             id="main-featured-link"
             to={`/newsPage/${post.id}`}
             reloadDocument
           >
             Continue reading…
-          </NavLink>
+          </Link>
         </div>
       </div>
     </>

@@ -17,7 +17,7 @@ export default function News() {
   const email = useSelector(selectCurrentEmail);
   const role = useSelector(selectCurrentRole);
   const [news, setNews] = useState([]);
-  const newsReverse = [...news].reverse();
+  const newsReverse = news ? [...news].reverse() : [];
   const [newNews, setNewNews] = useState({
     name: "",
     publishDate: "",
@@ -29,8 +29,7 @@ export default function News() {
   const overlay = document.getElementById("overlay");
   
   const routeChange = () => {
-    const path = "/newsPage";
-    navigate(path);
+    navigate("/newsPage");
   };
 
   const openPopup = () => {

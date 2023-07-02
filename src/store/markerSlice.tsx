@@ -19,7 +19,7 @@ const markerSlice = createSlice({
             const { currentState } = action.payload;
             state.currentState = currentState;
         },
-        clearEverything: (state, action) => {
+        clearEverything: (state) => {
             state.title = null;
             state.label = null;
             state.lat = null;

@@ -44,7 +44,7 @@ export default function SignUp() {
         return !!checkedString.match(regex);
     };
 
-    const activateAccount = async (token: any) => {
+    const activateAccount = async (token: string) => {
         const response = await fetch(`http://localhost:8090/sport-maps/v1/auth/accountVerification/${token}`, {
             method: "GET",
         });

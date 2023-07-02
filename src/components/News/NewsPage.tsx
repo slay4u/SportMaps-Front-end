@@ -128,7 +128,7 @@ export default function NewsPage() {
             <h1>{news.name}</h1>
             <button id="news-page-save-btn">
               Save
-              <TurnedInNotIcon id="save-btn-icon" />
+              <TurnedInNotIcon sx={{fontSize: "2rem"}} />
             </button>
             {role === "ADMIN" ? (
               <>

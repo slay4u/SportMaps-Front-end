@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -12,8 +12,7 @@ function FeaturedPost(prop: PropTypes.InferProps<typeof FeaturedPost.propTypes>)
 
   const navigate = useNavigate();
   const routeChange = () => {
-    const path = `/newsPage/${post.id}`;
-    navigate(path);
+    navigate(`/newsPage/${post.id}`);
   };
 
   return (
