@@ -16,5 +16,9 @@
     "strict": false,
     "watch": true,
     "moduleResolution": "Node"
-  }
+  },
+  "include": [
+    "src",
+    "src/declaration.d.ts"
+  ]
 }

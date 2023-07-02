@@ -1,0 +1,31 @@
+#noMatchContainer {
+    background: #4682b4;
+    text-align: center;
+    align-items: center;
+    padding-top: 13rem;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+}
+
+#noMatchElement1 {
+    font-size: 10rem;
+    letter-spacing: 1.5rem;
+    color: #00ff7f;
+}
+
+#noMatchElement2 {
+    font-size: 3rem;
+    font-family: cursive;
+    color: #ff00ff;
+}
+
+#noMatchElement3 {
+    font-size: 3rem;
+    font-family: cursive;
+    color: #ff7f50;
+}

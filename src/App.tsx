@@ -16,6 +16,7 @@ import ChatRoom from "./components/chatroom/ChatRoom";
 import NewsPage from "./components/News/NewsPage";
 import ForumPage from "./components/Forums/ForumPage";
 import UserProfile from "./components/UserForms/UserProfile";
+import Events from "./components/Events/Events";
 
 export default function App() {
     return (<>
@@ -32,6 +33,7 @@ export default function App() {
                     <Route path="/newsPage/:id" element={<NewsPage/>}/>
                     <Route path="/coaches" element={<Coaches/>}/>
                     <Route path="/profile" element={<UserProfile/>}/>
+                    <Route path="/events" element={<Events/>}/>
                 </Route>
                 <Route path="/signin" element={<SignIn/>}/>
                 <Route path="/signup" element={<SignUp/>}/>

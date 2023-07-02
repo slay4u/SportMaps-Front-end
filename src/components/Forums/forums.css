@@ -14,6 +14,7 @@
 #forumsGridContainer {
   width: 100%;
   margin: auto;
+  padding-bottom: 3rem;
   display: grid;
   row-gap: 2rem;
   grid-template-columns: auto;
@@ -23,6 +24,12 @@
   background-color: #4c4177;
   background-image: linear-gradient(315deg, #4c4177 0%, #2a5470 74%);
   padding: 7em 26em 3em 26em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
 }
 
 #forumPageJSTopicContainer {
@@ -33,7 +40,7 @@
 }
 
 #forumPageJSTopicHeader {
-  margin: 0em 0em 0.2em 0em;
+  margin: 0 0 0.2em 0;
   font-weight: 400;
 }
 
@@ -75,8 +82,8 @@
   box-shadow: 0 0.1em 0.6em hsla(0, 0%, 0%, 0.3);
   background-color: rgb(235, 228, 228);
   border-radius: 0.25em;
-  padding: 0em 1em 0.001em 1em;
-  margin: 1.2em 0em 1.2em 0em;
+  padding: 0 1em 0.001em 1em;
+  margin: 1.2em 0 1.2em 0;
   font-size: 1.1em;
 }
 
@@ -85,7 +92,6 @@
   border: 0;
   color: #fff;
   text-transform: uppercase;
-  font-family: helvetica;
   font-size: 0.8em;
   letter-spacing: 3px;
   position: relative;
@@ -100,7 +106,7 @@
   content: "";
   position: absolute;
   top: 50%;
-  right: 0px;
+  right: 0;
   transform: translateY(-50%);
   opacity: 0;
   transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -111,7 +117,7 @@
   height: 1px;
   background: white;
   transform: translateX(-3px);
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 #forumPageJSTopicSubmitButton::before {
@@ -136,18 +142,18 @@
 }
 
 #forumCommentJSContainer {
-  margin: 0em 0em 1em 0em;
+  margin: 0 0 1em 0;
   display: flex;
   justify-content: space-between;
   border-bottom: 2px solid hsl(0, 0%, 100%);
 }
 
 #forumCommentJSPar1 {
-  margin: 0.6em 0em 0.3em 0em;
+  margin: 0.6em 0 0.3em 0;
 }
 
 #forumCommentJSPar2 {
-  margin: 0.6em 0em 0.3em 0em;
+  margin: 0.6em 0 0.3em 0;
 }
 
 #forumCommentJSContainer1 {
@@ -254,9 +260,7 @@
   transform: rotate(-45deg);
 }
 
-.ForumsJSCreateNewForumButton {
-  background-color: hsl(145, 80%, 37%);
-  border: 1px solid hsl(145, 80%, 37%);
+.forumsSpecialButton {
   border-radius: 0.25em;
   box-shadow: hsla(0, 0%, 0%, 0.1) 0 2px 4px 0;
   box-sizing: border-box;
@@ -269,91 +273,25 @@
   transition: transform 150ms, box-shadow 150ms;
 }
 
-.ForumsJSCreateNewForumButton:hover {
+.forumsCreateButton {
+  background-color: hsl(145, 80%, 37%);
+  border: 1px solid hsl(145, 80%, 37%);
+}
+
+.forumsSpecialButton:hover {
   box-shadow: hsla(0, 0%, 0%, 0.15) 0 3px 9px 0;
   transform: translateY(-2px);
 }
 
-#forumPageJSTopicDeleteButton {
+.forumsDeleteButton {
   background-color: hsl(4, 80%, 37%);
   border: 1px solid hsl(4, 80%, 37%);
-  border-radius: 0.25em;
-  box-shadow: hsla(0, 0%, 0%, 0.1) 0 2px 4px 0;
-  box-sizing: border-box;
-  color: hsl(0, 0%, 100%);
-  cursor: pointer;
-  font-size: 1em;
-  padding: 0.5em;
-  text-align: center;
-  transform: translateY(0);
-  transition: transform 150ms, box-shadow 150ms;
 }
 
-#forumPageJSTopicDeleteButton:hover {
-  box-shadow: hsla(0, 0%, 0%, 0.15) 0 3px 9px 0;
-  transform: translateY(-2px);
-}
-
-#forumCommentJSDeleteButton {
-  background-color: hsl(4, 80%, 37%);
-  border: 1px solid hsl(4, 80%, 37%);
-  border-radius: 0.25em;
-  box-shadow: hsla(0, 0%, 0%, 0.1) 0 2px 4px 0;
-  box-sizing: border-box;
-  color: hsl(0, 0%, 100%);
-  cursor: pointer;
-  font-size: 1em;
-  padding: 0.5em;
-  text-align: center;
-  transform: translateY(0);
-  transition: transform 150ms, box-shadow 150ms;
-}
-
-#forumCommentJSDeleteButton:hover {
-  box-shadow: hsla(0, 0%, 0%, 0.15) 0 3px 9px 0;
-  transform: translateY(-2px);
-}
-
-#forumPageJSTopicEditButton {
+.forumsEditButton {
   background-color: hsl(209, 80%, 37%);
   border: 1px solid hsl(209, 80%, 37%);
-  border-radius: 0.25em;
-  box-shadow: hsla(0, 0%, 0%, 0.1) 0 2px 4px 0;
-  box-sizing: border-box;
-  color: hsl(0, 0%, 100%);
-  cursor: pointer;
-  font-size: 1em;
-  padding: 0.5em;
-  text-align: center;
-  transform: translateY(0);
-  transition: transform 150ms, box-shadow 150ms;
   margin-left: -3em;
-}
-
-#forumPageJSTopicEditButton:hover {
-  box-shadow: hsla(0, 0%, 0%, 0.15) 0 3px 9px 0;
-  transform: translateY(-2px);
-}
-
-#forumCommentJSEditButton {
-  background-color: hsl(209, 80%, 37%);
-  border: 1px solid hsl(209, 80%, 37%);
-  border-radius: 0.25em;
-  box-shadow: hsla(0, 0%, 0%, 0.1) 0 2px 4px 0;
-  box-sizing: border-box;
-  color: hsl(0, 0%, 100%);
-  cursor: pointer;
-  font-size: 1em;
-  padding: 0.5em;
-  text-align: center;
-  transform: translateY(0);
-  transition: transform 150ms, box-shadow 150ms;
-  margin-left: -3em;
-}
-
-#forumCommentJSEditButton:hover {
-  box-shadow: hsla(0, 0%, 0%, 0.15) 0 3px 9px 0;
-  transform: translateY(-2px);
 }
 
 .featured-container {

@@ -22,9 +22,9 @@ const authSlice = createSlice({
 
 export const { setCredentials, logOut } = authSlice.actions;
 
-export default authSlice.reducer
+export default authSlice.reducer;
 
-export const selectCurrentEmail = (state) => state.auth.email;
-export const selectCurrentToken = (state) => state.auth.token;
-export const selectCurrentRole = (state) => state.auth.role;
-export const selectCurrentRefreshToken = (state) => state.auth.refreshToken;
+export const selectCurrentEmail = (state: { auth: { email: never; }; }) => state.auth.email;
+export const selectCurrentToken = (state: { auth: { token: never; }; }) => state.auth.token;
+export const selectCurrentRole = (state: { auth: { role: never; }; }) => state.auth.role;
+export const selectCurrentRefreshToken = (state: { auth: { refreshToken: never; }; }) => state.auth.refreshToken;
