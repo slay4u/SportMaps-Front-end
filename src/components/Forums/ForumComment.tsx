@@ -7,7 +7,7 @@ import {selectCurrentRole} from "../../store/auth/authSlice";
 export default function ForumComment(prop: PropTypes.InferProps<typeof ForumComment.propTypes>) {
     const {comment} = prop;
     const [deleteCommentCall] = useDeleteForumCommentMutation();
-    const popup = document.getElementById(String("popupForumComment" + comment.id));
+    const popup = document.getElementById(String("popupForumComment" + comment.id)) as HTMLDialogElement;
     const [updateCommentCall] = useEditForumCommentMutation();
     const role = useSelector(selectCurrentRole);
     const [updateComment, setUpdateComment] = useState({
@@ -34,11 +34,25 @@ export default function ForumComment(prop: PropTypes.InferProps<typeof ForumComm
     };
 
     const openPopup = () => {
-        popup.classList.add("open-popupForums");
+        popup.showModal();
     };
 
     const closePopup = () => {
-        popup.classList.remove("open-popupForums");
+        popup.close();
+    }
+
+    const close = () => {
+        popup.addEventListener("click", e => {
+          const dialogDimensions = popup.getBoundingClientRect();
+          if (
+            e.clientX < dialogDimensions.left ||
+            e.clientX > dialogDimensions.right ||
+            e.clientY < dialogDimensions.top ||
+            e.clientY > dialogDimensions.bottom
+          ) {
+            popup.close();
+          }
+        })
     }
 
     const handleText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -106,7 +120,7 @@ export default function ForumComment(prop: PropTypes.InferProps<typeof ForumComm
                         justifyContent: "center",
                     }}
                 >
-                    <div className="popupForums" id={"popupForumComment" + comment.id}>
+                    <dialog className="popupForums" id={"popupForumComment" + comment.id} onClick={close}>
                         <button
                             id="closeNewForum"
                             onClick={closePopup}
@@ -128,7 +142,7 @@ export default function ForumComment(prop: PropTypes.InferProps<typeof ForumComm
                         >
                             Edit
                         </button>
-                    </div>
+                    </dialog>
                 </div>
             </main>
         </>

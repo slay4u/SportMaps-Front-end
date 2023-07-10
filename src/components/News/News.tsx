@@ -25,22 +25,33 @@ export default function News() {
     emailUser: email
   });
   const navigate = useNavigate();
-  const popup = document.getElementById("popup");
-  const overlay = document.getElementById("overlay");
+  const modal = document.querySelector("dialog");
   
   const routeChange = () => {
     navigate("/newsPage");
   };
 
-  const openPopup = () => {
-    popup.classList.add("active");
-    overlay.classList.add("active");
+  const openModal = () => {
+    modal.showModal();
   };
 
-  const closePopup = () => {
-    popup.classList.remove("active");
-    overlay.classList.remove("active");
+  const closeModal = () => {
+    modal.close();
   };
+
+  const close = () => {
+    modal.addEventListener("click", e => {
+      const dialogDimensions = modal.getBoundingClientRect();
+      if (
+        e.clientX < dialogDimensions.left ||
+        e.clientX > dialogDimensions.right ||
+        e.clientY < dialogDimensions.top ||
+        e.clientY > dialogDimensions.bottom
+      ) {
+        modal.close();
+      }
+    })
+  }
 
   useEffect(() => {
     getAllNews({}).then((res: {data: typeof news}) => {
@@ -113,14 +124,14 @@ export default function News() {
             <div className="news-create-btn-container">
               <button
                 className="create-new-news-btn"
-                onClick={openPopup}
+                onClick={openModal}
               >
                 Створити новину
               </button>
-              <div className="news-create-popup" id="popup">
+              <dialog className="news-create-dialog" onClick={close}>
                 <button
-                  id="close-news-popup"
-                  onClick={closePopup}
+                  id="close-news-dialog"
+                  onClick={closeModal}
                 >
                 </button>
                 <h2>Створення новини</h2>
@@ -148,8 +159,7 @@ export default function News() {
                 >
                   Створити
                 </button>
-              </div>
-              <div className="overlay" id="overlay" onClick={closePopup}></div>
+              </dialog>
             </div>
           ) : (
             ""

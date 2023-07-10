@@ -43,8 +43,7 @@ export default function NewsPage() {
     desc: "",
     emailUser: "",
   });
-  const popup = document.getElementById("popup");
-  const overlay = document.getElementById("overlay");
+  const modal = document.querySelector("dialog");
   const newsDate =
     new Date(news.publishDate).toLocaleDateString("uk-UA") +
     " " +
@@ -67,15 +66,27 @@ export default function NewsPage() {
     );
   }
 
-  const openPopup = () => {
-    popup.classList.add("active");
-    overlay.classList.add("active");
+  const openModal = () => {
+    modal.showModal();
   };
 
-  const closePopup = () => {
-    popup.classList.remove("active");
-    overlay.classList.remove("active");
+  const closeModal = () => {
+    modal.close();
   };
+
+  const close = () => {
+    modal.addEventListener("click", e => {
+      const dialogDimensions = modal.getBoundingClientRect();
+      if (
+        e.clientX < dialogDimensions.left ||
+        e.clientX > dialogDimensions.right ||
+        e.clientY < dialogDimensions.top ||
+        e.clientY > dialogDimensions.bottom
+      ) {
+        modal.close();
+      }
+    })
+  }
 
   const updateComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment({ ...comment, text: event.target.value });
@@ -134,7 +145,7 @@ export default function NewsPage() {
               <>
                 <button
                   className="create-new-news-btn news-page-edit-text-btn"
-                  onClick={openPopup}
+                  onClick={openModal}
                 >
                   Редагувати
                 </button>
@@ -144,8 +155,8 @@ export default function NewsPage() {
                 >
                   Видалити
                 </button>
-                <div className="news-create-popup" id="popup">
-                  <button id="close-news-popup" onClick={closePopup}></button>
+                <dialog className="news-create-dialog" onClick={close}>
+                  <button id="close-news-dialog" onClick={closeModal}></button>
                   <h2>Редагування новини</h2>
                   <div>
                     <p>Введіть назву</p>
@@ -171,8 +182,7 @@ export default function NewsPage() {
                   >
                     Редагувати
                   </button>
-                </div>
-                <div className="overlay" id="overlay" onClick={closePopup}></div>
+                </dialog>
               </>
             ) : (
               ""

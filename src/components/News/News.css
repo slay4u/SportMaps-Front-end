@@ -96,69 +96,46 @@
   transform: translateY(-0.2rem);
 }
 
-.news-create-popup {
+.news-create-dialog {
   background-color: #897be4;
-  border-radius: 0.6rem;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: 200ms ease-in-out;
+  border-radius: 1rem;
+  border: none;
   text-align: center;
   padding: 2rem 2rem;
   color: #333;
-  z-index: 10;
 }
 
-.news-create-popup.active {
-  transform: translate(-50%, -50%) scale(1);
+.news-create-dialog::backdrop {
+  background-color: hsla(0, 5%, 5%, 0.5);
 }
 
-.overlay {
-  position: fixed;
-  opacity: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, .5);
-  transition: 200ms ease-in-out;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.news-create-popup h2 {
+.news-create-dialog h2 {
   font-size: 25px;
   font-weight: bold;
   margin: -1rem 0 0.5em;
 }
 
-.news-create-popup p {
+.news-create-dialog p {
   margin: 0;
   font-size: 2rem;
   padding: 0.5rem;
 }
 
-.news-create-popup hr {
+.news-create-dialog hr {
   height: 0.1rem;
   border: none;
   margin: 1rem 0;
   background-color: black;
 }
 
-.news-create-popup #name-textarea {
+.news-create-dialog #name-textarea {
   width: 50rem;
   height: 6rem;
   resize: none;
   border-radius: 0.4rem;
 }
 
-.news-create-popup #text-textarea {
+.news-create-dialog #text-textarea {
   min-width: 65rem;
   min-height: 20rem;
   max-width: 110rem;
@@ -166,7 +143,7 @@
   border-radius: 0.4rem;
 }
 
-#close-news-popup {
+#close-news-dialog {
   top: 2%;
   left: 95%;
   overflow: hidden;
@@ -181,29 +158,24 @@
   cursor: pointer;
 }
 
-#close-news-popup:focus {
-  outline: solid 0 transparent;
-  box-shadow: 0 0 0 2px #000000;
-}
-
-#close-news-popup:hover {
+#close-news-dialog:hover {
   background: rgba(29, 161, 142, 0.1);
 }
 
-#close-news-popup:before,
-#close-news-popup:after {
+#close-news-dialog:before,
+#close-news-dialog:after {
   position: absolute;
   top: 16%;
   left: calc(50% - 0.0625em);
   width: 0.125em;
   height: 70%;
-  border-radius: 0.125em;
+  border-radius: 0.1em;
   transform: rotate(45deg);
   background: currentcolor;
   content: "";
 }
 
-#close-news-popup:after {
+#close-news-dialog:after {
   transform: rotate(-45deg);
 }
 

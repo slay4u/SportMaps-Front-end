@@ -23,7 +23,7 @@ export default function ForumPage() {
     const role = useSelector(selectCurrentRole);
     const [authorName, setAuthorName] = useState("");
     const [commentCall] = useCreateForumCommentMutation();
-    const popup = document.getElementById("popup");
+    const popup = document.getElementById("popup") as HTMLDialogElement;
     const navigate = useNavigate();
     const [forum, setForum] = useState({
         name: "", createDate: "", desc: "", emailUser: "", commentList: []
@@ -59,12 +59,26 @@ export default function ForumPage() {
     };
 
     const openPopup = () => {
-        popup.classList.add("open-popupForums");
+        popup.showModal();
     };
 
     const closePopup = () => {
-        popup.classList.remove("open-popupForums");
+        popup.close();
     };
+
+    const close = () => {
+        popup.addEventListener("click", e => {
+          const dialogDimensions = popup.getBoundingClientRect();
+          if (
+            e.clientX < dialogDimensions.left ||
+            e.clientX > dialogDimensions.right ||
+            e.clientY < dialogDimensions.top ||
+            e.clientY > dialogDimensions.bottom
+          ) {
+            popup.close();
+          }
+        })
+    }
 
     function getCurrentDate() {
         return (
@@ -166,7 +180,7 @@ export default function ForumPage() {
                         justifyContent: "center",
                     }}
                 >
-                    <div className="popupForums" id="popup">
+                    <dialog className="popupForums" id="popup" onClick={close}>
                         <button
                             id="closeNewForum"
                             onClick={closePopup}
@@ -190,7 +204,7 @@ export default function ForumPage() {
                         >
                             Edit
                         </button>
-                    </div>
+                    </dialog>
                 </div>
             </main>
         </>

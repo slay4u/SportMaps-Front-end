@@ -178,6 +178,7 @@
     hsl(228, 42%, 56%) 74%
   );
   border-radius: 0.25em;
+  border: none;
   position: absolute;
   inset: 0;
   margin: auto;
@@ -185,11 +186,6 @@
   text-align: center;
   padding: 1em;
   color: hsl(0, 1%, 13%);
-  visibility: hidden;
-}
-
-.open-popupForums {
-  visibility: visible;
 }
 
 .popupForums h1 {
@@ -232,11 +228,6 @@
   cursor: pointer;
   top: -4%;
   left: 50.5%;
-}
-
-#closeNewForum:focus {
-  outline: solid 0 transparent;
-  box-shadow: 0 0 0 2px #000000;
 }
 
 #closeNewForum:hover {

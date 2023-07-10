@@ -9,7 +9,7 @@ export default function Forums() {
     const [getAllForums] = useGetAllForumsMutation();
     const [createNewForum] = useCreateNewForumMutation();
     const [forums, setForums] = useState([]);
-    const popup = document.getElementById("popup");
+    const popup = document.getElementById("popup") as HTMLDialogElement;
     const email = useSelector(selectCurrentEmail);
     const [newForum, setNewForum] = useState({
         name: "", createDate: "", desc: "", emailUser: email
@@ -22,8 +22,22 @@ export default function Forums() {
     }, []);
 
     const openPopup = () => {
-        popup.classList.add("open-popupForums");
+        popup.showModal();
     };
+
+    const close = () => {
+        popup.addEventListener("click", e => {
+          const dialogDimensions = popup.getBoundingClientRect();
+          if (
+            e.clientX < dialogDimensions.left ||
+            e.clientX > dialogDimensions.right ||
+            e.clientY < dialogDimensions.top ||
+            e.clientY > dialogDimensions.bottom
+          ) {
+            popup.close();
+          }
+        })
+    }
 
     const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewForum({...newForum, name: event.target.value});
@@ -48,7 +62,7 @@ export default function Forums() {
                     className="forumsSpecialButton forumsCreateButton"
                     onClick={openPopup}
                 >
-                    Create new forum
+                   Create new forum
                 </button>
             </div>
             <div id="forumsGridContainer">
@@ -61,11 +75,11 @@ export default function Forums() {
                     paddingTop: "1em", display: "flex", justifyContent: "center",
                 }}
             >
-                <div className="popupForums" id="popup">
+                <dialog className="popupForums" id="popup" onClick={close}>
                     <button
                         id="closeNewForum"
                         onClick={() => {
-                            popup.classList.remove("open-popupForums");
+                            popup.close();
                         }}
                     >
                         close
@@ -84,7 +98,7 @@ export default function Forums() {
                     >
                         Create
                     </button>
-                </div>
+                </dialog>
             </div>
         </main>
     </>);

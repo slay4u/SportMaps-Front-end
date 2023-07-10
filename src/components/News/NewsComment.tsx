@@ -38,8 +38,7 @@ function NewsComment(prop: PropTypes.InferProps<typeof NewsComment.propTypes>) {
     hours +
     ":" +
     minutes;
-  const popup = document.getElementById(String("popupComment" + comment.id));
-  const overlay = document.getElementById("overlayComment");
+  const modal = document.getElementById(String("dialogComment" + comment.id)) as HTMLDialogElement;
   const [updateComment, setUpdateComment] = useState({
     createdDate: "",
     emailUser: "",
@@ -67,15 +66,27 @@ function NewsComment(prop: PropTypes.InferProps<typeof NewsComment.propTypes>) {
     window.location.reload();
   };
 
-  const openPopup = () => {
-    popup.classList.add("active");
-    overlay.classList.add("active");
+  const openModal = () => {
+    modal.showModal();
   };
 
-  const closePopup = () => {
-    popup.classList.remove("active");
-    overlay.classList.remove("active");
+  const closeModal = () => {
+    modal.close();
   };
+
+  const close = () => {
+    modal.addEventListener("click", e => {
+      const dialogDimensions = modal.getBoundingClientRect();
+      if (
+        e.clientX < dialogDimensions.left ||
+        e.clientX > dialogDimensions.right ||
+        e.clientY < dialogDimensions.top ||
+        e.clientY > dialogDimensions.bottom
+      ) {
+        modal.close();
+      }
+    })
+  }
 
   return (
     <>
@@ -92,7 +103,7 @@ function NewsComment(prop: PropTypes.InferProps<typeof NewsComment.propTypes>) {
           <>
             <button
               className="create-new-news-btn news-comment-edit-btn"
-              onClick={openPopup}
+              onClick={openModal}
             >
               Редагувати
             </button>
@@ -102,8 +113,8 @@ function NewsComment(prop: PropTypes.InferProps<typeof NewsComment.propTypes>) {
             >
               Видалити
             </button>
-            <div className="news-create-popup" id={"popupComment" + comment.id}>
-              <button id="close-news-popup" onClick={closePopup}></button>
+            <dialog className="news-create-dialog" id={"dialogComment" + comment.id} onClick={close}>
+              <button id="close-news-dialog" onClick={closeModal}></button>
               <h2>Редагування коментарію</h2>
               <div>
                 <p>Введіть текст</p>
@@ -120,8 +131,7 @@ function NewsComment(prop: PropTypes.InferProps<typeof NewsComment.propTypes>) {
               >
                 Редагувати
               </button>
-            </div>
-            <div className="overlay" id="overlayComment" onClick={closePopup}></div>
+            </dialog>
           </>
         ) : (
           ""
