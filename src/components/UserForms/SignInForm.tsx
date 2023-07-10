@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {LoginOutlined} from "@mui/icons-material";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setCredentials} from "../../store/auth/authSlice";
 import {useLoginMutation} from "../../store/auth/authApiSlice";
@@ -27,7 +27,6 @@ export default function SignIn() {
             setEmail("");
             setPassword("");
             navigate(from, {replace: true});
-            window.location.reload();
         } catch (err) {
             alert(errMsg);
         }
@@ -68,9 +67,7 @@ export default function SignIn() {
                     Sign In
                 </button>
                 <div className="signUserFormLinkContainer">
-                    <Link className="signUserFormLink" to="/signup" reloadDocument>
-                        Don&apos;t have an account? Sign up
-                    </Link>
+                    <a className="signUserFormLink" href="/signup">Don&apos;t have an account? Sign up</a>
                 </div>
             </div>
         </main>

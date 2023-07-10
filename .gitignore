@@ -10,7 +10,17 @@
 
 # production
 /build
+
+### IntelliJ IDEA / WebStorm ###
 /.idea
+.idea
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+/.vscode
 
 # misc
 .DS_Store

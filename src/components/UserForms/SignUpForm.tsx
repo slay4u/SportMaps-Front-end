@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {LockPersonOutlined} from "@mui/icons-material";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useSignupMutation} from "../../store/auth/authApiSlice";
 
 const USERNAME_REGEX = "^(?=.{2,30}$)[A-Z][a-zA-Z]*(?:\\h+[A-Z][a-zA-Z]*)*$";
@@ -50,7 +50,6 @@ export default function SignUp() {
         });
         if (response.ok) {
             navigate("/signin");
-            window.location.reload();
         }
     };
 
@@ -143,9 +142,7 @@ export default function SignUp() {
                     Sign Up
                 </button>
                 <div className="signUserFormLinkContainer">
-                    <Link className="signUserFormLink" to="/signin" reloadDocument>
-                        Already have an account? Sign in
-                    </Link>
+                    <a className="signUserFormLink" href="/signin">Already have an account? Sign in</a>
                 </div>
             </div>
         </main>

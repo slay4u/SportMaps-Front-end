@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, Outlet} from "react-router-dom";
 import Home from "./components/HomePage/Home";
 import SignIn from "./components/UserForms/SignInForm";
 import SignUp from "./components/UserForms/SignUpForm";
@@ -10,7 +10,6 @@ import News from "./components/News/News";
 import Coaches from "./components/Coaches/Coaches";
 import Forums from "./components/Forums/Forums";
 import AboutUs from "./components/AboutUs/AboutUs";
-import Layout from "./components/layout/Layout";
 import RequireAuth from "./components/RequireAuth";
 import ChatRoom from "./components/chatroom/ChatRoom";
 import NewsPage from "./components/News/NewsPage";
@@ -22,7 +21,7 @@ export default function App() {
     return (<>
         <NavigationBar/>
         <Routes>
-            <Route path="/" element={<Layout/>}>
+            <Route path="/" element={<Outlet/>}>
                 <Route element={<RequireAuth/>}>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/about" element={<AboutUs/>}/>

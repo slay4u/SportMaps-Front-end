@@ -13,13 +13,8 @@ export default function FeaturedTopic(prop: PropTypes.InferProps<typeof Featured
     };
 
     return (<>
-        <div
-            className="featured-container"
-            onClick={routeChange}
-        >
-            <div
-                className="featured-content"
-            >
+        <div className="featured-container" onClick={routeChange}>
+            <div className="featured-content">
                 <h1>{topic.name}</h1>
                 <h2>{createDate}</h2>
                 <p>{description}</p>
