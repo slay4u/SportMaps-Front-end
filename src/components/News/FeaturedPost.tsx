@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import "./News.css";
 
-function FeaturedPost(prop: PropTypes.InferProps<typeof FeaturedPost.propTypes>) {
+export default function FeaturedPost(prop: PropTypes.InferProps<typeof FeaturedPost.propTypes>) {
   const { post } = prop;
   const publishDate =
     new Date(post.publishDate).toLocaleDateString("uk-UA") +
@@ -46,5 +47,3 @@ FeaturedPost.propTypes = {
     desc: PropTypes.string.isRequired,
   }).isRequired,
 };
-
-export default FeaturedPost;

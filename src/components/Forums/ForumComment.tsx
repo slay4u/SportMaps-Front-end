@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {useDeleteForumCommentMutation, useEditForumCommentMutation,} from "../../store/auth/authApiSlice";
 import {useSelector} from "react-redux";
 import {selectCurrentRole} from "../../store/auth/authSlice";
+import "./forums.css";
 
 export default function ForumComment(prop: PropTypes.InferProps<typeof ForumComment.propTypes>) {
     const {comment} = prop;

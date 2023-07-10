@@ -6,8 +6,9 @@ import {
 } from "../../store/auth/authApiSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentRole } from "../../store/auth/authSlice";
+import "./News.css";
 
-function NewsComment(prop: PropTypes.InferProps<typeof NewsComment.propTypes>) {
+export default function NewsComment(prop: PropTypes.InferProps<typeof NewsComment.propTypes>) {
   const { comment } = prop;
   const role = useSelector(selectCurrentRole);
   const [deleteCommentCall] = useDeleteNewsCommentMutation();
@@ -156,5 +157,3 @@ NewsComment.propTypes = {
     text: PropTypes.string.isRequired
   }).isRequired,
 };
-
-export default NewsComment;

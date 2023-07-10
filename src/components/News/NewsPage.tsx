@@ -12,6 +12,7 @@ import {
   useUpdateNewsMutation,
 } from "../../store/auth/authApiSlice";
 import NewsComment from "./NewsComment";
+import "./News.css";
 
 export default function NewsPage() {
   const [commentCall] = useNewsCommentMutation();

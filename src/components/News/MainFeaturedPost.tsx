@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import "./News.css";
 
-function MainFeaturedPost(prop: PropTypes.InferProps<typeof MainFeaturedPost.propTypes>) {
+export default function MainFeaturedPost(prop: PropTypes.InferProps<typeof MainFeaturedPost.propTypes>) {
   const { post } = prop;
   const description = (post.desc.length > 330) ? post.desc.slice(0,330) + "..." : post.desc;
 
@@ -36,5 +37,3 @@ MainFeaturedPost.propTypes = {
     desc: PropTypes.string.isRequired
   }).isRequired
 };
-
-export default MainFeaturedPost;

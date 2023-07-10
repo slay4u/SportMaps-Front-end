@@ -4,7 +4,7 @@ import SockJS from "sockjs-client";
 import "./chat.css";
 
 var stompClient = null;
-const ChatRoom = () => {
+export default function ChatRoom() {
   const [userData, setUserData] = useState({
     username: "",
     connected: false,
@@ -173,6 +173,4 @@ const ChatRoom = () => {
       )}
     </>
   );
-};
-
-export default ChatRoom;
+}

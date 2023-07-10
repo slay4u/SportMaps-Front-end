@@ -11,6 +11,7 @@ import ForumComment from "./ForumComment";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectCurrentEmail, selectCurrentRole} from "../../store/auth/authSlice";
+import "./forums.css";
 
 export default function ForumPage() {
     const [forumCall] = useGetForumByIdMutation();

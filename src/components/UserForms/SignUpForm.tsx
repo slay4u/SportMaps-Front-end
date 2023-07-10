@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {LockPersonOutlined} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import {useSignupMutation} from "../../store/auth/authApiSlice";
+import "./user.css";
 
 const USERNAME_REGEX = "^(?=.{2,30}$)[A-Z][a-zA-Z]*(?:\\h+[A-Z][a-zA-Z]*)*$";
 const PWD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[{}:#@!;\\[_'`\\],\".\\/~?*\\-$^+=\\\\<>]).{8,20}$";

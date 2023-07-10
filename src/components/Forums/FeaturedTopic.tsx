@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
+import "./forums.css";
 
 export default function FeaturedTopic(prop: PropTypes.InferProps<typeof FeaturedTopic.propTypes>) {
     const {topic} = prop;
