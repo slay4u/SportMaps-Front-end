@@ -10,23 +10,19 @@ export default function FeaturedPost(prop: PropTypes.InferProps<typeof FeaturedP
     " " +
     new Date(post.publishDate).toLocaleTimeString("uk-UA").slice(0, 5);
   const description = post.desc.length > 330 ? post.desc.slice(0, 330) + "..." : post.desc;
-
   const navigate = useNavigate();
-  const routeChange = () => {
-    navigate(`/newsPage/${post.id}`);
-  };
 
   return (
     <>
       <div 
         className="featured-container"
-        onClick={routeChange}
+        onClick={() => navigate(`/newsPage/${post.id}`)}
       >
         <div 
           className="featured-content"
         >
-          <h1>{post.name}</h1>
-          <h2>{publishDate}</h2>
+          <h4>{post.name}</h4>
+          <h5>{publishDate}</h5>
           <p>{description}</p>
         </div>
         <img 

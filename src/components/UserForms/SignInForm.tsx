@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useRef } from "react";
 import {LoginOutlined} from "@mui/icons-material";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
@@ -7,26 +7,20 @@ import {useLoginMutation} from "../../store/auth/authApiSlice";
 import "./user.css";
 
 export default function SignIn() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [errMsg, setErrMsg] = useState("");
+    const email = useRef(null);
+    const password = useRef(null);
+    const errMsg = "Error";
+    const [login] = useLoginMutation();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
-    const [login] = useLoginMutation();
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        setErrMsg("Something went wrong.");
-    }, [email, password]);
-
+    
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         try {
-            const userData = await login({email, password}).unwrap();
-            dispatch(setCredentials({...userData, email}));
-            setEmail("");
-            setPassword("");
+            const userData = await login({email: email.current.value, password: password.current.value}).unwrap();
+            dispatch(setCredentials({...userData, email: email.current.value}));
             navigate(from, {replace: true});
         } catch (err) {
             alert(errMsg);
@@ -34,42 +28,38 @@ export default function SignIn() {
     };
 
     return (<>
-        <main className="signUserFormBackground">
-            <div className="signUserFormContainer">
-                <div className="signUserFormAvatar">
-                    <LoginOutlined sx={{fontSize: "2.5rem"}}/>
-                </div>
-                <p>Sign In</p>
-                <div className="sign-input-container">
-                    <input
-                        required
-                        type="text"
-                        autoComplete="off"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <label>Email</label>
-                </div>
-                <div className="sign-input-container">
-                    <input
-                        required
-                        type="password"
-                        autoComplete="off"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <label>Password</label>
-                </div>
-                <button
-                    className="signUserFormButton"
-                    type="submit"
-                    onClick={handleSubmit}
-                >
-                    Sign In
-                </button>
-                <div className="signUserFormLinkContainer">
-                    <a className="signUserFormLink" href="/signup">Don&apos;t have an account? Sign up</a>
-                </div>
+        <main className="signUserFormContainer">
+            <div className="signUserFormAvatar">
+                <LoginOutlined sx={{fontSize: "2.5rem"}}/>
+            </div>
+            <p>Sign In</p>
+            <div className="sign-input-container">
+                <input
+                    required
+                    type="text"
+                    autoComplete="off"
+                    ref={email}
+                />
+                <label>Email</label>
+            </div>
+            <div className="sign-input-container">
+                <input
+                    required
+                    type="password"
+                    autoComplete="off"
+                    ref={password}
+                />
+                <label>Password</label>
+            </div>
+            <button
+                className="signUserFormButton"
+                type="submit"
+                onClick={handleSubmit}
+            >
+                Sign In
+            </button>
+            <div className="signUserFormLinkContainer">
+                <a href="/signup"><h5>Don&apos;t have an account? Sign up</h5></a>
             </div>
         </main>
     </>);

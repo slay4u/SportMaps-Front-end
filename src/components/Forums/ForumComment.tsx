@@ -34,14 +34,6 @@ export default function ForumComment(prop: PropTypes.InferProps<typeof ForumComm
         window.location.reload();
     };
 
-    const openPopup = () => {
-        popup.showModal();
-    };
-
-    const closePopup = () => {
-        popup.close();
-    }
-
     const close = () => {
         popup.addEventListener("click", e => {
           const dialogDimensions = popup.getBoundingClientRect();
@@ -73,78 +65,44 @@ export default function ForumComment(prop: PropTypes.InferProps<typeof ForumComm
 
     return (
         <>
-            <main id="forumCommentJSPage">
-                <div id="forumCommentJSContainer">
-                    <p id="forumCommentJSPar1">#{comment.id}</p>
-                    <p id="forumCommentJSPar2">
-                        {comment.createdBy.firstName + " " + comment.createdBy.lastName}
-                    </p>
+            <main className="forum-page-container">
+                <div className="comment-header-container">
+                    <p>{comment.createdBy.firstName + " " + comment.createdBy.lastName}</p>
+                    <h5>{createdDate}</h5>
                 </div>
-                <div id="forumCommentJSContainer1">
-                    <p id="forumCommentJSText">{comment.text}</p>
-                </div>
+                <p>{comment.text}</p>
                 {role === "ADMIN" ? (
                     <div
-                        style={{
-                            textAlign: "center",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            display: "flex",
-                            fontSize: "0.9em",
-                        }}
+                        style={{textAlign: 'center'}}
                     >
-                        <p id="forumCommentJSTextDate">{createdDate}</p>
-                        <button className="forumsSpecialButton forumsEditButton" onClick={openPopup}>
+                        <button className="admin-btn edit-btn" onClick={() => popup.showModal()}>
                             Edit
                         </button>
-                        <button className="forumsSpecialButton forumsDeleteButton" onClick={deleteComment}>
+                        <button className="admin-btn delete-btn" onClick={deleteComment}>
                             Delete
                         </button>
                     </div>
-                ) : (
+                ) : null}
+                <dialog className="popup" id={"popupForumComment" + comment.id} onClick={close}>
                     <div
-                        style={{
-                            textAlign: "center",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            display: "flex",
-                            fontSize: "0.9em",
-                        }}
+                        className="closeBtn"
+                        onClick={() => popup.close()}
                     >
-                        <p id="forumCommentJSTextDate">{createdDate}</p>
                     </div>
-                )}
-                <div
-                    style={{
-                        paddingTop: "1em",
-                        display: "flex",
-                        justifyContent: "center",
-                    }}
-                >
-                    <dialog className="popupForums" id={"popupForumComment" + comment.id} onClick={close}>
-                        <button
-                            id="closeNewForum"
-                            onClick={closePopup}
-                        >
-                            close
-                        </button>
-                        <h1>Edit comment</h1>
-                        <div>
-                            <p>Input new text:</p>
-                            <textarea
-                                onChange={handleText}
-                                value={updateComment.text}
-                            ></textarea>
-                        </div>
-                        <button
-                            className="ForumsJSCreateNewForumButton"
-                            type="submit"
-                            onClick={editComment}
-                        >
-                            Edit
-                        </button>
-                    </dialog>
-                </div>
+                    <h4>Edit comment</h4>
+                    <p>Input new text:</p>
+                    <textarea
+                        onChange={handleText}
+                        value={updateComment.text}
+                    ></textarea>
+                    <button
+                        className="admin-btn edit-btn"
+                        type="submit"
+                        onClick={editComment}
+                    >
+                        Edit
+                    </button>
+                </dialog>
             </main>
         </>
     );

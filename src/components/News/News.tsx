@@ -25,30 +25,22 @@ export default function News() {
     emailUser: email
   });
   const navigate = useNavigate();
-  const modal = document.querySelector("dialog");
+  const popup = document.querySelector("dialog");
   
   const routeChange = () => {
     navigate("/newsPage");
   };
 
-  const openModal = () => {
-    modal.showModal();
-  };
-
-  const closeModal = () => {
-    modal.close();
-  };
-
   const close = () => {
-    modal.addEventListener("click", e => {
-      const dialogDimensions = modal.getBoundingClientRect();
+    popup.addEventListener("click", e => {
+      const dialogDimensions = popup.getBoundingClientRect();
       if (
         e.clientX < dialogDimensions.left ||
         e.clientX > dialogDimensions.right ||
         e.clientY < dialogDimensions.top ||
         e.clientY > dialogDimensions.bottom
       ) {
-        modal.close();
+        popup.close();
       }
     })
   }
@@ -59,7 +51,7 @@ export default function News() {
     });
   }, []);
 
-  const updateNewNewsName = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const updateNewNewsName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewNews({ ...newNews, name: event.target.value });
   };
 
@@ -78,7 +70,7 @@ export default function News() {
 
   return (
     <>
-      <main className="news-main-box">
+      <main>
           <div className="news-img-container">
             <div className="news-img-item" onClick={routeChange}>
               <img
@@ -121,59 +113,52 @@ export default function News() {
             </div>
           </div>
           {role === "ADMIN" ? (
-            <div className="news-create-btn-container">
+            <div className="create-btn-container">
               <button
-                className="create-new-news-btn"
-                onClick={openModal}
+                className="admin-btn create-btn"
+                onClick={() => popup.showModal()}
               >
                 Створити новину
               </button>
-              <dialog className="news-create-dialog" onClick={close}>
-                <button
-                  id="close-news-dialog"
-                  onClick={closeModal}
-                >
-                </button>
-                <h2>Створення новини</h2>
-                <div>
-                  <p>Введіть назву</p>
-                  <textarea
-                    id="name-textarea"
-                    onChange={updateNewNewsName} 
-                    value={newNews.name}
-                  ></textarea>
-                </div>
-                <hr/>
-                <div>
-                  <p>Введіть текст</p>
-                  <textarea
-                    id="text-textarea"
-                    onChange={updateNewNewsText}
-                    value={newNews.desc}
-                  ></textarea>
-                </div>
-                <button
-                  className="create-new-news-btn"
-                  type="submit"
-                  onClick={createNewNews}
-                >
-                  Створити
-                </button>
-              </dialog>
+              
             </div>
-          ) : (
-            ""
-          )}
-          <div className="news-grid-container">
+          ) : null}
+          <div>
               {newsReverse && newsReverse.slice(0, 1).map((post) => (
                 <MainFeaturedPost key={post.name} post={post} />
               ))}
-              <div className="news-grid">
+              <div className="template-grid">
                 {newsReverse && newsReverse.slice(1).map((post) => (
                   <FeaturedPost key={post.name} post={post} />
                 ))}
               </div>
           </div>
+          <dialog className="popup" onClick={close}>
+            <div 
+              className="closeBtn"
+              onClick={() => popup.close()}
+            ></div>
+            <h4>Створення новини</h4>
+            <div>
+              <p>Введіть назву</p>
+              <input
+                onChange={updateNewNewsName} 
+                value={newNews.name}
+              ></input>
+              <p>Введіть текст</p>
+              <textarea
+                onChange={updateNewNewsText}
+                value={newNews.desc}
+              ></textarea>
+            </div>
+            <button
+              className="admin-btn create-btn"
+              type="submit"
+              onClick={createNewNews}
+            >
+              Створити
+            </button>
+          </dialog>
       </main>
     </>
   );

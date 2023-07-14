@@ -39,7 +39,7 @@ export default function NewsComment(prop: PropTypes.InferProps<typeof NewsCommen
     hours +
     ":" +
     minutes;
-  const modal = document.getElementById(String("dialogComment" + comment.id)) as HTMLDialogElement;
+  const popup = document.getElementById(String("dialogComment" + comment.id)) as HTMLDialogElement;
   const [updateComment, setUpdateComment] = useState({
     createdDate: "",
     emailUser: "",
@@ -67,77 +67,63 @@ export default function NewsComment(prop: PropTypes.InferProps<typeof NewsCommen
     window.location.reload();
   };
 
-  const openModal = () => {
-    modal.showModal();
-  };
-
-  const closeModal = () => {
-    modal.close();
-  };
-
   const close = () => {
-    modal.addEventListener("click", e => {
-      const dialogDimensions = modal.getBoundingClientRect();
+    popup.addEventListener("click", e => {
+      const dialogDimensions = popup.getBoundingClientRect();
       if (
         e.clientX < dialogDimensions.left ||
         e.clientX > dialogDimensions.right ||
         e.clientY < dialogDimensions.top ||
         e.clientY > dialogDimensions.bottom
       ) {
-        modal.close();
+        popup.close();
       }
     })
   }
 
   return (
     <>
-      <div className="news-page-comment-container">
-        <div className="news-page-comment-content">
-          <p className="news-page-comment-author">
-            {comment.createdBy.firstName + " " + comment.createdBy.lastName}
-          </p>
-          <p className="news-page-comment-date">{createdDate}</p>
-          <hr />
-          <p className="news-page-comment-text">{comment.text}</p>
+      <main className="forum-page-container">
+        <div className="comment-header-container">
+          <p>{comment.createdBy.firstName + " " + comment.createdBy.lastName}</p>
+          <h5>{createdDate}</h5>
         </div>
+        <p>{comment.text}</p>
         {role === "ADMIN" ? (
-          <>
+          <div
+            style={{textAlign: 'center'}}
+          >
             <button
-              className="create-new-news-btn news-comment-edit-btn"
-              onClick={openModal}
+              className="admin-btn edit-btn"
+              onClick={() => popup.showModal()}
             >
               Редагувати
             </button>
             <button
-              className="create-new-news-btn news-comment-delete-btn"
+              className="admin-btn delete-btn"
               onClick={deleteComment}
             >
               Видалити
             </button>
-            <dialog className="news-create-dialog" id={"dialogComment" + comment.id} onClick={close}>
-              <button id="close-news-dialog" onClick={closeModal}></button>
-              <h2>Редагування коментарію</h2>
-              <div>
-                <p>Введіть текст</p>
-                <textarea
-                  id="edit-comment-textarea"
-                  onChange={updateNewsText}
-                  value={updateComment.text}
-                ></textarea>
-              </div>
-              <button
-                className="create-new-news-btn"
-                type="submit"
-                onClick={editComment}
-              >
-                Редагувати
-              </button>
-            </dialog>
-          </>
-        ) : (
-          ""
-        )}
-      </div>
+          </div>
+        ) : null}
+        <dialog className="popup" id={"dialogComment" + comment.id} onClick={close}>
+            <div className="closeBtn" onClick={() => popup.close()}></div>
+            <h4>Редагування коментарію</h4>
+            <p>Введіть текст</p>
+            <textarea
+              onChange={updateNewsText}
+              value={updateComment.text}
+            ></textarea>
+            <button
+              className="admin-btn edit-btn"
+              type="submit"
+              onClick={editComment}
+            >
+              Редагувати
+            </button>
+        </dialog>
+      </main>
     </>
   );
 }

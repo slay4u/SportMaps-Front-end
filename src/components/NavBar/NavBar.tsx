@@ -17,19 +17,19 @@ export default function NavigationBar() {
 
     return (<>
         <div className="navbar-container">
-            <a className="navbar-element" href="/about">About us</a>
-            <a className="navbar-element" href="/chat">ChatRoom</a>
-            <a className="navbar-element" href="/maps">Maps</a>
-            <a className="navbar-element" href="/forums">Forums</a>
-            <a className="navbar-element" href="/">SportMaps</a>
-            <a className="navbar-element" href="/news">News</a>
-            <a className="navbar-element" href="/coaches">Coaches</a>
-            <a className="navbar-element" href="/events">Events</a>
-            <a className="navbar-element" href="/profile">Profile</a>
+            <a href="/about">About us</a>
+            <a href="/chat">ChatRoom</a>
+            <a href="/maps">Maps</a>
+            <a href="/forums">Forums</a>
+            <a href="/"><h4>SportMaps</h4></a>
+            <a href="/news">News</a>
+            <a href="/coaches">Coaches</a>
+            <a href="/events">Events</a>
+            <a href="/profile">Profile</a>
             {refreshToken ? (<button className="navbar-button" onClick={logout}>
-                <a className="navbar-button-element" href="/signin">Log Out</a>
+                <a href="/signin">Log Out</a>
             </button>) : (<button className="navbar-button">
-                <a className="navbar-button-element" href="/signin">Sign In</a>
+                <a href="/signin">Sign In</a>
             </button>)}
         </div>
     </>);

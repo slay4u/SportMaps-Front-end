@@ -24,7 +24,7 @@ export default function ForumPage() {
     const role = useSelector(selectCurrentRole);
     const [authorName, setAuthorName] = useState("");
     const [commentCall] = useCreateForumCommentMutation();
-    const popup = document.getElementById("popup") as HTMLDialogElement;
+    const popup = document.querySelector("dialog");
     const navigate = useNavigate();
     const [forum, setForum] = useState({
         name: "", createDate: "", desc: "", emailUser: "", commentList: []
@@ -57,14 +57,6 @@ export default function ForumPage() {
         setTimeout(() => {
             navigate("/forums");
         }, 1000);
-    };
-
-    const openPopup = () => {
-        popup.showModal();
-    };
-
-    const closePopup = () => {
-        popup.close();
     };
 
     const close = () => {
@@ -116,14 +108,14 @@ export default function ForumPage() {
 
     return (
         <>
-            <main id="forumPageJSPage">
-                <div id="forumPageJSTopicContainer">
-                    <div id="forumPageJSTopicContainer1">
-                        <h1 id="forumPageJSTopicHeader">{forum.name}</h1>
-                        <p id="forumPageJSUserNick">{authorName}</p>
+            <main>
+                <div className="forum-page-container">
+                    <div className="forum-page-container1">
+                        <h3>{forum.name}</h3>
+                        <p>{authorName}</p>
                     </div>
-                    <div id="forumPageJSTopicContainer2">
-                        <p id="forumPageJSTopicParagraph">{forum.desc}</p>
+                    <div className="forum-page-container2">
+                        <p>{forum.desc}</p>
                     </div>
                     {role === "ADMIN" ? (
                         <div
@@ -134,79 +126,57 @@ export default function ForumPage() {
                                 display: "flex",
                             }}
                         >
-                            <p id="forumPageJSTopicDate">{forumDate}</p>
-                            <button className="forumsSpecialButton forumsEditButton" onClick={openPopup}>
+                            <p>{forumDate}</p>
+                            <button className="admin-btn edit-btn" onClick={() => popup.showModal()}>
                                 Edit
                             </button>
-                            <button onClick={deleteForum} className="forumsSpecialButton forumsDeleteButton">
+                            <button onClick={deleteForum} className="admin-btn delete-btn">
                                 Delete
                             </button>
                         </div>
-                    ) : (
-                        <div
-                            style={{
-                                textAlign: "center",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                display: "flex",
-                            }}
-                        >
-                            <p id="forumPageJSTopicDate">{forumDate}</p>
-                        </div>
-                    )}
+                    ) : (<p>{forumDate}</p>)}
                 </div>
-                <div id="forumPageJSTopicContainer3">
-          <textarea
-              id="forumCommentArea"
-              onChange={updateComment}
-          ></textarea>
+                <div className="forum-page-container3">
+                    <textarea
+                        className="comment-area"
+                        onChange={updateComment}
+                    ></textarea>
                     <button
-                        id="forumPageJSTopicSubmitButton"
+                        className="send-btn"
                         onClick={submitComment}
                         type="submit"
                     >
                         Post comment
                     </button>
                 </div>
-                <div>
+                <div className="template-grid">
                     {forum.commentList &&
                         forum.commentList.map((comment) => (
                             <ForumComment key={comment.id} comment={comment}/>
                         ))}
                 </div>
-                <div
-                    style={{
-                        paddingTop: "1em",
-                        display: "flex",
-                        justifyContent: "center",
-                    }}
-                >
-                    <dialog className="popupForums" id="popup" onClick={close}>
-                        <button
-                            id="closeNewForum"
-                            onClick={closePopup}
-                        >
-                            close
-                        </button>
-                        <h1>Edit forum</h1>
-                        <div>
-                            <p>Input new name:</p>
-                            <input onChange={handleName} value={updateForum.name}></input>
-                            <p>Input new text:</p>
-                            <textarea
-                                onChange={handleText}
-                                value={updateForum.desc}
-                            ></textarea>
-                        </div>
-                        <button
-                            className="ForumsJSCreateNewForumButton"
-                            type="submit"
-                            onClick={editForum}
-                        >
-                            Edit
-                        </button>
-                    </dialog>
-                </div>
+                <dialog className="popup" onClick={close}>
+                    <div
+                        className="closeBtn"
+                        onClick={() => popup.close()}
+                    >
+                    </div>
+                    <h4>Edit forum</h4>
+                    <p>Input new name:</p>
+                    <input onChange={handleName} value={updateForum.name}></input>
+                    <p>Input new text:</p>
+                    <textarea
+                        onChange={handleText}
+                        value={updateForum.desc}
+                    ></textarea>
+                    <button
+                        className="admin-btn edit-btn"
+                        type="submit"
+                        onClick={editForum}
+                    >
+                        Edit
+                    </button>
+                </dialog>
             </main>
         </>
     );

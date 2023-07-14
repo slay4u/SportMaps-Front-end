@@ -9,7 +9,7 @@ export default function Forums() {
     const [getAllForums] = useGetAllForumsMutation();
     const [createNewForum] = useCreateNewForumMutation();
     const [forums, setForums] = useState([]);
-    const popup = document.getElementById("popup") as HTMLDialogElement;
+    const popup = document.querySelector("dialog");
     const email = useSelector(selectCurrentEmail);
     const [newForum, setNewForum] = useState({
         name: "", createDate: "", desc: "", emailUser: email
@@ -20,10 +20,6 @@ export default function Forums() {
             setForums(res.data);
         });
     }, []);
-
-    const openPopup = () => {
-        popup.showModal();
-    };
 
     const close = () => {
         popup.addEventListener("click", e => {
@@ -54,52 +50,40 @@ export default function Forums() {
     };
 
     return (<>
-        <main id="mainForumsPage">
-            <div
-                style={{alignItems: "center", textAlign: "center", margin: "1em"}}
-            >
+        <main>
+            <div className="create-btn-container">
                 <button
-                    className="forumsSpecialButton forumsCreateButton"
-                    onClick={openPopup}
+                    className="admin-btn create-btn"
+                    onClick={() => popup.showModal()}
                 >
                    Create new forum
                 </button>
             </div>
-            <div id="forumsGridContainer">
+            <div className="template-grid">
                 {forums && forums
                     .map((topic) => <FeaturedTopic key={topic.name} topic={topic}/>)
                     .reverse()}
             </div>
-            <div
-                style={{
-                    paddingTop: "1em", display: "flex", justifyContent: "center",
-                }}
-            >
-                <dialog className="popupForums" id="popup" onClick={close}>
-                    <button
-                        id="closeNewForum"
-                        onClick={() => {
-                            popup.close();
-                        }}
-                    >
-                        close
-                    </button>
-                    <h1>New forum</h1>
-                    <div>
-                        <p>Input new name:</p>
-                        <input onChange={handleName} value={newForum.name}></input>
-                        <p>Input new text:</p>
-                        <textarea onChange={handleText} value={newForum.desc}></textarea>
-                    </div>
-                    <button
-                        className="ForumsJSCreateNewForumButton"
-                        type="submit"
-                        onClick={sendValue}
-                    >
-                        Create
-                    </button>
-                </dialog>
-            </div>
+            <dialog className="popup" onClick={close}>
+                <div 
+                className="closeBtn"
+                onClick={() => popup.close()}
+                ></div>
+                <h4>New forum</h4>
+                <div>
+                    <p>Input new name:</p>
+                    <input onChange={handleName} value={newForum.name}></input>
+                    <p>Input new text:</p>
+                    <textarea onChange={handleText} value={newForum.desc}></textarea>
+                </div>
+                <button
+                    className="admin-btn create-btn"
+                    type="submit"
+                    onClick={sendValue}
+                >
+                    Create
+                </button>
+            </dialog>
         </main>
     </>);
 }

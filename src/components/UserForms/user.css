@@ -154,24 +154,14 @@
     font-weight: 400;
 }
 
-.signUserFormBackground {
-    background-color: #8d5185;
-    background-image: linear-gradient(315deg, #8d5185 0%, #a1bafe 74%);
-    width: 100vw;
-    height: 100vh;
-}
-
 .signUserFormContainer {
     box-shadow: 0 0.1rem 0.6rem hsla(0, 0%, 0%, 0.3);
     background-color: rgba(0, 0, 0, 0.89);
     border-radius: 1rem;
     padding: 2rem;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 10em auto;
     text-align: center;
-    display: block;
+    max-width: 44rem;
 }
 
 .signUserFormAvatar {
@@ -196,7 +186,6 @@
 .sign-input-container {
     position: relative;
     margin-top: 3rem;
-    width: 100vw;
     max-width: 40rem;
 }
 
@@ -232,12 +221,6 @@
     font-size: 1.1rem;
 }
 
-.signUserFormLink {
-    text-decoration: none;
-    font-size: 1.5rem;
-    color: white;
-}
-
 .signUserFormLinkContainer {
     margin-top: 1.5rem;
     text-align: right;
@@ -245,31 +228,27 @@
 
 .signUserFormButton {
     cursor: pointer;
-    border: 0;
+    border: none;
     border-radius: 0.6rem;
     font-weight: 600;
-    font-size: 1.7rem;
     width: 10rem;
-    padding: 1rem 0;
-    box-shadow: 0 0 2rem rgba(104, 85, 224, 0.2);
+    padding: 1rem;
     transition: 0.4s;
-    color: white;
-    background-color: rgba(104, 85, 224, 1);
+    background: var(--clr-accent);
+    color: var(--clr-background);
     margin-top: 2rem;
 }
 
 .signUserFormButton:hover {
-    box-shadow: 0 0 1rem rgba(104, 85, 224, 0.6);
+    box-shadow: 0 0 2rem var(--clr-accent);
 }
 
 .instructions {
     border-radius: 0.6rem;
-    background: rgba(104, 85, 224, 1);
-    color: #fff;
-    font-size: 1.4rem;
-    font-weight: 300;
+    background: var(--clr-accent);
+    color: var(--clr-background);
     text-align: left;
-    padding: 0 0.3rem;
+    padding: 0.5rem;
 }
 
 .offscreen {

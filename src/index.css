@@ -1,3 +1,34 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+:root {
+  --clr-text: hsl(322, 73%, 97%);
+  --clr-background: hsl(0, 0%, 11%);
+  --clr-primary: hsl(180, 74%, 59%);
+  --clr-secondary: hsl(0, 0%, 26%);
+  --clr-accent: hsl(30, 72%, 53%);
+  --clr-create: hsl(145, 80%, 37%);
+  --clr-delete: hsl(4, 80%, 37%);
+  --clr-edit: hsl(209, 80%, 37%);
+
+  --ff-base: 'Inter', sans-serif;
+
+  --fs-100: clamp(1.00rem, calc(1.31rem + -0.26vw), 1.26rem);
+  --fs-200: clamp(1.41rem, calc(1.53rem + -0.10vw), 1.51rem);
+  --fs-300: clamp(1.81rem, calc(1.78rem + 0.19vw), 2.00rem);
+  --fs-400: clamp(2.17rem, calc(2.04rem + 0.65vw), 2.83rem);
+  --fs-500: clamp(2.61rem, calc(2.33rem + 1.39vw), 4.00rem);
+  --fs-600: clamp(3.13rem, calc(2.63rem + 2.52vw), 5.65rem);
+  --fs-700: clamp(3.76rem, calc(2.91rem + 4.24vw), 8.00rem);
+}
+
 html {
   font-size: 62.5%;
 }
@@ -7,12 +38,166 @@ html {
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: var(--clr-background);
+  color: var(--clr-text);
+  font-family: var(--ff-base);
+  font-size: var(--fs-300);
+  line-height: 1.5;
+}
+
+main {
+  padding: 0 calc(17vw + 5em);
+}
+
+h1 {
+  font-size: var(--fs-700);
+}
+
+h2 {
+  font-size: var(--fs-600);
+}
+
+h3 {
+  font-size: var(--fs-500);
+}
+
+h4 {
+  font-size: var(--fs-400);
+  font-weight: 400;
+}
+
+h5 {
+  font-size: var(--fs-200);
+  font-weight: 400;
+}
+
+a {
+  color: var(--clr-text);
+  text-decoration: none;
+  font-size: var(--fs-300);
+}
+
+button {
+  font-size: var(--fs-300);
+  font-family: var(--ff-base);
+  color: var(--clr-text);
+  border-radius: 0.6rem;
+  border: none;
+  cursor: pointer;
+}
+
+.create-btn-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.admin-btn {
+  padding: 0.5em;
+}
+
+.create-btn {
+  background-color: var(--clr-create);
+}
+
+.edit-btn {
+  background-color: var(--clr-edit);
+}
+
+.delete-btn {
+  background-color: var(--clr-delete);
+}
+
+dialog {
+  border-radius: 0.6rem;
+  border: none;
+  margin: auto;
+  padding: 1rem;
+  text-align: center;
+  background: var(--clr-background);
+  color: var(--clr-text);
+  width: 70rem;
+}
+
+.popup p {
+  margin: 1rem;
+}
+
+.popup input {
+  width: 100%;
+}
+
+.popup textarea {
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.closeBtn::after {
+  position: absolute;
+  top: -5%;
+  left: 95%;
+  display: inline-block;
+  font-size: 5rem;
+  content: "\00d7";
+  cursor: pointer;
+}
+
+.template-grid {
+  display: grid;
+  row-gap: 2rem;
+  grid-template-columns: auto;
+}
+
+.featured-container {
+  display: flex;
+  background: var(--clr-secondary);
+  height: 17rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.featured-container:hover {
+  filter: brightness(120%);
+}
+
+.featured-content {
+  padding: 1rem;
+}
+
+input {
+  font-size: var(--fs-300);
+  font-family: var(--ff-base);
+}
+
+textarea {
+  font-size: var(--fs-300);
+  font-family: var(--ff-base);
+}
+
+.comment-area {
+  border-radius: 0.6rem;
+  padding: 1rem;
+  margin-right: 2rem;
+  width: 100%;
+  max-height: 10rem;
+}
+
+.send-btn {
+  background-color: var(--clr-primary);
+  color: var(--clr-secondary);
+  border: none;
+}
+
+.comment-header-container {
+  border-bottom: 1px solid var(--clr-primary);
+  margin-bottom: 2rem;
+}
+
+.forum-page-container {
+  background: var(--clr-secondary);
+  border-radius: 0.6rem;
+  padding: 1rem;
 }
 
 .map-container {
@@ -36,9 +221,4 @@ body {
   background-color: transparent;
   width: 10%;
   height: 7%;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }

@@ -18,7 +18,7 @@ export default function SignUp() {
     const [validPassword, setValidPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [validEmail, setValidEmail] = useState(false);
-    const [errMsg, setErrMsg] = useState("");
+    let errMsg = "Error";
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -37,10 +37,6 @@ export default function SignUp() {
         setValidPassword(checkValid(password, PWD_REGEX));
     }, [password]);
 
-    useEffect(() => {
-        setErrMsg("Something went wrong.");
-    }, [firstName, lastName, email, password]);
-
     const checkValid = (checkedString: string, regex: string) => {
         return !!checkedString.match(regex);
     };
@@ -57,7 +53,7 @@ export default function SignUp() {
     const handleSubmit = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         if (!firstName.match(USERNAME_REGEX) || !lastName.match(USERNAME_REGEX) || !email.match(EMAIL_REGEX) || !password.match(PWD_REGEX)) {
-            setErrMsg("Invalid Entry");
+            errMsg = "Invalid entry!";
             return;
         }
         try {
@@ -75,76 +71,74 @@ export default function SignUp() {
     };
 
     return (<>
-        <main className="signUserFormBackground">
-            <div className="signUserFormContainer">
-                <div className="signUserFormAvatar">
-                    <LockPersonOutlined sx={{fontSize: "2.5rem"}}/>
-                </div>
-                <p>Sign Up</p>
-                <div className="sign-input-container">
-                    <input
-                        required
-                        type="text"
-                        autoComplete="off"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                    />
-                    <label>First Name</label>
-                    <h1 className={firstName && !validFirstName ? "instructions" : "offscreen"}>
-                        Provide valid name, please.
-                    </h1>
-                </div>
-                <div className="sign-input-container">
-                    <input
-                        required
-                        type="text"
-                        autoComplete="off"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                    />
-                    <label>Last Name</label>
-                    <h1 className={lastName && !validLastName ? "instructions" : "offscreen"}>
-                        Provide valid name, please.
-                    </h1>
-                </div>
-                <div className="sign-input-container">
-                    <input
-                        required
-                        type="text"
-                        autoComplete="off"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <label>Email</label>
-                    <h1 className={email && !validEmail ? "instructions" : "offscreen"}>
-                        Provide valid email, please.
-                    </h1>
-                </div>
-                <div className="sign-input-container">
-                    <input
-                        required
-                        type="password"
-                        autoComplete="off"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <label>Password</label>
-                    <h1 className={password && !validPassword ? "instructions" : "offscreen"}>
-                        Password must contain letters, numbers and special symbols. Should be at least 8 characters
-                        long.
-                    </h1>
-                </div>
-                <button
-                    type="submit"
-                    className="signUserFormButton"
-                    disabled={!validFirstName || !validLastName || !validEmail || !validPassword}
-                    onClick={handleSubmit}
-                >
-                    Sign Up
-                </button>
-                <div className="signUserFormLinkContainer">
-                    <a className="signUserFormLink" href="/signin">Already have an account? Sign in</a>
-                </div>
+        <main className="signUserFormContainer">
+            <div className="signUserFormAvatar">
+                <LockPersonOutlined sx={{fontSize: "2.5rem"}}/>
+            </div>
+            <p>Sign Up</p>
+            <div className="sign-input-container">
+                <input
+                    required
+                    type="text"
+                    autoComplete="off"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                />
+                <label>First Name</label>
+                <h5 className={firstName && !validFirstName ? "instructions" : "offscreen"}>
+                    Provide valid name, please.
+                </h5>
+            </div>
+            <div className="sign-input-container">
+                <input
+                    required
+                    type="text"
+                    autoComplete="off"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                />
+                <label>Last Name</label>
+                <h5 className={lastName && !validLastName ? "instructions" : "offscreen"}>
+                    Provide valid name, please.
+                </h5>
+            </div>
+            <div className="sign-input-container">
+                <input
+                    required
+                    type="text"
+                    autoComplete="off"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <label>Email</label>
+                <h5 className={email && !validEmail ? "instructions" : "offscreen"}>
+                    Provide valid email, please.
+                </h5>
+            </div>
+            <div className="sign-input-container">
+                <input
+                    required
+                    type="password"
+                    autoComplete="off"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <label>Password</label>
+                <h5 className={password && !validPassword ? "instructions" : "offscreen"}>
+                    Password must contain letters, numbers and special symbols. Should be at least 8 characters
+                    long.
+                </h5>
+            </div>
+            <button
+                type="submit"
+                className="signUserFormButton"
+                disabled={!validFirstName || !validLastName || !validEmail || !validPassword}
+                onClick={handleSubmit}
+            >
+                Sign Up
+            </button>
+            <div className="signUserFormLinkContainer">
+                <a href="/signin"><h5>Already have an account? Sign in</h5></a>
             </div>
         </main>
     </>);

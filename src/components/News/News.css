@@ -1,25 +1,3 @@
-.news-main-box {
-  background: linear-gradient(to top, #ed213a, #93291e); 
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: auto;
-}
-
-.news-grid-container {
-  width: 115rem;
-  padding: 3rem 0 2rem 0;
-  margin: auto;
-}
-
-.news-grid {
-  display: grid;
-  row-gap: 2rem;
-  grid-template-columns: auto;
-}
-
 .news-img-container {
   display: table;
   table-layout: fixed;
@@ -36,7 +14,7 @@
 .news-img {
   object-fit: cover;
   width: 100%;
-  height: 70rem;
+  height: 50rem;
   filter: brightness(60%);
   transition: 0.4s ease-in-out;
 }
@@ -72,120 +50,18 @@
   overflow: hidden;
 }
 
-.news-create-btn-container {
-  padding-top: 1rem;
-  display: flex;
-  justify-content: center;
-}
-
-.create-new-news-btn {
-  background-color: #13aa52;
-  border: 1px solid #13aa52;
-  border-radius: 0.5rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0.2rem 0.4rem 0;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1.5rem;
-  padding: 1.5rem;
-  margin-top: 0.5rem;
-  transition: 150ms;
-}
-
-.create-new-news-btn:hover {
-  box-shadow: rgba(0, 0, 0, 0.15) 0 0.3rem 0.9rem 0;
-  transform: translateY(-0.2rem);
-}
-
-.news-create-dialog {
-  background-color: #897be4;
-  border-radius: 1rem;
-  border: none;
-  text-align: center;
-  padding: 2rem 2rem;
-  color: #333;
-}
-
-.news-create-dialog::backdrop {
-  background-color: hsla(0, 5%, 5%, 0.5);
-}
-
-.news-create-dialog h2 {
-  font-size: 25px;
-  font-weight: bold;
-  margin: -1rem 0 0.5em;
-}
-
-.news-create-dialog p {
-  margin: 0;
-  font-size: 2rem;
-  padding: 0.5rem;
-}
-
-.news-create-dialog hr {
-  height: 0.1rem;
-  border: none;
-  margin: 1rem 0;
-  background-color: black;
-}
-
-.news-create-dialog #name-textarea {
-  width: 50rem;
-  height: 6rem;
-  resize: none;
-  border-radius: 0.4rem;
-}
-
-.news-create-dialog #text-textarea {
-  min-width: 65rem;
-  min-height: 20rem;
-  max-width: 110rem;
-  max-height: 50rem;
-  border-radius: 0.4rem;
-}
-
-#close-news-dialog {
-  top: 2%;
-  left: 95%;
-  overflow: hidden;
-  position: absolute;
-  border: none;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 50%;
-  background: transparent;
-  color: black;
-  font: inherit;
-  cursor: pointer;
-}
-
-#close-news-dialog:hover {
-  background: rgba(29, 161, 142, 0.1);
-}
-
-#close-news-dialog:before,
-#close-news-dialog:after {
-  position: absolute;
-  top: 16%;
-  left: calc(50% - 0.0625em);
-  width: 0.125em;
-  height: 70%;
-  border-radius: 0.1em;
-  transform: rotate(45deg);
-  background: currentcolor;
-  content: "";
-}
-
-#close-news-dialog:after {
-  transform: rotate(-45deg);
-}
-
 .main-featured-container {
   position: relative;
-  background-color: 'grey.800';
-  color: #fff;
-  margin-bottom: 3rem;
+  background-color: var(--clr-secondary);
   background-size: cover;
   background-position: center;
+  transition: 0.2s;
+  border-radius: 1rem;
+}
+
+.main-featured-container:hover {
+  cursor: pointer;
+  filter: brightness(90%);
 }
 
 .main-featured-container-shadow {
@@ -194,67 +70,25 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0,0,0,.5); 
+  border-radius: 1rem;
 }
 
 .main-featured-content {
-  width: 46%;
   position: relative;
-  padding: 2% 0 4% 4.5%;
+  padding: 2rem 3rem;
+  border-radius: 1rem;
 }
 
 .main-featured-content h1 {
   font-size: 4.5rem;
   line-height: 5rem;
   font-weight: 400;
-  margin: 0 0 1rem 0;
 }
 
 .main-featured-content p {
   font-size: 2.2rem;
   font-weight: 350;
-}
-
-#main-featured-link {
-  color: whitesmoke;
-  font-size: 2rem;
-}
-
-.featured-container {
-  display: flex;
-  background-color: rgb(192,192,192);
-  height: 17rem;
-  border-radius: 1rem;
-  cursor: pointer;
-  transition: 0.4s;
-}
-
-.featured-container:hover {
-  filter: brightness(90%);
-}
-
-.featured-content {
-  width: 74%;
-  padding: 1% 0 0 1%;
-}
-
-.featured-content h1 {
-  font-size: 1.8rem;
-  font-weight: 400;
-  margin: 0.5% 0 0 0;
-}
-
-.featured-content h2 {
-  font-size: 1.2rem;
-  font-weight: 300;
-  margin: 0.5% 0 0 0;
-  color:rgb(69, 78, 78)
-}
-
-.featured-content p {
-  font-size: 1.6rem;
-  font-weight: 300;
-  line-height: 2.2rem;
 }
 
 .featured-image {
@@ -263,22 +97,6 @@
   object-position: 50% 30%;
   object-fit: cover;
   border-radius: 0 1rem 1rem 0;
-}
-
-.news-page-main-box {
-  background: linear-gradient(to top, #ed213a, #93291e);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: auto;
-}
-
-.news-page-content-container {
-  min-height: 97rem;
-  width: 80%;
-  margin: auto;
 }
 
 .news-page-img {
@@ -292,28 +110,15 @@
   display: flex;
 }
 
-.news-page-title-section h1 {
-  font-size: 4rem;
-  margin: 0;
-  padding-left: 5%;
-  width: 60%;
-  font-weight: bold;
-}
-
 #news-page-save-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 5%;
   height: 4rem;
-  border-radius: 4.5rem;
+  border-radius: 0.6rem;
   border: none;
-  background-color: black;
-  color: white;
-  cursor: pointer;
+  background: black;
   font-weight: bold;
-  text-transform: capitalize;
-  font-size: 1.6rem;
   margin-left: 29.5%;
   margin-top: 0.5%;
   transition: 0.3s;
@@ -326,7 +131,7 @@
 .news-page-author-section {
   display: flex;
   align-items: center;
-  padding: 1% 0 1% 5%;
+  padding: 1rem;
 }
 
 #news-page-author-avatar {
@@ -335,182 +140,4 @@
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
-}
-
-.news-page-author-info {
-  margin-left: 1%;
-}
-
-.news-page-author-info p {
-  font-size: 1.6rem;
-  margin: 0;
-}
-
-#news-page-divider {
-  border: none;
-  height: 0.1rem;
-  margin: 0;
-  background-color: black;
-}
-
-.news-page-text {
-  font-size: 3rem;
-  padding: 0 1% 0 1%;
-}
-
-.news-page-edit-text-btn {
-  background-color: blue;
-  border-color: blue;
-  position: absolute;
-  margin-top: 3%;
-  margin-left: 67%;
-}
-
-.news-page-delete-text-btn {
-  background-color: red;
-  border-color: red;
-  position: absolute;
-  margin-top: 3%;
-  margin-left: 74%;
-}
-
-.news-page-comment-section {
-  width: 50%;
-  padding-left: 1rem;
-}
-
-.news-page-comment-title {
-  font-size: 2.4rem;
-  margin-bottom: 1rem;
-}
-
-#news-page-comment-area {
-  min-width: 50rem;
-  min-height: 8rem;
-  max-width: 70rem;
-  max-height: 20rem;
-  border-radius: 0.5rem;
-}
-
-#news-page-comment-btn {
-  background: #000;
-  border: none;
-  color: #fff;
-  text-transform: uppercase;
-  font-family: helvetica;
-  font-size: 1.2rem;
-  letter-spacing: 0.3rem;
-  position: relative;
-  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
-  cursor: pointer;
-  display: block;
-  min-height: 3rem;
-  max-height: 5rem;
-  padding: 0.8rem;
-  border-radius: 1rem;
-  margin-top: 0.6rem;
-}
-
-#news-page-comment-btn::after,
-#news-page-comment-btn::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-
-#news-page-comment-btn::after {
-  width: 3rem;
-  height: 0.1rem;
-  background: white;
-  transform: translateX(-0.3rem);
-  margin-top: 0;
-}
-
-#news-page-comment-btn::before {
-  content: "";
-  transform: rotate(-135deg) translateX(50%);
-  width: 1.1rem;
-  height: 1.1rem;
-  background: transparent;
-  border-left: 0.1rem solid white;
-  border-bottom: 0.1rem solid white;
-  margin-top: -0.1rem;
-}
-
-#news-page-comment-btn:hover {
-  padding: 1.5rem 6rem 1.5rem 2rem;
-}
-
-#news-page-comment-btn:hover::after,
-#news-page-comment-btn:hover::before {
-  opacity: 1;
-  right: 1.5rem;
-}
-
-.news-page-comment-grid {
-  display: grid;
-  margin-top: 3%;
-  padding-bottom: 1%;
-  row-gap: 2rem;
-  grid-template-columns: auto;
-}
-
-.news-page-comment-container {
-  display: flex;
-  background-color: rgb(192,192,192);
-  min-height: 11rem;
-  border-radius: 0.5rem;
-  width: 90%;
-}
-
-.news-page-comment-content {
-  width: 100%;
-  padding: 2%;
-}
-
-.news-page-comment-content hr {
-  border: none;
-  height: 0.1rem;
-  background-color: #979797;
-}
-
-.news-page-comment-author {
-  font-size: 1.6rem;
-  margin: 0;
-}
-
-.news-page-comment-date {
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-.news-page-comment-text {
-  font-size: 1.6rem;
-  margin-top: 1rem;
-  margin-bottom: 0;
-}
-
-.news-comment-edit-btn {
-  background-color: blue;
-  border-color: blue;
-  position: absolute;
-  margin-left: 23%;
-}
-
-.news-comment-delete-btn {
-  background-color: red;
-  border-color: red;
-  position: absolute;
-  margin-left: 30%;
-}
-
-#edit-comment-textarea {
-  width: 60rem;
-  height: 20rem;
-  resize: none;
-  border-radius: 0.5rem;
 }

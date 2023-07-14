@@ -44,7 +44,7 @@ export default function NewsPage() {
     desc: "",
     emailUser: "",
   });
-  const modal = document.querySelector("dialog");
+  const popup = document.querySelector("dialog");
   const newsDate =
     new Date(news.publishDate).toLocaleDateString("uk-UA") +
     " " +
@@ -67,24 +67,16 @@ export default function NewsPage() {
     );
   }
 
-  const openModal = () => {
-    modal.showModal();
-  };
-
-  const closeModal = () => {
-    modal.close();
-  };
-
   const close = () => {
-    modal.addEventListener("click", e => {
-      const dialogDimensions = modal.getBoundingClientRect();
+    popup.addEventListener("click", e => {
+      const dialogDimensions = popup.getBoundingClientRect();
       if (
         e.clientX < dialogDimensions.left ||
         e.clientX > dialogDimensions.right ||
         e.clientY < dialogDimensions.top ||
         e.clientY > dialogDimensions.bottom
       ) {
-        modal.close();
+        popup.close();
       }
     })
   }
@@ -93,7 +85,7 @@ export default function NewsPage() {
     setComment({ ...comment, text: event.target.value });
   };
 
-  const updateNewsName = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const updateNewsName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUpdateNews({ ...updateNews, name: event.target.value });
   };
 
@@ -129,15 +121,14 @@ export default function NewsPage() {
 
   return (
     <>
-      <main className="news-page-main-box">
-        <div className="news-page-content-container">
+      <main>
           <img
             className="news-page-img"
             src="https://source.unsplash.com/random/?sport/"
             alt="sport-img"
           ></img>
           <div className="news-page-title-section">
-            <h1>{news.name}</h1>
+            <h3>{news.name}</h3>
             <button id="news-page-save-btn">
               Save
               <TurnedInNotIcon sx={{fontSize: "2rem"}} />
@@ -145,39 +136,36 @@ export default function NewsPage() {
             {role === "ADMIN" ? (
               <>
                 <button
-                  className="create-new-news-btn news-page-edit-text-btn"
-                  onClick={openModal}
+                  className="admin-btn edit-btn"
+                  onClick={() => popup.showModal()}
                 >
                   Редагувати
                 </button>
                 <button
-                  className="create-new-news-btn news-page-delete-text-btn"
+                  className="admin-btn delete-btn"
                   onClick={deleteNews}
                 >
                   Видалити
                 </button>
-                <dialog className="news-create-dialog" onClick={close}>
-                  <button id="close-news-dialog" onClick={closeModal}></button>
-                  <h2>Редагування новини</h2>
+                <dialog className="popup" onClick={close}>
+                  <div className="closeBtn" onClick={() => popup.close()}></div>
+                  <h4>Редагування новини</h4>
                   <div>
                     <p>Введіть назву</p>
-                    <textarea
-                      id="name-textarea"
+                    <input
                       onChange={updateNewsName}
                       value={updateNews.name}
-                    ></textarea>
+                    ></input>
                   </div>
-                  <hr />
                   <div>
                     <p>Введіть текст</p>
                     <textarea
-                      id="text-textarea"
                       onChange={updateNewsText}
                       value={updateNews.desc}
                     ></textarea>
                   </div>
                   <button
-                    className="create-new-news-btn"
+                    className="admin-btn edit-btn"
                     type="submit"
                     onClick={editNews}
                   >
@@ -185,9 +173,7 @@ export default function NewsPage() {
                   </button>
                 </dialog>
               </>
-            ) : (
-              ""
-            )}
+            ) : null}
           </div>
           <div className="news-page-author-section">
             <img
@@ -197,35 +183,31 @@ export default function NewsPage() {
             ></img>
             <div className="news-page-author-info">
               <p>{authorName}</p>
-              <hr id="news-page-divider" />
               <p>{newsDate}</p>
             </div>
           </div>
           <hr id="news-page-divider" />
-          <p className="news-page-text">{news.desc}</p>
+          <h4>{news.desc}</h4>
           <hr id="news-page-divider" />
 
-          <div className="news-page-comment-section">
-            <p className="news-page-comment-title">Коментарі</p>
-            <textarea
-              id="news-page-comment-area"
-              onChange={updateComment}
-            ></textarea>
-            <button
-              id="news-page-comment-btn"
-              type="submit"
-              onClick={submitComment}
-            >
-              Надіслати
-            </button>
-            <div className="news-page-comment-grid">
-              {news.commentList &&
-                news.commentList.map((comment) => (
-                  <NewsComment key={comment.id} comment={comment} />
-                ))}
-            </div>
+          <h4>Коментарі</h4>
+          <textarea
+            className="comment-area"
+            onChange={updateComment}
+          ></textarea>
+          <button
+            className="send-btn"
+            type="submit"
+            onClick={submitComment}
+          >
+            Надіслати
+          </button>
+          <div className="template-grid">
+            {news.commentList &&
+              news.commentList.map((comment) => (
+                <NewsComment key={comment.id} comment={comment} />
+              ))}
           </div>
-        </div>
       </main>
     </>
   );

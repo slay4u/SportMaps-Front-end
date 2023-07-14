@@ -9,15 +9,11 @@ export default function FeaturedTopic(prop: PropTypes.InferProps<typeof Featured
     const description = topic.desc.length > 100 ? topic.desc.slice(0, 100) + "..." : topic.desc;
     const navigate = useNavigate();
 
-    const routeChange = () => {
-        navigate(`/forumPage/${topic.id}`);
-    };
-
     return (<>
-        <div className="featured-container" onClick={routeChange}>
+        <div className="featured-container" onClick={() => navigate(`/forumPage/${topic.id}`)}>
             <div className="featured-content">
-                <h1>{topic.name}</h1>
-                <h2>{createDate}</h2>
+                <h4>{topic.name}</h4>
+                <h5>{createDate}</h5>
                 <p>{description}</p>
             </div>
         </div>

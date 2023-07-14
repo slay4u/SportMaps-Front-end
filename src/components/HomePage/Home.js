@@ -63,7 +63,7 @@ export default function Home() {
             fontSize: "32px",
           }}
         >
-          <span style={{ fontSize: "70px", fontStyle: "italic" }}>
+          <span style={{ fontSize: "var(--fs-700)", fontStyle: "italic" }}>
             Sport Maps
           </span>
           <br></br>
