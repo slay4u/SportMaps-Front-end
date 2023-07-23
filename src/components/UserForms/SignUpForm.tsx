@@ -4,46 +4,34 @@ import {useNavigate} from "react-router-dom";
 import {useSignupMutation} from "../../store/auth/authApiSlice";
 import "./user.css";
 
-const USERNAME_REGEX = "^(?=.{2,30}$)[A-Z][a-zA-Z]*(?:\\h+[A-Z][a-zA-Z]*)*$";
-const PWD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[{}:#@!;\\[_'`\\],\".\\/~?*\\-$^+=\\\\<>]).{8,20}$";
-const EMAIL_REGEX = "^(?=.{1,32}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+const USERNAME_REGEXP = /^(?=.{2,30}$)[A-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/;
+const PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[{}:#@!;[_'`\],"./~?*\-$^+=\\<>]).{8,20}$/;
+const EMAIL_REGEXP = /^(?=.{1,32}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
 
 export default function SignUp() {
     const [signup] = useSignupMutation();
-    const [firstName, setFirstName] = useState("");
-    const [validFirstName, setValidFirstName] = useState(false);
-    const [lastName, setLastName] = useState("");
-    const [validLastName, setValidLastName] = useState(false);
-    const [password, setPassword] = useState("");
-    const [validPassword, setValidPassword] = useState(false);
-    const [email, setEmail] = useState("");
-    const [validEmail, setValidEmail] = useState(false);
-    let errMsg = "Error";
+    const [user, setUser] = useState({
+        firstName: "", lastName: "", email: "", password: ""
+    });
+    const [valid, setValid] = useState({
+        firstName: false, lastName: false, email: false, password: false
+    });
     const navigate = useNavigate();
 
     useEffect(() => {
-        setValidFirstName(checkValid(firstName, USERNAME_REGEX));
-    }, [firstName]);
+        setValid(prev => ({...prev, firstName: USERNAME_REGEXP.test(user.firstName)}));
+        setValid(prev => ({...prev, lastName: USERNAME_REGEXP.test(user.lastName)}));
+        setValid(prev => ({...prev, email: EMAIL_REGEXP.test(user.email)}));
+        setValid(prev => ({...prev, password: PASSWORD_REGEXP.test(user.password)}));
+    }, [user]);
 
-    useEffect(() => {
-        setValidLastName(checkValid(lastName, USERNAME_REGEX));
-    }, [lastName]);
-
-    useEffect(() => {
-        setValidEmail(checkValid(email, EMAIL_REGEX));
-    }, [email]);
-
-    useEffect(() => {
-        setValidPassword(checkValid(password, PWD_REGEX));
-    }, [password]);
-
-    const checkValid = (checkedString: string, regex: string) => {
-        return !!checkedString.match(regex);
+    const handleChange = (e: { target: { name: string; value: string; }; }) => {
+      setUser(prev=> ({...prev, [e.target.name]: e.target.value}));
     };
 
     const activateAccount = async (token: string) => {
         const response = await fetch(`http://localhost:8090/sport-maps/v1/auth/accountVerification/${token}`, {
-            method: "GET",
+            method: "GET"
         });
         if (response.ok) {
             navigate("/signin");
@@ -52,20 +40,14 @@ export default function SignUp() {
 
     const handleSubmit = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        if (!firstName.match(USERNAME_REGEX) || !lastName.match(USERNAME_REGEX) || !email.match(EMAIL_REGEX) || !password.match(PWD_REGEX)) {
-            errMsg = "Invalid entry!";
-            return;
-        }
+        let errMsg = "Something went wrong...";
         try {
-            const response = await signup({
-                firstName, lastName, email, password
-            }).unwrap();
-            setFirstName("");
-            setLastName("");
-            setPassword("");
-            setEmail("");
+            const response = await signup(user).unwrap();
             await activateAccount(response);
         } catch (err) {
+            if (err.status === 403) {
+                errMsg = "Email already taken.";
+            }
             alert(errMsg);
         }
     };
@@ -81,11 +63,11 @@ export default function SignUp() {
                     required
                     type="text"
                     autoComplete="off"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    name="firstName"
+                    onChange={handleChange}
                 />
                 <label>First Name</label>
-                <h5 className={firstName && !validFirstName ? "instructions" : "offscreen"}>
+                <h5 className={user.firstName && !valid.firstName ? "instructions" : "offscreen"}>
                     Provide valid name, please.
                 </h5>
             </div>
@@ -94,11 +76,11 @@ export default function SignUp() {
                     required
                     type="text"
                     autoComplete="off"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    name="lastName"
+                    onChange={handleChange}
                 />
                 <label>Last Name</label>
-                <h5 className={lastName && !validLastName ? "instructions" : "offscreen"}>
+                <h5 className={user.lastName && !valid.lastName ? "instructions" : "offscreen"}>
                     Provide valid name, please.
                 </h5>
             </div>
@@ -107,11 +89,11 @@ export default function SignUp() {
                     required
                     type="text"
                     autoComplete="off"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    name="email"
+                    onChange={handleChange}
                 />
                 <label>Email</label>
-                <h5 className={email && !validEmail ? "instructions" : "offscreen"}>
+                <h5 className={user.email && !valid.email ? "instructions" : "offscreen"}>
                     Provide valid email, please.
                 </h5>
             </div>
@@ -120,11 +102,11 @@ export default function SignUp() {
                     required
                     type="password"
                     autoComplete="off"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
+                    onChange={handleChange}
                 />
                 <label>Password</label>
-                <h5 className={password && !validPassword ? "instructions" : "offscreen"}>
+                <h5 className={user.password && !valid.password ? "instructions" : "offscreen"}>
                     Password must contain letters, numbers and special symbols. Should be at least 8 characters
                     long.
                 </h5>
@@ -132,7 +114,7 @@ export default function SignUp() {
             <button
                 type="submit"
                 className="signUserFormButton"
-                disabled={!validFirstName || !validLastName || !validEmail || !validPassword}
+                disabled={!valid.firstName || !valid.lastName || !valid.email || !valid.password}
                 onClick={handleSubmit}
             >
                 Sign Up

@@ -33,8 +33,7 @@ export default function ForumPage() {
         name: "", createDate: "", desc: "", emailUser: ""
     });
     const forumDate =
-        new Date(forum.createDate).toLocaleDateString("uk-UA") +
-        " " +
+        new Date(forum.createDate).toLocaleDateString("uk-UA") + " " +
         new Date(forum.createDate).toLocaleTimeString("uk-UA").slice(0, 5);
     const [comment, setComment] = useState({
         text: "", idForum: forumId, emailUser: email, createdDate: ""
@@ -75,8 +74,7 @@ export default function ForumPage() {
 
     function getCurrentDate() {
         return (
-            new Date().toLocaleDateString("uk-UA") +
-            " " +
+            new Date().toLocaleDateString("uk-UA") + " " +
             new Date().toLocaleTimeString("uk-UA").slice(0, 5)
         );
     }
@@ -91,12 +89,8 @@ export default function ForumPage() {
         window.location.reload();
     }
 
-    const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUpdateForum({...updateForum, name: event.target.value});
-    };
-
-    const handleText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setUpdateForum({...updateForum, desc: event.target.value});
+    const handleChange = (e: { target: { name: string; value: string; }; }) => {
+        setUpdateForum(prev=> ({...prev, [e.target.name]: e.target.value}));
     };
 
     const editForum = () => {
@@ -150,10 +144,8 @@ export default function ForumPage() {
                     </button>
                 </div>
                 <div className="template-grid">
-                    {forum.commentList &&
-                        forum.commentList.map((comment) => (
-                            <ForumComment key={comment.id} comment={comment}/>
-                        ))}
+                    {forum.commentList && forum.commentList.map((comment) => (
+                            <ForumComment key={comment.id} comment={comment}/>))}
                 </div>
                 <dialog className="popup" onClick={close}>
                     <div
@@ -163,12 +155,9 @@ export default function ForumPage() {
                     </div>
                     <h4>Edit forum</h4>
                     <p>Input new name:</p>
-                    <input onChange={handleName} value={updateForum.name}></input>
+                    <input onChange={handleChange} name="name"></input>
                     <p>Input new text:</p>
-                    <textarea
-                        onChange={handleText}
-                        value={updateForum.desc}
-                    ></textarea>
+                    <textarea onChange={handleChange} name="desc"></textarea>
                     <button
                         className="admin-btn edit-btn"
                         type="submit"

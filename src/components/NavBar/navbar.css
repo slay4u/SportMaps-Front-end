@@ -14,12 +14,6 @@
     flex-grow: 1;
 }
 
-.navbar-container h4 {
-    background-image: linear-gradient(90deg, var(--clr-primary) 0%, var(--clr-accent) 74%);
-    background-clip: text;
-    color: transparent;
-}
-
 .navbar-button {
     position: absolute;
     left: 90%;

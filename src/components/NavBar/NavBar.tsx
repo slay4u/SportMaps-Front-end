@@ -16,12 +16,10 @@ export default function NavigationBar() {
     };
 
     return (<>
-        <div className="navbar-container">
-            <a href="/about">About us</a>
-            <a href="/chat">ChatRoom</a>
+        <nav className="navbar-container">
+            <a href="/">SportMaps</a>
             <a href="/maps">Maps</a>
             <a href="/forums">Forums</a>
-            <a href="/"><h4>SportMaps</h4></a>
             <a href="/news">News</a>
             <a href="/coaches">Coaches</a>
             <a href="/events">Events</a>
@@ -31,6 +29,6 @@ export default function NavigationBar() {
             </button>) : (<button className="navbar-button">
                 <a href="/signin">Sign In</a>
             </button>)}
-        </div>
+        </nav>
     </>);
 }
