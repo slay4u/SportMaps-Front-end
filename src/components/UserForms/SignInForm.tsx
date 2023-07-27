@@ -27,12 +27,12 @@ export default function SignIn() {
         }
     };
 
-    return (<>
-        <main className="signUserFormContainer">
+    return (<main className="center-container sign-container">
+        <div className="signUserFormContainer">
             <div className="signUserFormAvatar">
                 <LoginOutlined sx={{fontSize: "2.5rem"}}/>
             </div>
-            <p>Sign In</p>
+            <h4>Sign In</h4>
             <div className="sign-input-container">
                 <input
                     required
@@ -61,6 +61,6 @@ export default function SignIn() {
             <div className="signUserFormLinkContainer">
                 <a href="/signup"><h5>Don&apos;t have an account? Sign up</h5></a>
             </div>
-        </main>
-    </>);
+        </div>
+    </main>);
 }

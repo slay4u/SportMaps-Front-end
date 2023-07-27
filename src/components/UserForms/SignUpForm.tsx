@@ -52,12 +52,12 @@ export default function SignUp() {
         }
     };
 
-    return (<>
-        <main className="signUserFormContainer">
+    return (<main className="center-container sign-container">
+        <div className="signUserFormContainer">
             <div className="signUserFormAvatar">
                 <LockPersonOutlined sx={{fontSize: "2.5rem"}}/>
             </div>
-            <p>Sign Up</p>
+            <h4>Sign Up</h4>
             <div className="sign-input-container">
                 <input
                     required
@@ -67,7 +67,7 @@ export default function SignUp() {
                     onChange={handleChange}
                 />
                 <label>First Name</label>
-                <h5 className={user.firstName && !valid.firstName ? "instructions" : "offscreen"}>
+                <h5 className={user.firstName && !valid.firstName ? "instructions" : "visually-hidden"}>
                     Provide valid name, please.
                 </h5>
             </div>
@@ -80,7 +80,7 @@ export default function SignUp() {
                     onChange={handleChange}
                 />
                 <label>Last Name</label>
-                <h5 className={user.lastName && !valid.lastName ? "instructions" : "offscreen"}>
+                <h5 className={user.lastName && !valid.lastName ? "instructions" : "visually-hidden"}>
                     Provide valid name, please.
                 </h5>
             </div>
@@ -93,7 +93,7 @@ export default function SignUp() {
                     onChange={handleChange}
                 />
                 <label>Email</label>
-                <h5 className={user.email && !valid.email ? "instructions" : "offscreen"}>
+                <h5 className={user.email && !valid.email ? "instructions" : "visually-hidden"}>
                     Provide valid email, please.
                 </h5>
             </div>
@@ -106,7 +106,7 @@ export default function SignUp() {
                     onChange={handleChange}
                 />
                 <label>Password</label>
-                <h5 className={user.password && !valid.password ? "instructions" : "offscreen"}>
+                <h5 className={user.password && !valid.password ? "instructions" : "visually-hidden"}>
                     Password must contain letters, numbers and special symbols. Should be at least 8 characters
                     long.
                 </h5>
@@ -122,6 +122,6 @@ export default function SignUp() {
             <div className="signUserFormLinkContainer">
                 <a href="/signin"><h5>Already have an account? Sign in</h5></a>
             </div>
-        </main>
-    </>);
+        </div>
+    </main>);
 }
