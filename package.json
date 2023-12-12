@@ -1,54 +1,28 @@
 {
   "name": "sport-maps",
   "version": "1.0.0",
-  "description": "For everyone who loves sport.",
   "private": true,
   "dependencies": {
-    "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.13.6",
-    "@react-google-maps/api": "^2.18.1",
-    "@reduxjs/toolkit": "^1.9.5",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.19",
+    "@mui/material": "^5.14.20",
+    "@react-google-maps/api": "^2.19.2",
+    "@tanstack/react-query": "^5.12.2",
+    "axios": "^1.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.1.1",
-    "react-router-dom": "^6.14.0",
-    "react-scripts": "^5.0.1",
-    "redux-persist": "^6.0.0"
+    "react-router-dom": "^6.20.1",
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "webpack --mode production",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead"
-    ],
-    "development": [
-      "last 1 year"
-    ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@types/node": "^20.3.1",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "@typescript-eslint/eslint-plugin": "^5.60.0",
-    "@typescript-eslint/parser": "^5.60.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^9.1.2",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "eslint": "^8.43.0",
-    "eslint-plugin-react": "^7.32.2",
-    "html-webpack-plugin": "^5.5.3",
-    "svg-url-loader": "^8.0.0",
-    "ts-loader": "^9.4.3",
-    "typescript": "^4.9.5",
-    "webpack": "^5.88.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
-  }
+  "browserslist": [
+    "last 2 years",
+    "not dead"
+  ]
 }
