@@ -3,12 +3,12 @@ import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
 import {useParams} from 'react-router-dom'
 import NewsComment from './NewsComment'
 import './News.css'
-import {useStateContext} from '../../context/context'
+import {useAuthentication} from '../../context/context'
 import {createFn, deleteFn, getByIdFn, updateFn} from '../../api/authApi'
 
 export default function NewsPage() {
     const {id} = useParams()
-    const {state} = useStateContext()
+    const {state} = useAuthentication()
     const email = state.email
     const role = state.role
     const [news, setNews] = useState({})

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const baseURL = 'http://localhost:8090/api/v1'
-const refreshTokenRequest = {
+const refreshRequest = {
     email: localStorage.getItem('email'),
     refreshToken: localStorage.getItem('refreshToken')
 }
@@ -23,24 +23,27 @@ const api = axios.create({
     withCredentials: false
 })
 
-export async function refreshTokenFn(refreshTokenRequest) {
-    const {data} = await api.post('/refresh', refreshTokenRequest)
-    return data
+async function refreshTokenFn(body) {
+    let response
+    try {
+        response = await api.post('/refresh', body)
+    } catch (err) {
+        localStorage.clear()
+        window.location.href = '/login'
+    }
+    return response.data
 }
 
-authApi.interceptors.response.use(response => {
-    return response
-}, async error => {
-    const originalRequest = error.config
-    if (error.response.status === 406 && !originalRequest._retry) {
+authApi.interceptors.response.use(response => response,
+    async err => {
+    const originalRequest = err.config
+    if (err.response.status === 406 && !originalRequest._retry) {
         originalRequest._retry = true
-        const data = await refreshTokenFn(refreshTokenRequest)
+        const data = await refreshTokenFn(refreshRequest)
         localStorage.setItem('token', data.token)
-        localStorage.setItem('refreshToken', data.refreshToken)
         return authApi(originalRequest)
     }
-    if (error.response.status === 403) window.location.href = '/login'
-    return Promise.reject(error)
+    return Promise.reject(err)
 })
 
 export async function logoutFn(token) {

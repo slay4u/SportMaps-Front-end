@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import './News.css'
-import {useStateContext} from "../../context/context";
+import {useAuthentication} from "../../context/context";
 import {deleteFn, updateFn} from "../../api/authApi";
 
 export default function NewsComment(prop) {
     const {comment} = prop
     const authorArray = comment.author.split('|')
-    const {state} = useStateContext()
+    const {state} = useAuthentication()
     const popup = document.getElementById('popupNewsComment' + comment.id)
     const role = state.role
     const [updateComment, setUpdateComment] = useState({

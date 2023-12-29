@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import './forums.css'
 import {deleteFn, updateFn} from '../../api/authApi'
-import {useStateContext} from '../../context/context'
+import {useAuthentication} from '../../context/context'
 
 export default function ForumComment(prop) {
     const {comment} = prop
     const authorArray = comment.author.split('|')
-    const {state} = useStateContext()
+    const {state} = useAuthentication()
     const popup = document.getElementById('popupForumComment' + comment.id)
     const role = state.role
     const [updateComment, setUpdateComment] = useState({

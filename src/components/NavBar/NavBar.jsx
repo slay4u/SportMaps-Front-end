@@ -1,31 +1,25 @@
 import React, {useEffect} from 'react'
 import logo from '../../assets/logo.svg'
-import {useStateContext} from '../../context/context'
+import {useAuthentication} from '../../context/context'
 import {logoutFn} from '../../api/authApi'
 import {Menu} from "@mui/icons-material";
 
 export default function NavigationBar() {
     let primaryHeader, navToggle, primaryNav = null
-    const {state, setState} = useStateContext()
+    const {state, setState} = useAuthentication()
     const refreshToken = state.refreshToken
 
     async function logout(e) {
         e.preventDefault()
         await logoutFn(refreshToken)
-        setState({
-            token: null,
-            refreshToken: null,
-            email: null,
-            role: null,
-            username: null
-        })
+        setState({})
     }
 
     useEffect(() => {
-        primaryHeader = document.querySelector(".primary-header");
-        navToggle = document.querySelector(".mobile-nav-toggle");
-        primaryNav = document.querySelector(".primary-navigation");
-    }, []);
+        primaryHeader = document.querySelector('.primary-header')
+        navToggle = document.querySelector('.mobile-nav-toggle')
+        primaryNav = document.querySelector('.primary-navigation')
+    }, [])
 
     const openMobileMenu = () => {
         navToggle.setAttribute("aria-expanded", String(!primaryNav.hasAttribute("data-visible")))
