@@ -5,10 +5,9 @@ import './News.css'
 export default function MainFeaturedPost(prop) {
   const {post} = prop
   const date =
-    new Date(post.date).toLocaleDateString('uk-UA') +
-    " " +
-    new Date(post.date).toLocaleTimeString('uk-UA').slice(0, 5)
-  const text = (post.text.length > 330) ? post.text.slice(0,330) + '...' : post.text
+    new Date(post?.date).toLocaleDateString('uk-UA') + " " +
+    new Date(post?.date).toLocaleTimeString('uk-UA').slice(0, 5)
+  const text = (post?.text.length > 330) ? post?.text.slice(0,330) + '...' : post?.text
   const navigate = useNavigate()
 
   return <div
@@ -18,7 +17,7 @@ export default function MainFeaturedPost(prop) {
       >
         <span className='main-featured-container-shadow'></span>
         <div className='main-featured-content'>
-          <h1>{post.name}</h1>
+          <h1>{post?.name}</h1>
           <p>{date}</p>
           <p>{text}</p>
         </div>

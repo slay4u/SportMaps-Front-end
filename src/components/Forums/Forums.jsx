@@ -5,11 +5,12 @@ import {createFn, getAllFn} from '../../api/authApi'
 import {useAuthentication} from '../../context/context'
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import {CircularProgress} from '@mui/material'
+import {jwtDecode} from 'jwt-decode'
 
 export default function Forums() {
     const {state} = useAuthentication()
     const [newForum, setNewForum] = useState({
-        name: '', date: '', text: '', author: state.email
+        name: '', date: '', text: '', author: jwtDecode(state?.token)?.sub
     })
     const queryClient = useQueryClient()
     const {data, isLoading} = useQuery({

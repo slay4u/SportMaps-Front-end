@@ -1,69 +1,71 @@
 import React, {useState} from 'react'
 import './News.css'
-import {useAuthentication} from "../../context/context";
-import {deleteFn, updateFn} from "../../api/authApi";
+import {useAuthentication} from '../../context/context'
+import {deleteFn, updateFn} from '../../api/authApi'
+import {jwtDecode} from 'jwt-decode'
+import {useMutation, useQueryClient} from '@tanstack/react-query'
 
 export default function NewsComment(prop) {
     const {comment} = prop
-    const authorArray = comment.author.split('|')
     const {state} = useAuthentication()
-    const popup = document.getElementById('popupNewsComment' + comment.id)
-    const role = state.role
     const [updateComment, setUpdateComment] = useState({
-        date: '', author: authorArray[0], id: comment.idEntity, text: ''
+        date: '', author: comment?.author.split('|')[0], id: comment.idEntity, text: ''
     })
-    const date = new Date(comment.date).toLocaleDateString('uk-UA') + ' ' + new Date(comment.date).toLocaleTimeString('uk-UA').slice(0, 5)
+    const date =
+        new Date(comment?.date).toLocaleDateString('uk-UA') + ' ' +
+        new Date(comment?.date).toLocaleTimeString('uk-UA').slice(0, 5)
 
-    async function deleteComment() {
-        await deleteFn('/news-comments', comment.id)
-        window.location.reload()
-    }
+    const queryClient = useQueryClient()
+    const editComment = useMutation({
+        mutationFn: (body) => updateFn('/news-comments', comment.id, body),
+        onSuccess: () => queryClient.invalidateQueries({queryKey: ['news-comments', comment.id]})
+    })
+    const deleteComment = useMutation({
+        mutationFn: () => deleteFn('/news-comments', comment.id),
+        onSuccess: () => queryClient.invalidateQueries({queryKey: ['news-comments']})
+    })
 
-    function updateNewsText(e) {
+    function updateCommentText(e) {
         setUpdateComment({...updateComment, text: e.target.value})
     }
 
-    async function editComment() {
+    function updateCommentFn() {
         updateComment.date = new Date().toJSON().slice(0, 16)
-        await updateFn('/news-comments', comment.id, updateComment)
+        editComment.mutate(updateComment)
         window.location.reload()
     }
 
-    return <main className="forum-page-container">
-        <div className="comment-header-container">
-            <p>{authorArray[1] + " " + authorArray[2]}</p>
+    function deleteCommentFn() {
+        deleteComment.mutate()
+        window.location.reload()
+    }
+
+    return <main className='forum-page-container'>
+        <div className='comment-header-container'>
+            <p>{comment?.author.split('|')[1] + " " + comment?.author.split('|')[2]}</p>
             <h5>{date}</h5>
         </div>
-        <p>{comment.text}</p>
-        {role === "ADMIN" ? (<div
-            style={{textAlign: 'center'}}
-        >
-            <button
-                className="admin-btn edit-btn"
-                onClick={() => popup.showModal()}
-            >
+        <p>{comment?.text}</p>
+        {jwtDecode(state?.token)?.role === 'ADMIN' ? (<div style={{textAlign: 'center'}}>
+            <button className='admin-btn edit-btn'
+                    onClick={() => document.getElementById('popupNewsComment' + comment?.id).showModal()}>
                 Редагувати
             </button>
-            <button
-                className="admin-btn delete-btn"
-                onClick={deleteComment}
-            >
+            <button className='admin-btn delete-btn'
+                    onClick={deleteCommentFn}>
                 Видалити
             </button>
         </div>) : null}
-        <dialog className="popup" id={"popupNewsComment" + comment.id}>
-            <div className="closeBtn" onClick={() => popup.close()}></div>
+        <dialog className='popup' id={'popupNewsComment' + comment?.id}>
+            <div className='closeBtn' onClick={() => document.getElementById('popupNewsComment' + comment?.id).close()}></div>
             <h4>Редагування коментарію</h4>
             <p>Введіть текст</p>
             <textarea
-                onChange={updateNewsText}
-                value={updateComment.text}
+                onChange={updateCommentText}
             ></textarea>
-            <button
-                className="admin-btn edit-btn"
-                type="submit"
-                onClick={editComment}
-            >
+            <button className='admin-btn edit-btn'
+                    type='submit'
+                    onClick={updateCommentFn}>
                 Редагувати
             </button>
         </dialog>
