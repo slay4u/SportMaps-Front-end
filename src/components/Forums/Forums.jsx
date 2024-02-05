@@ -2,15 +2,14 @@ import React, {useState} from 'react'
 import FeaturedTopic from './FeaturedTopic'
 import './forums.css'
 import {createFn, getAllFn} from '../../api/authApi'
-import {useAuthentication} from '../../context/context'
+import useAuthentication from '../../hooks/useAuthentication'
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import {CircularProgress} from '@mui/material'
-import {jwtDecode} from 'jwt-decode'
 
 export default function Forums() {
     const {state} = useAuthentication()
     const [newForum, setNewForum] = useState({
-        name: '', date: '', text: '', author: jwtDecode(state?.token)?.sub
+        name: '', date: '', text: '', author: state.email || ''
     })
     const queryClient = useQueryClient()
     const {data, isLoading} = useQuery({
@@ -32,26 +31,28 @@ export default function Forums() {
     }
 
     return <main>
-        <dialog className='popup' id='popupForums'>
-            <div className='closeBtn' onClick={
-                () => document.getElementById('popupForums').close()}></div>
-            <h4>New forum</h4>
-            <div>
-                <p>Input new name:</p>
-                <input onChange={handleChange} name='name'></input>
-                <p>Input new text:</p>
-                <textarea onChange={handleChange} name='text'></textarea>
+        {state.token ? <>
+            <dialog className='popup' id='popupForums'>
+                <div className='closeBtn' onClick={
+                    () => document.getElementById('popupForums').close()}></div>
+                <h4>New forum</h4>
+                <div>
+                    <p>Input new name:</p>
+                    <input onChange={handleChange} name='name'></input>
+                    <p>Input new text:</p>
+                    <textarea onChange={handleChange} name='text'></textarea>
+                </div>
+                <button className='admin-btn create-btn' type='submit' onClick={handleSubmit}>
+                    Create
+                </button>
+            </dialog>
+            <div className='create-btn-container'>
+                <button className='admin-btn create-btn'
+                        onClick={() => document.getElementById('popupForums').showModal()}>
+                    Create new forum
+                </button>
             </div>
-            <button className='admin-btn create-btn' type='submit' onClick={handleSubmit}>
-                Create
-            </button>
-        </dialog>
-        <div className='create-btn-container'>
-            <button className='admin-btn create-btn'
-                    onClick={() => document.getElementById('popupForums').showModal()}>
-                Create new forum
-            </button>
-        </div>
+        </> : null}
         {isLoading ? <CircularProgress/> : <div className='template-grid'>
             {data?.content?.map(topic => <FeaturedTopic key={topic.id} topic={topic}/>).reverse()}
         </div>}

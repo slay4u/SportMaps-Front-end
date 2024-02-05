@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 
 export default function NoMatch() {
+    const navigate = useNavigate()
+
     useEffect(() => {
-        setTimeout(() => {
-            window.location.href = '/'
-        }, 2000)
+        setTimeout(() => navigate(-1),
+            2000)
     }, [])
 
     return <main className="center-container">

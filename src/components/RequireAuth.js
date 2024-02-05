@@ -1,11 +1,11 @@
 import {Navigate, Outlet, useLocation} from 'react-router-dom'
 import React from 'react'
-import {useAuthentication} from '../context/context'
+import useAuthentication from '../hooks/useAuthentication'
 
-export default function RequireAuth() {
+export default function RequireAuth({allowedRoles}) {
     const location = useLocation()
     const {state} = useAuthentication()
-    if (!state.token || state.token.length < 32)
-        return <Navigate to="/login" state={{from: location}} replace/>
-    return <Outlet/>
+    return allowedRoles?.includes(state?.role) ? <Outlet/> : state?.token ?
+        <Navigate to='/unauthorized' state={{from: location}} replace/> :
+        <Navigate to='/login' state={{from: location}} replace/>
 }

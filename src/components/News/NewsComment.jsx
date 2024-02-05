@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import './News.css'
-import {useAuthentication} from '../../context/context'
+import useAuthentication from '../../hooks/useAuthentication'
 import {deleteFn, updateFn} from '../../api/authApi'
 import {jwtDecode} from 'jwt-decode'
 import {useMutation, useQueryClient} from '@tanstack/react-query'

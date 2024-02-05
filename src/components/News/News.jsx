@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import MainFeaturedPost from './MainFeaturedPost'
 import FeaturedPost from './FeaturedPost'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import {useAuthentication} from '../../context/context'
+import useAuthentication from '../../hooks/useAuthentication'
 import {createFn, getAllFn} from '../../api/authApi'
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import {CircularProgress} from '@mui/material'
@@ -11,9 +11,9 @@ import {jwtDecode} from 'jwt-decode'
 
 export default function News() {
     const {state} = useAuthentication()
-    const [newNews, setNewNews] = useState({
-        name: '', date: '', text: '', author: jwtDecode(state?.token)?.sub
-    })
+    // const [newNews, setNewNews] = useState({
+    //     name: '', date: '', text: '', author: jwtDecode(state?.token)?.sub
+    // })
     const queryClient = useQueryClient()
     const {data, isLoading} = useQuery({
         queryKey: ['news'], queryFn: () => getAllFn('/news', 0)
@@ -23,15 +23,15 @@ export default function News() {
         onSuccess: () => queryClient.invalidateQueries({queryKey: ['news']})
     })
 
-    function handleChange(e) {
-        setNewNews(prev => ({...prev, [e.target.name]: e.target.value}))
-    }
-
-    function handleSubmit() {
-        newNews.date = new Date().toJSON().slice(0, 16)
-        createNews.mutate(newNews)
-        window.location.reload()
-    }
+    // function handleChange(e) {
+    //     setNewNews(prev => ({...prev, [e.target.name]: e.target.value}))
+    // }
+    //
+    // function handleSubmit() {
+    //     newNews.date = new Date().toJSON().slice(0, 16)
+    //     createNews.mutate(newNews)
+    //     window.location.reload()
+    // }
 
     return <main>
         <div className='news-img-container'>
@@ -75,31 +75,37 @@ export default function News() {
                 </p>
             </div>
         </div>
-        {jwtDecode(state?.token)?.role === 'ADMIN' ? <div className='create-btn-container'>
-            <button className='admin-btn create-btn'
-                    onClick={() => document.getElementById('popupNews').showModal()}>
-                Створити новину
-            </button>
-        </div> : null}
+        {state?.role === 'ADMIN' ? <><div className='create-btn-container'>
+                <button className='admin-btn create-btn'
+                        onClick={() => document.getElementById('popupNews').showModal()}>
+                    Створити новину
+                </button>
+            </div>
+            <dialog className='popup' id='popupNews'>
+                <div className='closeBtn'
+                     onClick={() => document.getElementById('popupNews').close()}></div>
+                <h4>Створення новини</h4>
+                <div>
+                    <p>Введіть назву</p>
+                    <input
+                        // onChange={handleChange}
+                           name='name'></input>
+                    <p>Введіть текст</p>
+                    <textarea
+                        // onChange={handleChange}
+                              name='text'></textarea>
+                </div>
+                <button className='admin-btn create-btn' type='submit'
+                        // onClick={handleSubmit}
+                >
+                    Створити
+                </button>
+            </dialog></> : null}
         {isLoading ? <CircularProgress/> : <>
             {data?.content?.slice(0, 1).map(post => (<MainFeaturedPost key={post.id} post={post}/>))}
             <div className='template-grid'>
                 {data?.content?.slice(1).map(post => (<FeaturedPost key={post.id} post={post}/>)).reverse()}
             </div>
         </>}
-        <dialog className='popup' id='popupNews'>
-            <div className='closeBtn'
-                 onClick={() => document.getElementById('popupNews').close()}></div>
-            <h4>Створення новини</h4>
-            <div>
-                <p>Введіть назву</p>
-                <input onChange={handleChange} name='name'></input>
-                <p>Введіть текст</p>
-                <textarea onChange={handleChange} name='text'></textarea>
-            </div>
-            <button className='admin-btn create-btn' type='submit' onClick={handleSubmit}>
-                Створити
-            </button>
-        </dialog>
     </main>
 }

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './forums.css'
 import {deleteFn, updateFn} from '../../api/authApi'
-import {useAuthentication} from '../../context/context'
+import useAuthentication from '../../hooks/useAuthentication'
 import {jwtDecode} from 'jwt-decode'
 import {useMutation, useQueryClient} from '@tanstack/react-query'
 
