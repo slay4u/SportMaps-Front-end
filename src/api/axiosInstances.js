@@ -16,3 +16,7 @@ export const api = axios.create({
     },
     withCredentials: true
 })
+
+export const authMultipartApi = axios.create({
+    baseURL: baseURL
+})

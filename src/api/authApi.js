@@ -1,4 +1,5 @@
 import useAuthApi from '../hooks/useAuthApi'
+import useAuthMultipartApi from "../hooks/useAuthMultipartApi";
 
 export async function getAllFn(url, page) {
     const authApi = useAuthApi()
@@ -29,4 +30,14 @@ export async function updateFn(url, id, body) {
 export async function deleteFn(url, id) {
     const authApi = useAuthApi()
     await authApi.delete(url + `/${id}`)
+}
+
+export async function createMultipartFn(url, formData) {
+    const authMultipartApi = useAuthMultipartApi()
+    await authMultipartApi.post(url, formData)
+}
+
+export async function updateMultipartFn(url, id, formData) {
+    const authMultipartApi = useAuthMultipartApi()
+    await authMultipartApi.put(url + `/${id}`, formData)
 }

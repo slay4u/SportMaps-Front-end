@@ -5,18 +5,36 @@ import {createFn, getAllFn} from '../../api/authApi'
 import useAuthentication from '../../hooks/useAuthentication'
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import {CircularProgress} from '@mui/material'
+import useAuthApi from '../../hooks/useAuthApi'
 
 export default function Forums() {
+    const authApi = useAuthApi()
     const {state} = useAuthentication()
     const [newForum, setNewForum] = useState({
         name: '', date: '', text: '', author: state.email || ''
     })
     const queryClient = useQueryClient()
+    // const {data, isLoading} = useQuery({
+    //     queryKey: ['forums'], queryFn: () => getAllFn('/forums', 0)
+    // })
+    // const createForum = useMutation({
+    //     mutationFn: (body) => createFn('/forums', body),
+    //     onSuccess: () => queryClient.invalidateQueries({queryKey: ['forums']})
+    // })
     const {data, isLoading} = useQuery({
-        queryKey: ['forums'], queryFn: () => getAllFn('/forums', 0)
+        queryKey: ['forums'], queryFn: async () => {
+            const forums = await authApi.get('/forums', {
+                params: {
+                    page: 0
+                }
+            })
+            return forums?.data
+        }
     })
     const createForum = useMutation({
-        mutationFn: (body) => createFn('/forums', body),
+        mutationFn: (body) => {
+            authApi.post('/forums', body)
+        },
         onSuccess: () => queryClient.invalidateQueries({queryKey: ['forums']})
     })
 
@@ -27,7 +45,7 @@ export default function Forums() {
     function handleSubmit() {
         newForum.date = new Date().toJSON().slice(0, 16)
         createForum.mutate(newForum)
-        window.location.reload()
+        // window.location.reload()
     }
 
     return <main>

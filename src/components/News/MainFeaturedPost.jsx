@@ -1,6 +1,8 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import './News.css'
+import parse from 'html-react-parser'
+import DOMPurify from 'dompurify'
 
 export default function MainFeaturedPost(prop) {
   const {post} = prop
@@ -19,7 +21,7 @@ export default function MainFeaturedPost(prop) {
         <div className='main-featured-content'>
           <h1>{post?.name}</h1>
           <p>{date}</p>
-          <p>{text}</p>
+          <div>{parse(DOMPurify.sanitize(text))}</div>
         </div>
-      </div>
+  </div>
 }

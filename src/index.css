@@ -86,6 +86,30 @@ h5 {
   font-size: var(--fs-200);
 }
 
+strong  {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+blockquote {
+  margin: 5px;
+  padding: 5px;
+  background: #797979;
+  border-radius: 5px;
+  font-style: italic;
+}
+
+blockquote::before {
+  content: '\201C';
+}
+
+blockquote::after {
+  content: '\201D';
+}
+
 img,
 picture,
 svg {

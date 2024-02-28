@@ -1,0 +1,108 @@
+.ql-snow .ql-stroke {
+    stroke: #ffffff !important;
+}
+
+.ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
+    fill: #ffffff !important;
+}
+
+.ql-snow .ql-thin, .ql-snow .ql-stroke.ql-thin {
+    fill: #ffffff !important;
+}
+
+.ql-snow .ql-picker.ql-header .ql-picker-label::before, .ql-snow .ql-picker.ql-header .ql-picker-item::before {
+    color: var(--clr-accent);
+}
+
+button:hover .ql-stroke,
+.ql-picker-label:hover .ql-stroke {
+    fill: none;
+    stroke: var(--clr-accent) !important;
+}
+
+.ql-active .ql-stroke {
+    fill: none;
+    stroke: var(--clr-accent) !important;
+}
+
+button:hover .ql-fill,
+.ql-picker-label:hover .ql-fill {
+    fill: var(--clr-accent) !important;
+    stroke: none;
+}
+
+.ql-active .ql-fill {
+    fill: var(--clr-accent) !important;
+    stroke: none;
+}
+
+.write {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+
+    .content {
+        flex: 5;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        input {
+            padding: 10px;
+            border: 2px solid lightblue;
+            border-radius: 5px;
+        }
+
+        .editorContainer {
+            height: 300px;
+            overflow: scroll;
+            border-bottom: 1px solid lightgrey;
+        }
+
+        .editor {
+            height: 100%;
+            border: none;
+        }
+    }
+
+    .menu {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .item {
+            border: 1px solid lightgrey;
+            padding: 10px;
+            flex: 1;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .file {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+
+            :first-child {
+                cursor: pointer;
+                color: teal;
+                background-color: transparent;
+                border: 1px solid teal;
+                width: 150px;
+            }
+
+            :last-child {
+                cursor: pointer;
+                color: teal;
+                background-color: transparent;
+                border: 1px solid teal;
+                width: 120px;
+            }
+        }
+    }
+}

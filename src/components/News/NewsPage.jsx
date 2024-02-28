@@ -1,12 +1,15 @@
 import React, {useState} from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams, Link} from 'react-router-dom'
 import NewsComment from './NewsComment'
 import './News.css'
 import useAuthentication from '../../hooks/useAuthentication'
-import {createFn, deleteFn, getByIdFn, updateFn} from '../../api/authApi'
+import {createFn, deleteFn, getByIdFn} from '../../api/authApi'
 import {jwtDecode} from 'jwt-decode'
 import {useQueryClient, useQuery, useMutation} from '@tanstack/react-query'
 import {CircularProgress} from '@mui/material'
+import parse from 'html-react-parser'
+import DOMPurify from 'dompurify'
+import {useDate} from './dateHook'
 
 export default function NewsPage() {
     const {id} = useParams()
@@ -14,18 +17,11 @@ export default function NewsPage() {
     const [comment, setComment] = useState({
         text: '', id: id, author: jwtDecode(state?.token)?.sub, date: ''
     })
-    const [updateNews, setUpdateNews] = useState({
-        name: '', date: '', text: '', author: ''
-    })
 
     const {data, isLoading} = useQuery({
         queryKey: ['news', id], queryFn: () => getByIdFn('/news', id)
     })
     const queryClient = useQueryClient()
-    const editNews = useMutation({
-        mutationFn: (body) => updateFn('/news', id, body),
-        onSuccess: () => queryClient.invalidateQueries({queryKey: ['news', id]})
-    })
     const deleteNews = useMutation({
         mutationFn: () => deleteFn('/news', id),
         onSuccess: () => queryClient.invalidateQueries({queryKey: ['news']})
@@ -35,27 +31,14 @@ export default function NewsPage() {
         onSuccess: () => queryClient.invalidateQueries({queryKey: ['news-comments']})
     })
 
-    const newsDate =
-        new Date(data?.date).toLocaleDateString('uk-UA') + ' ' +
-        new Date(data?.date).toLocaleTimeString('uk-UA').slice(0, 5)
+    const newsDate = useDate(data?.date)
 
     function updateComment(e) {
         setComment({...comment, text: e.target.value})
     }
 
-    function handleChange(e) {
-        setUpdateNews(prev => ({...prev, [e.target.name]: e.target.value}))
-    }
-
-    function updateNewsFn() {
-        updateNews.date = new Date().toJSON().slice(0, 16)
-        updateNews.author = data?.author.split('|')[0]
-        editNews.mutate(updateNews)
-        window.location.reload()
-    }
-
     function submitComment() {
-        comment.date = new Date().toJSON().slice(0, 16)
+        comment.date = new Date(Date.now() - ((new Date().getTimezoneOffset()) * 60000)).toJSON().slice(0, 16)
         createComment.mutate(comment)
         window.location.reload()
     }
@@ -69,49 +52,27 @@ export default function NewsPage() {
         {isLoading ? <CircularProgress/> : <>
             <img
                 className='news-page-img'
-                src='https://source.unsplash.com/random/?sport/'
+                src={`data:image/jpeg;base64, ${data?.image}`}
                 alt='sport-img'
-            ></img>
+                loading='lazy'
+            />
             <div className='news-page-title-section'>
                 <h3>{data?.name}</h3>
                 {jwtDecode(state?.token)?.role === 'ADMIN' ? (<>
-                    <button className='admin-btn edit-btn'
-                            onClick={() => document.getElementById('popupNewsPage' + id).showModal()}>
-                        Редагувати
+                    <button className='admin-btn edit-btn'>
+                        <Link to={`/editor/${id}`} state={data}
+                              style={{color: 'black', textDecoration: 'none'}}>Редагувати</Link>
                     </button>
                     <button className='admin-btn delete-btn'
                             onClick={deleteNewsFn}>
                         Видалити
                     </button>
-                    <dialog className='popup' id={'popupNewsPage' + id}>
-                        <div className='closeBtn' onClick={() => document.getElementById('popupNewsPage' + id).close()}></div>
-                        <h4>Редагування новини</h4>
-                        <div>
-                            <p>Введіть назву</p>
-                            <input
-                                onChange={handleChange}
-                                name='name'
-                            ></input>
-                        </div>
-                        <div>
-                            <p>Введіть текст</p>
-                            <textarea
-                                onChange={handleChange}
-                                name='text'
-                            ></textarea>
-                        </div>
-                        <button className='admin-btn edit-btn'
-                                type='submit'
-                                onClick={updateNewsFn}>
-                            Редагувати
-                        </button>
-                    </dialog>
                 </>) : null}
             </div>
             <div className='news-page-author-section'>
                 <img
                     id='news-page-author-avatar'
-                    src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'
+                    src='https://source.unsplash.com/random/?sport/'
                     alt='author-avatar'
                 ></img>
                 <div className='news-page-author-info'>
@@ -120,7 +81,7 @@ export default function NewsPage() {
                 </div>
             </div>
             <hr id='news-page-divider'/>
-            <h4>{data?.text}</h4>
+            <div>{parse(DOMPurify.sanitize(data?.text))}</div>
             <hr id='news-page-divider'/>
 
             <h4>Коментарі</h4>

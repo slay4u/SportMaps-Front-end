@@ -1,6 +1,8 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import './News.css'
+import parse from 'html-react-parser'
+import DOMPurify from 'dompurify'
 
 export default function FeaturedPost(prop) {
   const {post} = prop
@@ -14,15 +16,15 @@ export default function FeaturedPost(prop) {
         className='featured-container'
         onClick={() => navigate(`/news/${post.id}`)}
       >
-        <div 
-          className='featured-content'
-        >
-          <h4>{post?.name}</h4>
-          <h5>{date}</h5>
-          <p>{text}</p>
-        </div>
-        <img 
-          className='featured-image'
+    <div
+        className='featured-content'
+    >
+      <h4>{post?.name}</h4>
+      <h5>{date}</h5>
+      <div>{parse(DOMPurify.sanitize(text))}</div>
+    </div>
+    <img
+        className='featured-image'
           src={'https://source.unsplash.com/random/?sport' + '/' + post.id}
           alt={post.id + ' image'}
         ></img>

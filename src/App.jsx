@@ -24,6 +24,7 @@ const DisclaimerPage = lazy(() => import('./components/Disclaimer/DisclaimerPage
 const VerificationPage = lazy(() => import('./components/Verification/VerificationPage'))
 const EventPage = lazy(() => import('./components/Events/EventPage'))
 const Unauthorized = lazy(() => import('./components/401/Unauthorized'))
+const EditorPage = lazy(() => import('./components/Editor/EditorPage'))
 
 export default function App() {
     return <>
@@ -33,6 +34,8 @@ export default function App() {
                 <Route path="/" element={<Outlet/>}>
                     <Route element={<RequireAuth allowedRoles={['USER', 'ADMIN']}/>}>
                         <Route path="/profile" element={<UserProfile/>}/>
+                        <Route path="/editor" element={<EditorPage/>}/>
+                        <Route path="/editor/:id" element={<EditorPage/>}/>
                     </Route>
                     <Route path="/events" element={<Events/>}/>
                     <Route path="/events/:id" element={<EventPage/>}/>

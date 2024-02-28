@@ -1,6 +1,6 @@
 import useRefreshToken from './useRefreshToken'
 import useAuthentication from './useAuthentication'
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import {authApi} from '../api/axiosInstances'
 
 const useAuthApi = () => {
@@ -16,23 +16,23 @@ const useAuthApi = () => {
             }, error => Promise.reject(error)
         )
 
-        const responseIntercept = authApi.interceptors.response.use(
-            response => response,
-            async error => {
-                const originalRequest = error?.config
-                if (error?.response?.status === 406 && !originalRequest?.sent) {
-                    originalRequest.sent = true
-                    const newToken = await refresh()
-                    originalRequest.headers['Authorization'] = `Bearer ${newToken}`
-                    return authApi(originalRequest)
-                }
-                return Promise.reject(error)
-            }
-        )
+        // const responseIntercept = authApi.interceptors.response.use(
+        //     response => response,
+        //     async error => {
+        //         const originalRequest = error?.config
+        //         if (error?.response?.status === 406 && !originalRequest?.sent) {
+        //             originalRequest.sent = true
+        //             const newToken = await refresh()
+        //             originalRequest.headers['Authorization'] = `Bearer ${newToken}`
+        //             return authApi(originalRequest)
+        //         }
+        //         return Promise.reject(error)
+        //     }
+        // )
 
         return () => {
             authApi.interceptors.request.eject(requestIntercept)
-            authApi.interceptors.response.eject(responseIntercept)
+            // authApi.interceptors.response.eject(responseIntercept)
         }
     }, [state, refresh])
 
