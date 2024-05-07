@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = 'http://localhost:8090/api/v1'
+const baseURL = 'http://localhost:8090/sm'
 
 export const authApi = axios.create({
     baseURL: baseURL,

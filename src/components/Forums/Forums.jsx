@@ -3,7 +3,6 @@ import FeaturedTopic from './FeaturedTopic'
 import './forums.css'
 import {createFn, getAllFn} from '../../api/authApi'
 import useAuthentication from '../../hooks/useAuthentication'
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import {CircularProgress} from '@mui/material'
 import useAuthApi from '../../hooks/useAuthApi'
 
@@ -13,7 +12,6 @@ export default function Forums() {
     const [newForum, setNewForum] = useState({
         name: '', date: '', text: '', author: state.email || ''
     })
-    const queryClient = useQueryClient()
     // const {data, isLoading} = useQuery({
     //     queryKey: ['forums'], queryFn: () => getAllFn('/forums', 0)
     // })
@@ -43,7 +41,6 @@ export default function Forums() {
     }
 
     function handleSubmit() {
-        newForum.date = new Date().toJSON().slice(0, 16)
         createForum.mutate(newForum)
         // window.location.reload()
     }

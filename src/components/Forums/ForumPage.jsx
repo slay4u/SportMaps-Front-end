@@ -4,9 +4,7 @@ import {useParams} from 'react-router-dom'
 import './forums.css'
 import useAuthentication from '../../hooks/useAuthentication'
 import {createFn, deleteFn, getByIdFn, updateFn} from '../../api/authApi'
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import {CircularProgress} from '@mui/material'
-import {jwtDecode} from 'jwt-decode'
 
 export default function ForumPage() {
     const {id} = useParams()

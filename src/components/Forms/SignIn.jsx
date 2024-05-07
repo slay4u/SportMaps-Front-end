@@ -4,7 +4,6 @@ import {useLocation, useNavigate} from 'react-router-dom'
 import './user.css'
 import {loginFn} from '../../api/api'
 import useAuthentication from '../../hooks/useAuthentication'
-import {jwtDecode} from 'jwt-decode'
 
 export default function SignIn() {
     const userRef = useRef()
@@ -34,7 +33,7 @@ export default function SignIn() {
         e.preventDefault()
         try {
             const data = await loginFn(user)
-            const {sub, role, iss} = jwtDecode(data)
+            const {sub, role, iss} = JSON.parse(atob(data.split('.')[1]))
             setState({
                 email: sub,
                 role: role,

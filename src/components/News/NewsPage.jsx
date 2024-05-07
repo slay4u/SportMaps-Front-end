@@ -4,12 +4,9 @@ import NewsComment from './NewsComment'
 import './News.css'
 import useAuthentication from '../../hooks/useAuthentication'
 import {createFn, deleteFn, getByIdFn} from '../../api/authApi'
-import {jwtDecode} from 'jwt-decode'
-import {useQueryClient, useQuery, useMutation} from '@tanstack/react-query'
 import {CircularProgress} from '@mui/material'
 import parse from 'html-react-parser'
 import DOMPurify from 'dompurify'
-import {useDate} from './dateHook'
 
 export default function NewsPage() {
     const {id} = useParams()

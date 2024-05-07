@@ -1,7 +1,7 @@
 import {api} from './axiosInstances'
 
 export async function logoutFn() {
-    await api.delete('')
+    await api.delete('/')
 }
 
 export async function loginFn(body) {
